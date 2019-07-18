@@ -1,0 +1,29 @@
+######################################################
+# Syntax Coloring Map for ClimbingClockSpeedCorrector
+# AUTHOR: Harrison Outram
+# DATE: 8/07/2019
+# VERSION: 0.3
+# PROJECT: Climbing Clock (2019)
+# ORGANISATION: Curtin Robotics Club (CRoC)
+######################################################
+
+######################################################
+# Datatypes (KEYWORD1)
+######################################################
+
+ClimbingClockSpeedCorrector	KEYWORD1
+
+######################################################
+# Methods and Functions (KEYWORD2)
+######################################################
+
+getCorrectedPwm	KEYWORD2
+addNewCorrectedPwm	KEYWORD2
+getMeanPwm	KEYWORD2
+
+######################################################
+# Constants (LITERAL1)
+######################################################
+
+MAX_NUM_OF_PWMS	LITERAL1
+SPEED_INCREASE_INCREMENT	LITERAL1
