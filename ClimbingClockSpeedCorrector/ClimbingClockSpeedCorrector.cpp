@@ -1,7 +1,7 @@
 /*
  * Author: Harrison Outram
- * Date: 8/07/2019
- * Version: 0.3
+ * Date: 25/07/2019
+ * Version: 0.4
  * Purpose: Provide functionality for auto correcting motor speed
  * Project: Climbing Clock (2019)
  * Organisation: Curtin Robotics Club (CRoC)
@@ -12,6 +12,9 @@
 
 const uint8_t ClimbingClockSpeedCorrector::MAX_NUM_OF_PWMS = 9; //default value
 const uint8_t ClimbingClockSpeedCorrector::SPEED_INCREASE_INCREMENT = 10; //default value
+const char ClimbingClockSpeedCorrecter::LINEAR_CHANGE_TYPE = 'l';
+const char ClimbingClockSpeedCorrecter::EXP_CHANGE_TYPE = 'e';
+const int ClimbingClockSpeedCorrecter::MIN_SPEED_INCREMENT = 5;
 
 ClimbingClockSpeedCorrector::ClimbingClockSpeedCorrector(uint16_t initialPwm, uint32_t inCorrectTime) {
   pwmIndex = 0;
@@ -21,10 +24,13 @@ ClimbingClockSpeedCorrector::ClimbingClockSpeedCorrector(uint16_t initialPwm, ui
   correctedPwms[0] = initialPwm;
   correctTime = inCorrectTime;
   speedIncreaseIncrement = SPEED_INCREASE_INCREMENT;
+  speedChangeType = LINEAR_CHANGE_TYPE;
+  
 }
 
 ClimbingClockSpeedCorrector::ClimbingClockSpeedCorrector(uint16_t initialPwm, uint32_t inCorrectTime,
-												uint8_t inMaxNumOfCorrectedPwms, uint16_t inSpeedIncreaseIncrement) {
+																												 uint8_t inMaxNumOfCorrectedPwms, uint16_t inSpeedIncreaseIncrement,
+																												 char inSpeedChangeType, ) {
   pwmIndex = 0;
   maxPwmIndex = inMaxNumOfCorrectedPwms - 1;
   correctedPwms = new uint16_t[inMaxNumOfCorrectedPwms];
