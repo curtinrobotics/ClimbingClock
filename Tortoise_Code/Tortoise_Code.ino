@@ -1,31 +1,36 @@
 /*
- * Author: Harrison Outram
- * Date: 25/07/2019
- * Version: 0.4 (incomplete: see comments)
- * Purpose: code for tortoise robot
+ * Author: Anton R
+ * Date: 01/08/2019
+ * Purpose: Added Real Time Clock functionality
  * Project: Climbing Clock (2019)
  * Organisation: Curtin Robotics Club (CRoC)
  */
 
 #include <SpeedCorrector.h>
 
-const uint32_t CORRECT_TIME = 12*60*60*1000; //Num of milliseconds in 12 hours
+#include <RTClib.h> // Real Time Clock library
+
+const TimeSpan CORRECT_TIME = new TimeSpan(12*60*60); // Num of seconds in 12 hours
 const uint16_t INITIAL_PWM = 300; //dummy value for bug testing. Get real value via testing robot.
 
 uint16_t currentPwm, correctedPwm;
 bool topMet = false;
-uint64_t prevTime;
+DateTime prevTime;
 
 SpeedCorrector speedCorrector(INITIAL_PWM, CORRECT_TIME);
 
+RTC_DS1307 rtc;
+
 void setup() {
-  uint32_t startingTime = 7*60*60*1000; //The num of milliseconds passed since the last 12PM/AM
-  uint32_t initalCorrectTime = CORRECT_TIME - startingTime;
-  //initialise time module pending
-  
+
+  rtc.begin(); // start the real time clock
+
+  DateTime startingTime = rtc.now(); // time at startup
+  DateTime initalCorrectTime = new DateTime(CORRECT_TIME.unixtime() - startingTime.unixtime());
+
   do {
     topMet = checkIfAtTop();
-    
+
     if ( (topMet) || (getTime() == initalCorrectTime) ) {
       prepareNextCycle();
     }
@@ -34,7 +39,7 @@ void setup() {
 
 void loop() {
   topMet = checkIfAtTop();
-  
+
   if ( (topMet) || (getTime() == CORRECT_TIME) ) {
     prepareNextCycle();
   }
@@ -47,11 +52,9 @@ bool checkIfAtTop(void) {
   return true; //used for testing purposes
 }
 
-uint64_t getTime(void) {
-  //definition pending
-  //need further understanding
-
-  return millis() - prevTime; //used for testing purposes
+// returns current time
+DateTime getTime(void) {
+  return rtc.now();
 }
 
 void prepareNextCycle() {
