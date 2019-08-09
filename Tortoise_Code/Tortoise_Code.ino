@@ -8,7 +8,7 @@
 
 #include <SpeedCorrector.h>
 
-#include <RTClib.h> // Real Time Clock library
+#include <RTClib.h> // Real Time Clock (RTC) library
 
 const TimeSpan CORRECT_TIME = new TimeSpan(12*60*60); // Num of seconds in 12 hours
 const uint16_t INITIAL_PWM = 300; // dummy value for bug testing. Get real value via testing robot.
@@ -23,10 +23,12 @@ RTC_DS1307 rtc;
 
 void setup() {
 
-  rtc.begin(); // start the real time clock
+  rtc.begin(); // start the rtc
+
+  rtc.adjust(DateTime(F(__DATE__), F(__TIME__))); // initialize the rtc
 
   DateTime startingTime = rtc.now(); // time at startup
-  TimeSpan initalCorrectTime = new DateTime(previous12Hour(startingTime) - startingTime);
+  TimeSpan initalCorrectTime = new DateTime(previousTwelveHour(startingTime) - startingTime);
 
   do {
     topMet = checkIfAtTop();
@@ -67,7 +69,8 @@ void prepareNextCycle() {
   delay(300); //prevents topMet from being reactivated
 }
 
-DateTime previous12Hour(DateTime time) {
+// returns the last noon or midnight, whichever is closest
+DateTime previousTwelveHour(DateTime time) {
   DateTime out = new Datetime(time.unixtime());
 
   if (time.hour() < 12) {
