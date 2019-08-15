@@ -1,7 +1,7 @@
 /*
  * Author: Harrison Outram
- * Date: 25/07/2019
- * Version: 1.1
+ * Date: 15/08/2019
+ * Version: 1.2
  * Purpose: Provide functionality for auto correcting motor speed
  * Project: Climbing Clock (2019)
  * Organisation: Curtin Robotics Club (CRoC)
@@ -15,6 +15,7 @@ const uint8_t SpeedCorrector::SPEED_INCREMENT = 10; //default value for alt cons
 const uint8_t SpeedCorrector::MIN_SPEED_INCREMENT = 5; //default value for alt constructor 1
 const char SpeedCorrector::LINEAR_CHANGE_TYPE = 'l'; //value for setting linear change type
 const char SpeedCorrector::EXP_CHANGE_TYPE = 'e'; //value for setting exponential change type
+const char SpeedCorrector::NON_CHANGE_TYPE = 'n'; //value for setting non-change type
 const uint8_t SpeedCorrector::SPEED_INCREMENT_CHANGE = 5; //default value for speedIncrementChange
 
 SpeedCorrector::SpeedCorrector(uint16_t initialPwm, uint32_t inCorrectTime) {
@@ -109,7 +110,9 @@ void SpeedCorrector::calcNewSpeedIncrement(void) {
 		speedIncrement = speedIncrement - speedIncrementChange;
 	} else if (speedChangeType == EXP_CHANGE_TYPE) {
 		speedIncrement /= speedIncrementChange;
-	}
+	} else if (speedChangeType == NON_CHANGE_TYPE) {
+		// do not change speedIncrement
+    }
 
 	if (speedIncrement < minSpeedIncrement) {
 		speedIncrement = minSpeedIncrement;
