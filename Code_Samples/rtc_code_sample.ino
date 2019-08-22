@@ -47,12 +47,12 @@ void setup()
 
 void loop()
 {
-  
+
   DateTime currentTime = rtc.now();
   DateTime last12Hrs = previousTwelveHour(currentTime);
 
   // a bunch of example code below, uncomment to see how it works
-  
+
 /*
   Serial.print("The current time is: ");
   Serial.print(currentTime.hour());
@@ -85,20 +85,33 @@ void loop()
   //delay(500);
 }
 
+
+// previousTwelveHour: returns the date and time of the previous 12-hour mark
+//                     (noon or midnight)
+
 DateTime previousTwelveHour(DateTime time) {
+
+  // ake a copy of the current time object
   DateTime out(time.unixtime());
 
+  // if time is before noon, set the number of hours to 0
   if (time.hour() < 12) {
     out = out - TimeSpan((int) time.hour() * 60 * 60);
   }
+  // if time is after noon, set the number of hours to 12
   else if (time.hour() > 12) {
     out = out - TimeSpan((int) (time.hour() - 12) * 60 * 60);
   }
 
+  // set minutes and seconds to 0
   out = out - TimeSpan((int) (time.minute() * 60) + (int) time.second());
 
   return out;
 }
+
+// colorWipe: copied from a sample neopixel code
+//            colours all pixels one by one with a slight delay
+//            creates a "wiping" visual effect
 
 void colorWipe(uint32_t color, int wait) {
   for (int i = 0; i < strip.numPixels(); i++) {
@@ -108,16 +121,25 @@ void colorWipe(uint32_t color, int wait) {
   }
 }
 
+
+// drawTime: displays the current time on an LED strip
+//           red = hour
+//           green = minute
+//           blue = second
+
 void drawTime(DateTime currentTime) {
-  // wipe pixels
+  // clear the pixels
   for (int i = 0; i < LED_COUNT; i++) {
-    strip.setPixelColor(i,strip.Color(1,1,1));
+    strip.setPixelColor(i,strip.Color(0,0,0));
   }
-  
+
+  // get time variables from currentTime
   int clockHour = currentTime.hour() % 12;
   int clockMinute = currentTime.minute();
   int clockSecond = currentTime.second();
-  
+
+  // determine which pixels display which variable
+  // modulo division prevents overflow
   int hourLED = round((float)clockHour/12.0f * (float)LED_COUNT);
   hourLED %= LED_COUNT;
   int minuteLED = round((float)clockMinute/60.0f * (float)LED_COUNT);
@@ -125,9 +147,8 @@ void drawTime(DateTime currentTime) {
   int secondLED = round((float)clockSecond/60.0f * (float)LED_COUNT);
   secondLED %= LED_COUNT;
 
-  //Serial.print("second = ");
-  
-
+  // set and display the colours
+  // if pixels clash, colours are mixed together by adding their values
   strip.setPixelColor(hourLED, COL_RED);
   strip.setPixelColor(minuteLED, strip.getPixelColor(minuteLED) + COL_GRN);
   strip.setPixelColor(secondLED, strip.getPixelColor(secondLED) + COL_BLU);
