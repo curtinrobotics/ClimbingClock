@@ -1,6 +1,6 @@
 /*
  * Author: Harrison Outram
- * Date: 25/07/2019
+ * Date: 29/08/2019
  * Version: 1.1
  * Purpose: Header file for auto correcting motor speed
  * Project: Climbing Clock (2019)
@@ -45,7 +45,7 @@ class SpeedCorrector {
 	char speedChangeType;
 	uint8_t speedIncrementChange;
 	
-	//private methds
+	//private methods
 	uint16_t getPwmOffset(uint32_t timeErr, uint16_t currentPwm);
 	void calcNewSpeedIncrement(void);
 };
