@@ -1,7 +1,7 @@
 /*
  * Author: Harrison Outram
- * Date: 15/08/2019
- * Version: 1.2
+ * Date: 29/08/2019
+ * Version: 1.3
  * Purpose: Provide functionality for auto correcting motor speed
  * Project: Climbing Clock (2019)
  * Organisation: Curtin Robotics Club (CRoC)
@@ -50,29 +50,27 @@ SpeedCorrector::~SpeedCorrector() {
 	delete correctedPwms;
 }
 
-/*public methods*/
+	/* PUBLIC METHODS */
 
 //calculates new PWM based on current PWM and error
 uint16_t SpeedCorrector::getCorrectedPwm(uint32_t actualTime, uint16_t currentPwm, bool topReached) {
 	uint16_t correctedPwm;
 	
-	if (correctTime > actualTime) { //reached top too quickly
+	if (correctTime > actualTime) //reached top too quickly
 		correctedPwm = currentPwm - getPwmOffset(correctTime - actualTime, currentPwm);
-	} else if (!topReached) {
+	else if (!topReached)
 		correctedPwm = currentPwm + speedIncrement;
-	} else {
+	else
 		correctedPwm = currentPwm;
-	}
 	
 	return correctedPwm;
 }
 
 void SpeedCorrector::addNewCorrectedPwm(uint16_t correctedPwm) {
-	if (pwmIndex == maxPwmIndex) {
-	pwmIndex = 0; //reset index to replace oldest value
-	} else {
-	pwmIndex++;
-	}
+	if (pwmIndex == maxPwmIndex)
+		pwmIndex = 0; //reset index to replace oldest value
+	else
+		pwmIndex++;
 	
 	correctedPwms[pwmIndex] = correctedPwm;
 }
@@ -81,15 +79,13 @@ uint16_t SpeedCorrector::getMeanPwm(void) {
 	uint32_t meanPwm = 0;
 	
 	if (correctedPwmsFull) {
-		for (uint8_t i = 0; i < maxPwmIndex; i++) {
+		for (uint8_t i = 0; i < maxPwmIndex; i++)
 			meanPwm += correctedPwms[i];
-		}
 		
 		meanPwm /= (maxPwmIndex + 1);
 	} else {
-		for (uint8_t i = 0; i <= pwmIndex; i++) {
+		for (uint8_t i = 0; i <= pwmIndex; i++)
 			meanPwm += correctedPwms[i];
-		}
 		
 		meanPwm /= (pwmIndex + 1);
 	}
@@ -97,7 +93,7 @@ uint16_t SpeedCorrector::getMeanPwm(void) {
 	return meanPwm;
 }
 
-/*private methods*/
+	/* PRIVATE METHODS */
 
 uint16_t SpeedCorrector::getPwmOffset(uint32_t timeErr, uint16_t currentPwm) {
 	//use dimensional analysis to confirm equation is correct
@@ -106,15 +102,13 @@ uint16_t SpeedCorrector::getPwmOffset(uint32_t timeErr, uint16_t currentPwm) {
 
 //change speedIncrement to new value
 void SpeedCorrector::calcNewSpeedIncrement(void) {
-	if (speedChangeType == LINEAR_CHANGE_TYPE) {
+	if (speedChangeType == LINEAR_CHANGE_TYPE)
 		speedIncrement = speedIncrement - speedIncrementChange;
-	} else if (speedChangeType == EXP_CHANGE_TYPE) {
+	else if (speedChangeType == EXP_CHANGE_TYPE)
 		speedIncrement /= speedIncrementChange;
-	} else if (speedChangeType == NON_CHANGE_TYPE) {
+	else if (speedChangeType == NON_CHANGE_TYPE)
 		// do not change speedIncrement
-    }
 
-	if (speedIncrement < minSpeedIncrement) {
+	if (speedIncrement < minSpeedIncrement)
 		speedIncrement = minSpeedIncrement;
-	}
 }
