@@ -1,7 +1,7 @@
 /*
  * Author: Harrison Outram
  * Date: 5/09/2019
- * Version: 1.0
+ * Version: 1.1
  * Purpose: Header file for speed change functions
  * Project: Climbing Clock (2019)
  * Organisation: Curtin Robotics Club (CRoC)
@@ -14,9 +14,9 @@
 
 class SpeedChangeFunctions {
   public:
-	static uint32_t noChange(uint32_t currSpeedInc, uint32_t speedIncChange);
-	static uint32_t linearChange(uint32_t currSpeedInc, uint32_t speedIncChange);
-	static uint32_t exponentialChange(uint32_t currSpeedInc, uint32_t speedIncChange);
+	static uint8_t noChange(uint8_t currSpeedInc, uint8_t speedIncChange);
+	static uint8_t linearChange(uint8_t currSpeedInc, uint8_t speedIncChange);
+	static uint8_t exponentialChange(uint8_t currSpeedInc, uint8_t speedIncChange);
 };
 
 #endif
