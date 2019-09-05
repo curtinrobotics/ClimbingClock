@@ -1,12 +1,12 @@
 #################################################################
 AUTHOR: Harrison Outram
-DATE: 25/07/2019 (day/month/year)
+DATE: 5/09/2019 (day/month/year)
 PROGRAM: SpeedCorrector library/class
 LANGuaGE: C++ (Using the Arduino IDE)
 PURPOSE: Provide functionality for a Machine Learning (ML) AI to
 			auto-correct robot climbing speed
 project: Climbing Clock (2019)
-version: 1.1
+version: 1.2
 #################################################################
 
 				----------------------
@@ -23,16 +23,6 @@ Purpose: default value for speedIncrement classfield
 Name: MIN_SPEED_INCREMENT
 Value: 5 (uint8_t)
 Purpose: default minimum speed increment for adjusting motor speed
-
-Name: LINEAR_CHANGE_TYPE
-Value: 'l'
-Purpose: value for setting the speedIncrement change method to a linear function
-Note: See calcNewSpeedIncrement method
-
-Name: EXP_CHANGE_TYPE
-Value: 'e'
-Purpose: value for setting the speedIncrement change method to an exponential function
-Note: See calcNewSpeedIncrement method
 
 Name: SPEED_INCREMENT_CHANGE
 Value: 5 (uint8_t)
@@ -83,10 +73,10 @@ Datatype: uint8_t
 Mutable: No
 Purpose: The minimum value for the speedIncrement classfield.
 
-Name: speedChangeType
-Datatype: char
+Name: speedChangeFunc
+Datatype: uint8_t (*)(uint8_t, uint8_t)
 Mutable: No
-Purpose: Determines the equation to use for changing the speedIncrement classfied.
+Purpose: Determines the function to use for changing the speedIncrement classfied.
 
 Name: speedIncrementChange
 Datatype: uint8_t
@@ -107,15 +97,14 @@ Note 3: the change type for the speedIncrement classfield is linear with a speed
 
 Name: Alternate 2
 Imports: initialPwm (uint16_t), inCorrectTime (uint32_t), inMaxPwmIndex (uint8_t),
-			inSpeedIncrement (int8_t), inMinSpeedIncrement (uint8_t), inSpeedChangeType (char),
+			inSpeedIncrement (int8_t), inMinSpeedIncrement (uint8_t), inSpeedChangeFunc (type(speedChangeFunc)),
 			inSpeedIncrementChange (uint8_t)
 Note 1: assigns initialPwm as the 0th element in the correctedPwms array
 Note 2: Strongly recommended to keep inSpeedIncrement value small to avoid overcorrection.
 Note 3: Despite signed integer datatype for inSpeedIncrement, do NOT assign a negative number.
 			This signed integer datatype prevents a run-time error.
 Note 4: Do NOT assign a value of 0 to inMinSpeedIncrement.
-Note 5: inSpeedChangeType must be either LINEAR_CHANGE_TYPE or EXP_CHANGE_TYPE.
-Note 6: It is strongly recommended that a small value (e.g. single digit) be chosed for inSpeedIncrementChange.
+Note 5: It is strongly recommended that a small value (e.g. single digit) be chosed for inSpeedIncrementChange.
 
 Name: Destructor
 Imports: N/A
@@ -147,19 +136,6 @@ Name: getPwmOffset
 Imports: timeErr (uint32_t), currentPwm (uint16_t)
 Export: pwmOffset (uint16_t)
 Purpose: calculates how much the current PWM was off by via the timeError and the currentPwm.
-
-Name: calcNewSpeedIncrement
-Import: N/A
-Export: N/A
-Purpose: Reduces speedIncrement classfield based on speedChangeType and speedIncrementChange.
-Note 1: If linear was chosen as the change type, then the equation
-			newSpeedIncrement = speedIncrement - floor(time / correctTime) * speedIncrementChange
-			is used.
-Note 2: If exponential was chosen as the change type, then the equation
-			newSpeedIncrement = speedIncrement * (1/speedIncrementChange) ^ floor(time / correctTime)
-			is used.
-Note 3: If the newSpeedIncrement is less than the minSpeedIncrement, then the newSpeedIncrement is
-			assigned minSpeedIncrement.
 
 				-----------------
 				EXTERNAL MATERIAL
