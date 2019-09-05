@@ -1,7 +1,7 @@
 /*
  * Author: Harrison Outram
- * Date: 29/08/2019
- * Version: 1.1
+ * Date: 5/09/2019
+ * Version: 1.2
  * Purpose: Header file for auto correcting motor speed
  * Project: Climbing Clock (2019)
  * Organisation: Curtin Robotics Club (CRoC)
@@ -18,14 +18,12 @@ class SpeedCorrector {
 	static const uint8_t MAX_NUM_OF_PWMS;
 	static const uint8_t SPEED_INCREMENT;
 	static const uint8_t MIN_SPEED_INCREMENT;
-	static const char LINEAR_CHANGE_TYPE;
-	static const char EXP_CHANGE_TYPE;
 	static const uint8_t SPEED_INCREMENT_CHANGE;
 	
 	//constructors and destructor
 	SpeedCorrector(uint16_t initialPwm, uint32_t inCorrectTime);
 	SpeedCorrector(uint16_t initialPwm, uint32_t inCorrectTime, uint8_t inMaxNumOfPwms,
-					uint16_t inSpeedIncrement, uint8_t inMinSpeedIncrement, char inSpeedChangeType,
+					uint16_t inSpeedIncrement, uint8_t inMinSpeedIncrement, uint8_t (speedChangeFunc*)(uint8_t currSpeedChange, uint8_t speedIncChange),
 					uint8_t inSpeedIncrementChange);
 	~SpeedCorrector();
 	
@@ -34,7 +32,7 @@ class SpeedCorrector {
 	void addNewCorrectedPwm(uint16_t correctedPwm);
 	uint16_t getMeanPwm(void);
   private:
-	//classfields
+	//object variables
 	uint8_t pwmIndex;
 	uint8_t maxPwmIndex;
 	uint16_t* correctedPwms;
@@ -42,7 +40,7 @@ class SpeedCorrector {
 	uint32_t correctTime;
 	int8_t speedIncrement;
 	uint8_t minSpeedIncrement;
-	char speedChangeType;
+	uint8_t (speedChangeFunc*)(uint8_t currSpeedChange, uint8_t speedIncChange);
 	uint8_t speedIncrementChange;
 	
 	//private methods
