@@ -10,10 +10,9 @@
 #ifndef SpeedCorrector_h
 #define SpeedCorrector_h
 
-#include "Arduino.h"
 //my new change
 
-class SpeedCorrector {
+class SpeedCorrec {
   public:
 	//public class constants
 	static const uint8_t MAX_NUM_OF_PWMS;
