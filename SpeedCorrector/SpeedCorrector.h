@@ -10,9 +10,9 @@
 #ifndef SpeedCorrector_h
 #define SpeedCorrector_h
 
-//my new change
+#include <SpeedCorrector.h>
 
-class SpeedCorrec {
+class SpeedCorrector {
   public:
 	//public class constants
 	static const uint8_t MAX_NUM_OF_PWMS;
