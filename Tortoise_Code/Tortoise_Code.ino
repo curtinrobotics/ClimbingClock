@@ -1,31 +1,38 @@
 /*
- * Author: Harrison Outram
- * Date: 25/07/2019
- * Version: 0.4 (incomplete: see comments)
- * Purpose: code for tortoise robot
+ * Authors: Harrison O, Anton R
+ * Date: 01/08/2019
+ * Purpose: Code for the tortoise component of the clock
  * Project: Climbing Clock (2019)
  * Organisation: Curtin Robotics Club (CRoC)
  */
 
 #include <SpeedCorrector.h>
 
-const uint32_t CORRECT_TIME = 12*60*60*1000; //Num of milliseconds in 12 hours
-const uint16_t INITIAL_PWM = 300; //dummy value for bug testing. Get real value via testing robot.
+#include <RTClib.h> // Real Time Clock (RTC) library
+
+const TimeSpan CORRECT_TIME = new TimeSpan(12*60*60); // Num of seconds in 12 hours
+const uint16_t INITIAL_PWM = 300; // dummy value for bug testing. Get real value via testing robot.
 
 uint16_t currentPwm, correctedPwm;
 bool topMet = false;
-uint64_t prevTime;
+DateTime prevTime;
 
 SpeedCorrector speedCorrector(INITIAL_PWM, CORRECT_TIME);
 
+RTC_DS1307 rtc;
+
 void setup() {
-  uint32_t startingTime = 7*60*60*1000; //The num of milliseconds passed since the last 12PM/AM
-  uint32_t initalCorrectTime = CORRECT_TIME - startingTime;
-  //initialise time module pending
-  
+
+  rtc.begin(); // start the rtc
+
+  rtc.adjust(DateTime(F(__DATE__), F(__TIME__))); // initialize the rtc
+
+  DateTime startingTime = rtc.now(); // time at startup
+  TimeSpan initalCorrectTime = new DateTime(previousTwelveHour(startingTime) - startingTime);
+
   do {
     topMet = checkIfAtTop();
-    
+
     if ( (topMet) || (getTime() == initalCorrectTime) ) {
       prepareNextCycle();
     }
@@ -34,7 +41,7 @@ void setup() {
 
 void loop() {
   topMet = checkIfAtTop();
-  
+
   if ( (topMet) || (getTime() == CORRECT_TIME) ) {
     prepareNextCycle();
   }
@@ -47,11 +54,9 @@ bool checkIfAtTop(void) {
   return true; //used for testing purposes
 }
 
-uint64_t getTime(void) {
-  //definition pending
-  //need further understanding
-
-  return millis() - prevTime; //used for testing purposes
+// returns time
+DateTime getTime(void) {
+  return rtc.now();
 }
 
 void prepareNextCycle() {
@@ -62,6 +67,22 @@ void prepareNextCycle() {
   topMet = false;
   prevTime = getTime();
   delay(300); //prevents topMet from being reactivated
+}
+
+// returns the last noon or midnight, whichever is closest
+DateTime previousTwelveHour(DateTime time) {
+  DateTime out = new Datetime(time.unixtime());
+
+  if (time.hour() < 12) {
+    out -= time.hour();
+  }
+  else if (time.hour() > 12) {
+    out -= time.hour() - 12;
+  }
+
+  out -= time.minute() * 60 + time.second();
+
+  return out;
 }
 
 //go back to the bottom of the rack/ladder
