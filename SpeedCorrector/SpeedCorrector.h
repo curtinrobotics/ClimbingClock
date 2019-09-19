@@ -1,6 +1,6 @@
 /*
  * Author: Harrison Outram
- * Date: 5/09/2019
+ * Date: 19/09/2019
  * Version: 1.2
  * Purpose: Header file for auto correcting motor speed
  * Project: Climbing Clock (2019)
@@ -11,6 +11,7 @@
 #define SpeedCorrector_h
 
 #include "Arduino.h"
+#include "../SpeedChangeFunctions/SpeedChangeFunctions.h"
 
 class SpeedCorrector {
   public:
@@ -23,7 +24,7 @@ class SpeedCorrector {
 	//constructors and destructor
 	SpeedCorrector(uint16_t initialPwm, uint32_t inCorrectTime);
 	SpeedCorrector(uint16_t initialPwm, uint32_t inCorrectTime, uint8_t inMaxNumOfPwms,
-					uint16_t inSpeedIncrement, uint8_t inMinSpeedIncrement, uint8_t (speedChangeFunc*)(uint8_t currSpeedChange, uint8_t speedIncChange),
+					uint16_t inSpeedIncrement, uint8_t inMinSpeedIncrement, uint8_t (*inSpeedChangeFunc)(uint8_t currSpeedChange, uint8_t speedIncChange),
 					uint8_t inSpeedIncrementChange);
 	~SpeedCorrector();
 	
@@ -40,7 +41,7 @@ class SpeedCorrector {
 	uint32_t correctTime;
 	int8_t speedIncrement;
 	uint8_t minSpeedIncrement;
-	uint8_t (speedChangeFunc*)(uint8_t currSpeedChange, uint8_t speedIncChange);
+	uint8_t (*speedChangeFunc)(uint8_t currSpeedChange, uint8_t speedIncChange);
 	uint8_t speedIncrementChange;
 	
 	//private methods
