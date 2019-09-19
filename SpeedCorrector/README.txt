@@ -1,12 +1,12 @@
 #################################################################
 AUTHOR: Harrison Outram
-DATE: 5/09/2019 (day/month/year)
+DATE: 19/09/2019 (day/month/year)
 PROGRAM: SpeedCorrector library/class
 LANGuaGE: C++ (Using the Arduino IDE)
 PURPOSE: Provide functionality for a Machine Learning (ML) AI to
 			auto-correct robot climbing speed
 project: Climbing Clock (2019)
-version: 1.2
+version: 1.3
 #################################################################
 
 				----------------------

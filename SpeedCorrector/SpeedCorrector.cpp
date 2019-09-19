@@ -1,15 +1,13 @@
 /*
  * Author: Harrison Outram
- * Date: 5/09/2019
+ * Date: 19/09/2019
  * Version: 1.5
  * Purpose: Provide functionality for auto correcting motor speed
  * Project: Climbing Clock (2019)
  * Organisation: Curtin Robotics Club (CRoC)
  */
 
-#include "Arduino.h"
 #include "SpeedCorrector.h"
-#include "../SpeedChangeFunctions/SpeedChangeFunctions.h"
 
 const uint8_t SpeedCorrector::MAX_NUM_OF_PWMS = 10; //default value for alt constructor 1
 const uint8_t SpeedCorrector::SPEED_INCREMENT = 10; //default value for alt constructor 1
@@ -17,7 +15,7 @@ const uint8_t SpeedCorrector::MIN_SPEED_INCREMENT = 5; //default value for alt c
 const uint8_t SpeedCorrector::SPEED_INCREMENT_CHANGE = 5; //default value for speedIncrementChange
 
 SpeedCorrector::SpeedCorrector(uint16_t initialPwm, uint32_t inCorrectTime) {
-	pwmIndex = 0;
+	pwmIndex = 1;
 	maxPwmIndex = MAX_NUM_OF_PWMS - 1;
 	correctedPwms = new uint16_t[MAX_NUM_OF_PWMS];
 	correctedPwmsFull = false;
@@ -30,9 +28,9 @@ SpeedCorrector::SpeedCorrector(uint16_t initialPwm, uint32_t inCorrectTime) {
 }
 
 SpeedCorrector::SpeedCorrector(uint16_t initialPwm, uint32_t inCorrectTime,	uint8_t inMaxNumOfCorrectedPwms, 
-							uint16_t inSpeedIncrement, uint8_t inMinSpeedIncrement, uint8_t (speedChangeFunc*)(uint8_t currSpeedChange, uint8_t speedIncChange),
+							uint16_t inSpeedIncrement, uint8_t inMinSpeedIncrement, uint8_t (*inSpeedChangeFunc)(uint8_t currSpeedChange, uint8_t speedIncChange),
 							uint8_t inSpeedIncrementChange) {
-	pwmIndex = 0;
+	pwmIndex = 1;
 	maxPwmIndex = inMaxNumOfCorrectedPwms - 1;
 	correctedPwms = new uint16_t[inMaxNumOfCorrectedPwms];
 	correctedPwmsFull = false;
@@ -40,7 +38,7 @@ SpeedCorrector::SpeedCorrector(uint16_t initialPwm, uint32_t inCorrectTime,	uint
 	correctTime = inCorrectTime;
 	speedIncrement = inSpeedIncrement;
 	minSpeedIncrement = inMinSpeedIncrement;
-	speedChangeFunc = speedChangeFunc;
+	speedChangeFunc = inSpeedChangeFunc;
 	speedIncrementChange = inSpeedIncrementChange;
 }
 
@@ -100,9 +98,9 @@ uint16_t SpeedCorrector::getPwmOffset(uint32_t timeErr, uint16_t currentPwm) {
 	return (uint16_t)( ((float)timeErr / (float)correctTime) * (float)currentPwm );
 }
 
-//change speedIncrement to new value
+//changes speedIncrement to new value, doesn't return it
 void SpeedCorrector::calcNewSpeedIncrement(void) {
-	speedIncrement = (speedChangeFunc*)(speedIncrement, speedIncrementChange);
+	speedIncrement = (*speedChangeFunc)(speedIncrement, speedIncrementChange);
 
 	if (speedIncrement < minSpeedIncrement)
 		speedIncrement = minSpeedIncrement;

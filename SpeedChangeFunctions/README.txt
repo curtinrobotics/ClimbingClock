@@ -1,6 +1,6 @@
 #################################################################
 AUTHOR: Harrison Outram
-DATE: 5/09/2019 (day/month/year)
+DATE: 19/09/2019 (day/month/year)
 PROGRAM: SpeedChangeFunctions library
 LANGuaGE: C++ (Using the Arduino IDE)
 PURPOSE: Provide SpeedCorrector class with generic equations for
