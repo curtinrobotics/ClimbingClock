@@ -1,7 +1,7 @@
 /*
  * Author: Harrison Outram
- * Date: 19/09/2019
- * Version: 1.0
+ * Date: 26/09/2019
+ * Version: 1.2
  * Purpose: test script for SpeedCorrector class
  * Project: Climbing Clock (2019)
  * Organisation: Curtin Robotics Club (CRoC)
@@ -69,9 +69,9 @@ uint8_t testSuite_getCorrectedPwm(void) {
 
 uint8_t getCorrectedPwm_testCase1(void) {
   uint8_t testsPassed = 0;
-  uint16_t actualTime = 999;
-  uint8_t currentPwm = 100;
-  uint16_t expectedCorrPwm = 99;
+  uint16_t actualTime = TEST_CORRECT_TIME - 1;
+  uint16_t currentPwm = 5000;
+  uint16_t expectedCorrPwm = 4995;
   
   uint16_t actualCorrPwm1 = speedCorr1->getCorrectedPwm(actualTime, currentPwm, false);
   uint16_t actualCorrPwm2 = speedCorr2->getCorrectedPwm(actualTime, currentPwm, false);
@@ -79,11 +79,21 @@ uint8_t getCorrectedPwm_testCase1(void) {
   
   if (actualCorrPwm1 == expectedCorrPwm && actualCorrPwm2 == expectedCorrPwm
       && actualCorrPwm3 == expectedCorrPwm) {
-    Serial.print("Corrected PWM test case 1 passed.\n");
+    Serial.print("Corrected PWM test case 1 passed.\n\n");
     testsPassed++;
-  } else
+  } else {
     Serial.print("Corrected PWM test case 1 failed.\n");
-
+    Serial.print("Expected corrected PWM : ");
+    Serial.print(expectedCorrPwm);
+    Serial.print(", actual corrected PWM 1: ");
+    Serial.print(actualCorrPwm1);
+    Serial.print(", actual corrected PWM 2: ");
+    Serial.print(actualCorrPwm2);
+    Serial.print(", actual corrected PWM 3: ");
+    Serial.print(actualCorrPwm3);
+    Serial.print("\n\n");
+  }
+  
   return testsPassed;
 }
 
@@ -98,10 +108,20 @@ uint8_t getCorrectedPwm_testCase2(void) {
 
   if (actualCorrPwm1 == expectedCorrPwm && actualCorrPwm2 == expectedCorrPwm
       && actualCorrPwm3 == expectedCorrPwm) {
-    Serial.print("Corrected PWM test case 2 passed.\n");
+    Serial.print("Corrected PWM test case 1 passed.\n\n");
     testsPassed++;
-  } else
-    Serial.print("Corrected PWM test case 2 failed.\n");
+  } else {
+    Serial.print("Corrected PWM test case 1 failed.\n");
+    Serial.print("Expected corrected PWM : ");
+    Serial.print(expectedCorrPwm);
+    Serial.print(", actual corrected PWM 1: ");
+    Serial.print(actualCorrPwm1);
+    Serial.print(", actual corrected PWM 2: ");
+    Serial.print(actualCorrPwm2);
+    Serial.print(", actual corrected PWM 3: ");
+    Serial.print(actualCorrPwm3);
+    Serial.print("\n\n");
+  }
 
   return testsPassed;
 }
@@ -112,21 +132,27 @@ uint8_t getCorrectedPwm_testCase3(void) {
   uint16_t actualTime = 1000;
   uint8_t currentPwm[] = {100, 200, 150};
   uint16_t expectedCorrPwm[] = {110, 205, 155};
+  uint16_t actualCorrPwm;
 
   while (testPassed && i < 3) {
-    uint16_t actualCorrPwm1 = speedCorr1->getCorrectedPwm(actualTime, currentPwm[i], false);
+    actualCorrPwm = speedCorr1->getCorrectedPwm(actualTime, currentPwm[i], false);
     
-    if (actualCorrPwm1 != expectedCorrPwm[i])
+    if (actualCorrPwm != expectedCorrPwm[i])
       testPassed = false;
     
     i++;
   }
 
   if (testPassed) {
-    Serial.print("Corrected PWM test case 3 passed.\n");
+    Serial.print("Corrected PWM test case 3 passed.\n\n");
     testsPassed++;
   } else {
     Serial.print("Corrected PWM test case 3 failed.\n");
+    Serial.print("Expected corrected PWM: ");
+    Serial.print(expectedCorrPwm[i - 1]);
+    Serial.print(", actual corrected PWM: ");
+    Serial.print(actualCorrPwm);
+    Serial.print("\n\n");
   }
 
   return testsPassed;
@@ -138,21 +164,27 @@ uint8_t getCorrectedPwm_testCase4(void) {
   uint16_t actualTime = 1000;
   uint8_t currentPwm[] = {100, 200, 150};
   uint16_t expectedCorrPwm[] = {120, 210, 160};
+  uint16_t actualCorrPwm;
 
   while (testPassed && i < 3) {
-    uint16_t actualCorrPwm2 = speedCorr2->getCorrectedPwm(actualTime, currentPwm[i], false);
+    actualCorrPwm = speedCorr2->getCorrectedPwm(actualTime, currentPwm[i], false);
 
-    if (actualCorrPwm2 != expectedCorrPwm[i])
+    if (actualCorrPwm != expectedCorrPwm[i])
       testPassed = false;
     
     i++;
   }
 
   if (testPassed) {
-    Serial.print("Corrected PWM test case 4 passed.\n");
+    Serial.print("Corrected PWM test case 4 passed.\n\n");
     testsPassed++;
   } else {
     Serial.print("Corrected PWM test case 4 failed.\n");
+    Serial.print("Expected corrected PWM: ");
+    Serial.print(expectedCorrPwm[i - 1]);
+    Serial.print(", actual corrected PWM: ");
+    Serial.print(actualCorrPwm);
+    Serial.print("\n\n");
   }
 
   return testsPassed;
@@ -163,22 +195,28 @@ uint8_t getCorrectedPwm_testCase5(void) {
   bool testPassed = true;
   uint16_t actualTime = 1000;
   uint8_t currentPwm[] = {100, 200, 150};
-  uint16_t expectedCorrPwm[] = {100, 200, 150};
+  uint16_t expectedCorrPwm[] = {120, 220, 170};
+  uint16_t actualCorrPwm;
 
   while (testPassed && i < 3) {
-    uint16_t actualCorrPwm3 = speedCorr3->getCorrectedPwm(actualTime, currentPwm[i], false);
+    actualCorrPwm = speedCorr3->getCorrectedPwm(actualTime, currentPwm[i], false);
 
-    if (actualCorrPwm3 != expectedCorrPwm[i])
+    if (actualCorrPwm != expectedCorrPwm[i])
       testPassed = false;
     
     i++;
   }
 
   if (testPassed) {
-    Serial.print("Corrected PWM test case 5 passed.\n");
+    Serial.print("Corrected PWM test case 5 passed.\n\n");
     testsPassed++;
   } else {
     Serial.print("Corrected PWM test case 5 failed.\n");
+    Serial.print("Expected corrected PWM: ");
+    Serial.print(expectedCorrPwm[i - 1]);
+    Serial.print(", actual corrected PWM: ");
+    Serial.print(actualCorrPwm);
+    Serial.print("\n\n");
   }
 
   return testsPassed;
@@ -204,117 +242,210 @@ uint8_t testSuite_getMeanPwn(void) { // Also tests addNewCorrecetedPwm by necess
 
 uint8_t getMeanPwm_testCase1(void) {
   uint8_t testsPassed = 0;
-  bool allTestsPassed = true;
+  bool initialPwmTestPassed = true, allTestsPassed_notFull = true, allTestsPassed_full = true;
+  uint8_t i = 0;
+  uint16_t actualMeanPwm;
 
-  // When pwmArray is full
-  uint16_t testPwms[] = {4000, 4500, 3200, 3400, 3300, 3900, 4555, 5500, 5200};  
-  uint16_t expectedMeanPwms[] = {4500, 4500, 4175, 4020, 3900, 3900, 3981, 4150, 4255};
-
-  // When pwmArray is not full
-  uint16_t testPwms2[] = {5506, 2030, 7000, 6210, 6000};
-  uint16_t expectedMeanPwms2[] = {4306, 4109, 4359, 4660, 4920};
+  // Row 1 for when pwmArray is not full
+  // Row 2 for when pwmArray is full
+  uint16_t testPwms[2][9] = { {4000, 4500, 3200, 3400, 3300, 3900, 4555, 5500, 5200},
+                              {5506, 2030, 7000, 6210, 6000} };  
+  uint16_t expectedMeanPwms[2][9] = { {4500, 4500, 4175, 4020, 3900, 3900, 3981, 4150, 4255},
+                                      {4306, 4109, 4359, 4660, 4920} };
   
-  if (speedCorr1->getMeanPwm() != TEST_INITIAL_PWM)
-    allTestsPassed = false;
+  if (speedCorr1->getMeanPwm() != TEST_INITIAL_PWM) {
+    allTestsPassed_notFull = false;
+    initialPwmTestPassed = false;
+  }
   
-  for (uint8_t i = 0; i < EXPECTED_DEFAULT_NUM_PWM - 1; i++) {
-    speedCorr1->addNewCorrectedPwm(testPwms[i]);
+  while (i < EXPECTED_DEFAULT_NUM_PWM - 1 && allTestsPassed_notFull) {
+    speedCorr1->addNewCorrectedPwm(testPwms[0][i]);
+    actualMeanPwm = speedCorr1->getMeanPwm();
     
-    if (speedCorr1->getMeanPwm() != expectedMeanPwms[i])
-      allTestsPassed = false;
+    if (actualMeanPwm != expectedMeanPwms[0][i])
+      allTestsPassed_notFull = false;
+    
+    i++;
   }
 
-  for (uint8_t i = 0; i < 5; i++) {
-    speedCorr1->addNewCorrectedPwm(testPwms2[i]);
-    
-    if (speedCorr1->getMeanPwm() != expectedMeanPwms2[i])
-      allTestsPassed = false;
+  if (allTestsPassed_notFull) {
+    i = 0;
+  
+    while (i < 5 && allTestsPassed_full) {
+      speedCorr1->addNewCorrectedPwm(testPwms[1][i]);
+      actualMeanPwm = speedCorr1->getMeanPwm();
+      
+      if (actualMeanPwm != expectedMeanPwms[1][i])
+        allTestsPassed_full = false;
+      
+      i++;
+    }
   }
 
-  if (allTestsPassed) {
-    Serial.print("Mean PWM test case 1 passed.\n");
+  if (allTestsPassed_notFull && allTestsPassed_full) {
+    Serial.print("Mean PWM test case 1 passed.\n\n");
     testsPassed++;
-  }
-  else
+  } else {
     Serial.print("Mean PWM test case 1 failed.\n");
+    if (!initialPwmTestPassed) {
+      Serial.print("Initial mean PWM failed\n");
+      Serial.print("Expected: ");
+      Serial.print(TEST_INITIAL_PWM);
+      Serial.print(", actual: ");
+      Serial.print(speedCorr1->getMeanPwm());
+    }
+    else if (!allTestsPassed_notFull) {
+      Serial.print("Expected mean PWM before being full: ");
+      Serial.print(expectedMeanPwms[0][i - 1]);
+      Serial.print(", actual PWM: ");
+      Serial.print(actualMeanPwm);
+    } else {
+      Serial.print("Expected mean PWM after being full: ");
+      Serial.print(expectedMeanPwms[1][i - 1]);
+      Serial.print(", actual PWM: ");
+      Serial.print(actualMeanPwm);
+    }
+    Serial.print("\n\n");
+  }
   
   return testsPassed;
 }
 
 uint8_t getMeanPwm_testCase2(void) {
-  uint8_t testsPassed = 0;
-  bool allTestsPassed = true;
+  uint8_t testsPassed = 0, i = 0;
+  bool initialPwmTestPassed = true, allTestsPassed_notFull = true, allTestsPassed_full = true;
+  uint16_t actualMeanPwm;
 
-  // When pwmArray is full
-  uint16_t testPwms[] = {4000, 4500, 3200, 3400, 3300, 3900, 4555};  
-  uint16_t expectedMeanPwms[] = {4500, 4500, 4175, 4020, 3900, 3900, 3981};
-
-  // When pwmArray is not full
-  uint16_t testPwms2[] = {5506, 2030, 7000, 6210, 6000};
-  uint16_t expectedMeanPwms2[] = {4045, 3798, 4111, 4487, 4812};
+  // Row 1 for when pwmArray is not full
+  // Row 2 for when pwmArray is full
+  uint16_t testPwms[2][7] = { {4000, 4500, 3200, 3400, 3300, 3900, 4555},
+                              {5506, 2030, 7000, 6210, 6000} };  
+  uint16_t expectedMeanPwms[2][7] = { {4500, 4500, 4175, 4020, 3900, 3900, 3981},
+                                      {4045, 3798, 4111, 4487, 4812} };
   
-  if (speedCorr2->getMeanPwm() != TEST_INITIAL_PWM)
-    allTestsPassed = false;
+  if (speedCorr2->getMeanPwm() != TEST_INITIAL_PWM) {
+    allTestsPassed_notFull = false;
+    initialPwmTestPassed = false;
+  }
   
-  for (uint8_t i = 0; i < ALT_MAX_NUM_PWMS - 1; i++) {
-    speedCorr2->addNewCorrectedPwm(testPwms[i]);
+  while (i < ALT_MAX_NUM_PWMS - 1 && allTestsPassed_notFull) {
+    speedCorr2->addNewCorrectedPwm(testPwms[0][i]);
+    actualMeanPwm = speedCorr2->getMeanPwm();
     
-    if (speedCorr2->getMeanPwm() != expectedMeanPwms[i])
-      allTestsPassed = false;
+    if (actualMeanPwm != expectedMeanPwms[0][i])
+      allTestsPassed_notFull = false;
+
+    i++;
   }
 
-  for (uint8_t i = 0; i < 5; i++) {
-    speedCorr2->addNewCorrectedPwm(testPwms2[i]);
-    
-    if (speedCorr2->getMeanPwm() != expectedMeanPwms2[i])
-      allTestsPassed = false;
+  if (allTestsPassed_notFull) {
+    i = 0;
+    while (i < 5 && allTestsPassed_full) {
+      speedCorr2->addNewCorrectedPwm(testPwms[1][i]);
+      actualMeanPwm = speedCorr2->getMeanPwm();
+      
+      if (actualMeanPwm != expectedMeanPwms[1][i])
+        allTestsPassed_full = false;
+
+      i++;
+    }
   }
 
-  if (allTestsPassed) {
-    Serial.print("Mean PWM test case 2 passed.\n");
+  if (allTestsPassed_notFull && allTestsPassed_full) {
+    Serial.print("Mean PWM test case 2 passed.\n\n");
     testsPassed++;
-  }
-  else
+  } else {
     Serial.print("Mean PWM test case 2 failed.\n");
+    if (!initialPwmTestPassed) {
+      Serial.print("Initial mean PWM failed\n");
+      Serial.print("Expected: ");
+      Serial.print(TEST_INITIAL_PWM);
+      Serial.print(", actual: ");
+      Serial.print(speedCorr1->getMeanPwm());
+    }
+    else if (!allTestsPassed_notFull) {
+      Serial.print("Expected mean PWM before being full: ");
+      Serial.print(expectedMeanPwms[0][i - 1]);
+      Serial.print(", actual PWM: ");
+      Serial.print(actualMeanPwm);
+    } else {
+      Serial.print("Expected mean PWM after being full: ");
+      Serial.print(expectedMeanPwms[1][i - 1]);
+      Serial.print(", actual PWM: ");
+      Serial.print(actualMeanPwm);
+    }
+    Serial.print("\n\n");
+  }
   
   return testsPassed;
 }
 
 uint8_t getMeanPwm_testCase3(void) {
-  uint8_t testsPassed = 0;
-  bool allTestsPassed = true;
+  uint8_t testsPassed = 0, i = 0;
+  bool initialPwmTestPassed = true, allTestsPassed_notFull = true, allTestsPassed_full = true;
+  uint16_t actualMeanPwm;
 
-  // When pwmArray is full
-  uint16_t testPwms[] = {4000, 4500, 3200, 3400, 3300, 3900, 4555};  
-  uint16_t expectedMeanPwms[] = {4500, 4500, 4175, 4020, 3900, 3900, 3981};
-
-  // When pwmArray is not full
-  uint16_t testPwms2[] = {5506, 2030, 7000, 6210, 6000};
-  uint16_t expectedMeanPwms2[] = {4045, 3798, 4111, 4487, 4812};
+  // Row 1 for when pwmArray is not full
+  // Row 2 for when pwmArray is full
+  uint16_t testPwms[2][7] = { {4000, 4500, 3200, 3400, 3300, 3900, 4555},
+                              {5506, 2030, 7000, 6210, 6000} };
+  uint16_t expectedMeanPwms[2][7] = { {4500, 4500, 4175, 4020, 3900, 3900, 3981},
+                                      {4045, 3798, 4111, 4487, 4812} };
   
-  if (speedCorr3->getMeanPwm() != TEST_INITIAL_PWM)
-    allTestsPassed = false;
+  if (speedCorr3->getMeanPwm() != TEST_INITIAL_PWM) {
+    allTestsPassed_notFull = false;
+    initialPwmTestPassed = false;
+  }
   
-  for (uint8_t i = 0; i < ALT_MAX_NUM_PWMS - 1; i++) {
-    speedCorr3->addNewCorrectedPwm(testPwms[i]);
+  while (i < ALT_MAX_NUM_PWMS - 1 && allTestsPassed_notFull) {
+    speedCorr3->addNewCorrectedPwm(testPwms[0][i]);
+    actualMeanPwm = speedCorr3->getMeanPwm();
     
-    if (speedCorr3->getMeanPwm() != expectedMeanPwms[i])
-      allTestsPassed = false;
+    if (actualMeanPwm != expectedMeanPwms[0][i])
+      allTestsPassed_notFull = false;
+
+    i++;
   }
 
-  for (uint8_t i = 0; i < 5; i++) {
-    speedCorr3->addNewCorrectedPwm(testPwms2[i]);
+  if (allTestsPassed_notFull) {
+    i = 0;
     
-    if (speedCorr3->getMeanPwm() != expectedMeanPwms2[i])
-      allTestsPassed = false;
+    while (i < 5 && allTestsPassed_full) {
+      speedCorr3->addNewCorrectedPwm(testPwms[1][i]);
+      actualMeanPwm = speedCorr3->getMeanPwm();
+      
+      if (actualMeanPwm != expectedMeanPwms[1][i])
+        allTestsPassed_full = false;
+
+      i++;
+    }
   }
 
-  if (allTestsPassed) {
-    Serial.print("Mean PWM test case 3 passed.\n");
+  if (allTestsPassed_notFull && allTestsPassed_full) {
+    Serial.print("Mean PWM test case 3 passed.\n\n");
     testsPassed++;
-  }
-  else
+  } else {
     Serial.print("Mean PWM test case 3 failed.\n");
+    if (!initialPwmTestPassed) {
+      Serial.print("Initial mean PWM failed\n");
+      Serial.print("Expected: ");
+      Serial.print(TEST_INITIAL_PWM);
+      Serial.print(", actual: ");
+      Serial.print(speedCorr1->getMeanPwm());
+    }
+    else if (!allTestsPassed_notFull) {
+      Serial.print("Expected mean PWM before being full: ");
+      Serial.print(expectedMeanPwms[0][i - 1]);
+      Serial.print(", actual PWM: ");
+      Serial.print(actualMeanPwm);
+    } else {
+      Serial.print("Expected mean PWM after being full: ");
+      Serial.print(expectedMeanPwms[1][i - 1]);
+      Serial.print(", actual PWM: ");
+      Serial.print(actualMeanPwm);
+    }
+    Serial.print("\n\n");
+  }
   
   return testsPassed;
 }
@@ -322,7 +453,7 @@ uint8_t getMeanPwm_testCase3(void) {
 void outputOverallResult(uint8_t testsPassed) {
   uint8_t testsFailed = NUM_TESTS - testsPassed;
 
-  Serial.print("\n=========================\n");
+  Serial.print("=========================\n");
   Serial.print(NUM_TESTS);
   Serial.print(" tests performed\n");
   Serial.print("=========================\n");
