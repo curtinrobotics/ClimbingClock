@@ -1,7 +1,7 @@
 /*
  * Author: Harrison Outram
- * Date: 19/09/2019
- * Version: 1.5
+ * Date: 26/09/2019
+ * Version: 1.6
  * Purpose: Provide functionality for auto correcting motor speed
  * Project: Climbing Clock (2019)
  * Organisation: Curtin Robotics Club (CRoC)
@@ -10,12 +10,12 @@
 #include "SpeedCorrector.h"
 
 const uint8_t SpeedCorrector::MAX_NUM_OF_PWMS = 10; //default value for alt constructor 1
-const uint8_t SpeedCorrector::SPEED_INCREMENT = 10; //default value for alt constructor 1
+const uint8_t SpeedCorrector::SPEED_INCREMENT = 11; //default value for alt constructor 1
 const uint8_t SpeedCorrector::MIN_SPEED_INCREMENT = 5; //default value for alt constructor 1
 const uint8_t SpeedCorrector::SPEED_INCREMENT_CHANGE = 5; //default value for speedIncrementChange
 
 SpeedCorrector::SpeedCorrector(uint16_t initialPwm, uint32_t inCorrectTime) {
-	pwmIndex = 1;
+	pwmIndex = 0;
 	maxPwmIndex = MAX_NUM_OF_PWMS - 1;
 	correctedPwms = new uint16_t[MAX_NUM_OF_PWMS];
 	correctedPwmsFull = false;
@@ -30,7 +30,7 @@ SpeedCorrector::SpeedCorrector(uint16_t initialPwm, uint32_t inCorrectTime) {
 SpeedCorrector::SpeedCorrector(uint16_t initialPwm, uint32_t inCorrectTime,	uint8_t inMaxNumOfCorrectedPwms, 
 							uint16_t inSpeedIncrement, uint8_t inMinSpeedIncrement, uint8_t (*inSpeedChangeFunc)(uint8_t currSpeedChange, uint8_t speedIncChange),
 							uint8_t inSpeedIncrementChange) {
-	pwmIndex = 1;
+	pwmIndex = 0;
 	maxPwmIndex = inMaxNumOfCorrectedPwms - 1;
 	correctedPwms = new uint16_t[inMaxNumOfCorrectedPwms];
 	correctedPwmsFull = false;
@@ -77,7 +77,7 @@ uint16_t SpeedCorrector::getMeanPwm(void) {
 	uint32_t meanPwm = 0;
 	
 	if (correctedPwmsFull) {
-		for (uint8_t i = 0; i < maxPwmIndex; i++)
+		for (uint8_t i = 0; i <= maxPwmIndex; i++)
 			meanPwm += correctedPwms[i];
 		
 		meanPwm /= (maxPwmIndex + 1);
