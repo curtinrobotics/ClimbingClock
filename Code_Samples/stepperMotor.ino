@@ -19,16 +19,29 @@ void setup()
   msm.begin(MSTP);
 }
 
+//tested speeds (*.play(speed*fabs(sin(f)))
+//original = 440
+//300 - 
+//200 - does not seem to like this one
+
+//tested counter values
+//original f = 0.001
+//0.01 - super quick
+//0.0005 - good but still too fast for the clock
+//0.0001 - doesn't seem to work?
+
 float f = 0; 
 void loop()
 {
   digitalWrite(HDIR, sin(f)>0 ? HIGH : LOW);
   digitalWrite(MDIR, sin(f)>0 ? HIGH : LOW);
   //hsm.stop();
-  hsm.play(440*fabs(sin(f)));
+  hsm.play(300*fabs(sin(f))); //speed of motor 
   //msm.stop();
-  msm.play(440*fabs(sin(f)));  
-  f+=0.001;
+  msm.play(300*fabs(sin(f)));  //speed of motor
+  
+  f+=0.0005; //this will affect how long the gears spin for (it's a counter for the loop below)
+
   if(f > 10) { 
     f = 0;
     PORTD ^= 0x90; 
