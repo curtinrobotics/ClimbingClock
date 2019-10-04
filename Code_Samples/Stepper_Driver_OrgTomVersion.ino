@@ -1,5 +1,5 @@
 /*
-  Author: Tom LastName
+  Author: Tom Johnson
   Date: 26/09/2019
   Organisation: Curtin Robotics Club (CRoC)
   Project: Climbing Clock (2019)
