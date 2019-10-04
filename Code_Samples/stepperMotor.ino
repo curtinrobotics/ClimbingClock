@@ -24,8 +24,8 @@ void setup()
 { 
   //DDRD - maps to the digital pins 0 - 7 on the Arduino board
   //PORTD - the read and write pin
-  DDRD |= 0xFC; 
-  PORTD |= 0xFC;
+  DDRD |= 0xFC; //setting pins 2 - 7 as output, leaving pins 0 and 1 as inputs/nothing
+  PORTD |= 0xFC; //setting pins 2 -7 as output
   motor1.begin(M1_STP); //initialising pin to play a tone
   motor2.begin(M2_STP); //initialising pin to play a tone
 }
