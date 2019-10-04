@@ -1,63 +1,52 @@
 /*
-  Author: Some bloke calling itself "blueicesparks" ?????
-  Date: ???????
+  Author: Tom Johnson
+  Date: 26/09/2019
+  Date: 28/09/2019 Modifications to speed and freq
   Organisation: Curtin Robotics Club (CRoC)
   Project: Climbing Clock (2019)
-  Purpose: something to do with stepper motors apparently ????
+  Purpose: Revised version of the stepper motor code.
 */
 
 #include <Tone.h>
 
-// What do this words mean???
-#define HDIR 2 // High as dirt?
-#define HSTP 3 // H-stop? Hate Sleeping Tiki-Parrots???
-#define H_EN 4 // Hate Every Nagger???
+#define M1_DIR 2 // Motor 1 - Direction
+#define M1_STP 3 // Motor 1 - Step
+#define M1_EN 4 // Motor 1 - Encoder
 
-#define MDIR 5 // Make Dodgeball Illegal in Romania???
-#define MSTP 6 // Men Stopping Tchikita Police???
-#define M_EN 7 // MASSIVES: Everyone's Nuisance???
+#define M2_DIR 5 // Motor 2 - Direction
+#define M2_STP 6 // Motor 2 - Step
+#define M2_EN 7 // Motor 2 - Encoder
 
-Tone hsm; // Herpes Strike Miami ???
-Tone msm; // Men Seeing Men ???
+Tone motor1; 
+Tone motor2; 
 
 void setup()
-{
-  // Is it necessary to specify the binary of a hexadecimal number?
-  // If someone reading this doesn't understand hexadecimal, how likely is it they'll understand binary?
-  DDRD |= 0xFC;  // 0b11111100 
-  PORTD |= 0xFC; // 0b11111100
-  hsm.begin(HSTP);
-  msm.begin(MSTP);
+{ 
+  //DDRD - maps to the digital pins 0 - 7 on the Arduino board
+  //PORTD - the read and write pin
+  DDRD |= 0xFC; 
+  PORTD |= 0xFC;
+  motor1.begin(HSTP); //initialising pin to play a tone
+  motor2.begin(MSTP); //initialising pin to play a tone
 }
 
-// EEWWWWW!!! NOT ZOMBIE CODE!!!
-//tested speeds (*.play(speed*fabs(sin(f)))
-//original = 440
-//300 - 
-//200 - does not seem to like this one
-
-//tested counter values
-//original f = 0.001
-//0.01 - super quick
-//0.0005 - good but still too fast for the clock
-//0.0001 - doesn't seem to work?
-
-float f = 0.0;
+float duration = 0.0; 
 
 void loop()
 {
-  digitalWrite(HDIR, sin(f) > 0 ? HIGH : LOW);
-  digitalWrite(MDIR, sin(f) > 0 ? HIGH : LOW);
-  //hsm.stop();
-  hsm.play( 300 * fabs(sin(f)) ); //speed of motor 
-  //msm.stop();
-  msm.play( 300 * fabs(sin(f)) );  //speed of motor
+  // if sin function > 0, then high will be written to pin. If sin function < 0, then low will be written to pin.
+  digitalWrite(M1_DIR, sin(duration) > 0 ? HIGH : LOW); 
+  digitalWrite(M2_DIR, sin(duration) > 0 ? HIGH : LOW);
+  //hsm.stop(); //stop playing the tone
+  motor1.play( 300 * fabs(sin(duration)) ); //speed of motor 
+  //msm.stop(); //stop playing the tone
+  motor2.play( 300 * fabs(sin(duration)) );  //speed of motor
   
-  f += 0.0005; //this will affect how long the gears spin for (it's a counter for the loop below)
+  duration += 0.0005; //this will affect how long the gears spin for (it's a counter for the loop below)
 
-  if (f > 10) { 
-    f = 0.0;
-    PORTD ^= 0x90; // WHAT IN GOD'S NAME IS THIS???? ALWAYS comment on bitwise operations!!! 
+  if (duration > 10) { 
+    duration = 0.0;
+    PORTD ^= 0x90; // resets the read/write pin (I'm pretty sure but will double check) 
     //digitalWrite(H_EN, digitalRead(H_EN) ? LOW : HIGH );  
     //digitalWrite(M_EN, digitalRead(M_EN) ? LOW : HIGH ); 
   }
