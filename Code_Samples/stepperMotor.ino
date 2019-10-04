@@ -20,6 +20,7 @@
 
 Tone motor1; 
 Tone motor2; 
+float duration = 0.0; 
 
 void setup()
 { 
@@ -30,8 +31,6 @@ void setup()
   motor1.begin(M1_STP); //initialising pin to play a tone
   motor2.begin(M2_STP); //initialising pin to play a tone
 }
-
-float duration = 0.0; 
 
 void loop()
 {
