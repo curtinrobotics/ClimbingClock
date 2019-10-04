@@ -19,15 +19,15 @@ void setup() {
   pinMode(4, OUTPUT); digitalWrite(4, LOW);
 }
 
-float freq = 0.0;
+float duration = 0.0;
 
 void loop() {
-  digitalWrite(DIR, sin(f) > 0 ? HIGH : LOW);
-  tone(STEP, 1000 * fabs(sin(freq)));
-  freq += 0.001;
+  digitalWrite(DIR, sin(duration) > 0 ? HIGH : LOW);
+  tone(STEP, 1000 * fabs(sin(duration)));
+  duration += 0.001;
   
-  if (freq > 10.0) {
-    freq = 0.0;
+  if (duration > 10.0) {
+    duration = 0.0;
     digitalWrite(_EN, digitalRead(_EN) ? LOW : HIGH );
   }
 }
