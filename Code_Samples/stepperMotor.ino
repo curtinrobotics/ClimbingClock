@@ -26,8 +26,8 @@ void setup()
   //PORTD - the read and write pin
   DDRD |= 0xFC; 
   PORTD |= 0xFC;
-  motor1.begin(HSTP); //initialising pin to play a tone
-  motor2.begin(MSTP); //initialising pin to play a tone
+  motor1.begin(M1_STP); //initialising pin to play a tone
+  motor2.begin(M2_STP); //initialising pin to play a tone
 }
 
 float duration = 0.0; 
