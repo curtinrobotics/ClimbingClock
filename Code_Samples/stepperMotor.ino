@@ -35,8 +35,8 @@ float duration = 0.0;
 
 void loop()
 {
-  digitalWrite(M1_DIR, sin(duration) > 0 ? HIGH : LOW);
-  digitalWrite(M2_DIR, sin(duration) > 0 ? HIGH : LOW);
+  digitalWrite(M1_DIR, sin(duration) > 0.0 ? HIGH : LOW);
+  digitalWrite(M2_DIR, sin(duration) > 0.0 ? HIGH : LOW);
   //hsm.stop(); //stop playing the tone
   motor1.play( 300.0 * fabs(sin(duration)) ); //speed of motor 
   //msm.stop(); //stop playing the tone
