@@ -10,7 +10,7 @@
 
 #include <RTClib.h> // Real Time Clock (RTC) library
 
-const TimeSpan CORRECT_TIME = new TimeSpan(12*60*60); // Num of seconds in 12 hours
+const TimeSpan CORRECT_TIME = TimeSpan(12*60*60); // Num of seconds in 12 hours
 const uint16_t INITIAL_PWM = 300; // dummy value for bug testing. Get real value via testing robot.
 
 uint16_t currentPwm;
@@ -26,18 +26,18 @@ void setup() {
   rtc.adjust(DateTime(F(__DATE__), F(__TIME__))); // initialize the rtc
 
   DateTime startingTime = rtc.now(); // time at startup
-  DateTime prevTwelveHour = getPreviousTwelveHour(startingTime);
-  TimeSpan *initialCorrectTime = new DateTime(prevTwelveHour - startingTime);
+  DateTime *prevTwelveHourPtr = getPreviousTwelveHour(startingTime);
+  TimeSpan *initialCorrectTimePtr = new DateTime(*prevTwelveHourPtr - startingTime);
 
   do {
     topMet = checkIfAtTop();
 
-    if ( (topMet) || (getTime() == initialCorrectTime) ) {
+    if ( (topMet) || (getTime() == *initialCorrectTimePtr) ) {
       prepareNextCycle();
     }
   } while (!topMet);
   
-  delete prevTwelveHour; delete initialCorrectTime;
+  delete prevTwelveHourPtr; delete initialCorrectTimePtr;
 }
 
 void loop() {
@@ -77,18 +77,18 @@ void prepareNextCycle() {
 
 // returns the last noon or midnight, whichever is closest
 DateTime* getPreviousTwelveHour(DateTime time) {
-  DateTime *out = new Datetime(time.unixtime());
+  DateTime *prevTwelveHourPtr = new DateTime(time.unixtime());
 
   if (time.hour() < 12) {
-    *out -= time.hour();
+    *prevTwelveHourPtr -= time.hour();
   }
   else if (time.hour() > 12) {
-    out -= time.hour() - 12;
+    *prevTwelveHourPtr -= time.hour() - 12;
   }
 
-  out -= time.minute() * 60 + time.second();
+  *prevTwelveHourPtr -= time.minute() * 60 + time.second();
 
-  return out;
+  return prevTwelveHourPtr;
 }
 
 //go back to the bottom of the rack/ladder
