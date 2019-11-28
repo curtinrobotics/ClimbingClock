@@ -7,45 +7,44 @@
  */
 
 #include <SpeedCorrector.h>
-
 #include <RTClib.h> // Real Time Clock (RTC) library
 
-const TimeSpan CORRECT_TIME = TimeSpan(12*60*60); // Num of seconds in 12 hours
-const uint16_t INITIAL_PWM = 300; // dummy value for bug testing. Get real value via testing robot.
+#define HOURS 12
+const TimeSpan CORRECT_TIME = TimeSpan(HOURS * 60 * 60); // Num of seconds in 12 hours
+const uint16_t INITIAL_PWM = 200; // dummy value for bug testing. Get real value via testing robot.
 
 uint16_t currentPwm;
 bool topMet = false;
-DateTime prevTime;
-
-SpeedCorrector speedCorrector(INITIAL_PWM, CORRECT_TIME);
-
+DateTime currCycleCorrectTime;
+SpeedCorrector speedCorrector(INITIAL_PWM, CORRECT_TIME.totalseconds());
 RTC_DS1307 rtc;
 
 void setup() {
   rtc.begin(); // start the rtc
   rtc.adjust(DateTime(F(__DATE__), F(__TIME__))); // initialize the rtc
+  //line setting initial PWM pending
 
-  DateTime startingTime = rtc.now(); // time at startup
-  DateTime *prevTwelveHourPtr = getPreviousTwelveHour(startingTime);
-  TimeSpan *initialCorrectTimePtr = new DateTime(*prevTwelveHourPtr - startingTime);
+  DateTime currTime = rtc.now();
+  DateTime& initialCorrectTimeRef = getNextTwelveHour(currTime);
+  bool firstCycleDone = false;
 
   do {
     topMet = checkIfAtTop();
-
-    if ( (topMet) || (getTime() == *initialCorrectTimePtr) ) {
+    
+    if (topMet || rtc.now() >= initialCorrectTimeRef) {
       prepareNextCycle();
+      firstCycleDone = true;
     }
-  } while (!topMet);
+  } while (!firstCycleDone);
   
-  delete prevTwelveHourPtr; delete initialCorrectTimePtr;
+  delete &initialCorrectTimeRef;
 }
 
 void loop() {
   topMet = checkIfAtTop();
-
-  if ( (topMet) || (getTime() == CORRECT_TIME) ) {
-    prepareNextCycle();
-  }
+  
+  if (topMet || rtc.now() >= currCycleCorrectTime)
+    prepareNextCycle(); //updates currCycleCorrectTime
 }
 
 bool checkIfAtTop(void) {
@@ -55,40 +54,54 @@ bool checkIfAtTop(void) {
   return true; //used for testing purposes
 }
 
-// returns time
-DateTime getTime(void) {
-  return rtc.now();
-}
-
 void prepareNextCycle() {
   resetPosition();
-  uint16_t correctedPwm = speedCorrector.getCorrectedPwm(getTime(), currentPwm, topMet);
+  DateTime currTime = rtc.now();
+  DateTime& prevTwelveHourRef = getPrevTwelveHour(currTime);
+  delete &prevTwelveHourRef;
+  uint16_t correctedPwm = speedCorrector.getCorrectedPwm(currTime.unixtime(), currentPwm, topMet);
   speedCorrector.addNewCorrectedPwm(correctedPwm);
   currentPwm = speedCorrector.getMeanPwm();
   topMet = false;
   //line setting new PWM pending
   
   // if reached top too early wait until time is up
-  while (getTime() - prevTime < CORRECT_TIME) { }
+  while (rtc.now() <  currCycleCorrectTime) { }
   
-  prevTime = getTime();
+  currCycleCorrectTime = DateTime(CORRECT_TIME.totalseconds() + prevTwelveHourRef.unixtime());
   delay(300); //prevents topMet from being reactivated
 }
 
+// returns the next noon or midnight DateTime
+DateTime& getNextTwelveHour(DateTime& timeRef) {
+  DateTime& nextTwelveHourRef = new DateTime(timeRef.unixtime());
+
+  if (timeRef.hour() < HOURS) {
+    nextTwelveHourRef = nextTwelveHourRef + TimeSpan(timeRef.hour());
+  }
+  else if (timeRef.hour() > HOURS) {
+    nextTwelveHourRef = nextTwelveHourRef + TimeSpan(timeRef.hour() - HOURS);
+  }
+
+  nextTwelveHourRef = nextTwelveHourRef - TimeSpan(timeRef.minute() * 60 + timeRef.second());
+
+  return nextTwelveHourRef;
+}
+
 // returns the last noon or midnight, whichever is closest
-DateTime* getPreviousTwelveHour(DateTime time) {
-  DateTime *prevTwelveHourPtr = new DateTime(time.unixtime());
+DateTime& getPrevTwelveHour(DateTime& timeRef) {
+  DateTime& prevTwelveHourRef = new DateTime(timeRef.unixtime());
 
-  if (time.hour() < 12) {
-    *prevTwelveHourPtr -= time.hour();
+  if (timeRef.hour() < HOURS) {
+    prevTwelveHourRef = prevTwelveHourRef + TimeSpan(timeRef.hour());
   }
-  else if (time.hour() > 12) {
-    *prevTwelveHourPtr -= time.hour() - 12;
+  else if (timeRef.hour() > HOURS) {
+    prevTwelveHourRef = prevTwelveHourRef + TimeSpan(timeRef.hour() - HOURS);
   }
 
-  *prevTwelveHourPtr -= time.minute() * 60 + time.second();
+  prevTwelveHourRef = prevTwelveHourRef - TimeSpan(timeRef.minute() * 60 + timeRef.second());
 
-  return prevTwelveHourPtr;
+  return prevTwelveHourRef;
 }
 
 //go back to the bottom of the rack/ladder
