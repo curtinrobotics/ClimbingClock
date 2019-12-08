@@ -1,0 +1,32 @@
+######################################################
+# Syntax Coloring Map for abstract Robot class
+# AUTHOR: Harrison Outram
+# DATE: 8/12/2019 (d/m/y)
+# VERSION: 1.0
+# PROJECT: Climbing Clock (2019)
+# ORGANISATION: Curtin Robotics Club (CRoC)
+######################################################
+
+######################################################
+# Datatypes (KEYWORD1)
+######################################################
+
+Robot	KEYWORD1
+
+######################################################
+# Methods (KEYWORD2)
+######################################################
+
+start	KEYWORD2
+cycleDone	KEYWORD2
+prepareNextCycle	KEYWORD2
+goDown	KEYWORD2 
+attemptToGoUp	KEYWORD2
+atBottom	KEYWORD2
+
+######################################################
+# Constants (LITERAL1)
+######################################################
+
+BOTTOM_RELEASE_TIME	LITERAL1
+DOWN_PWM	LITERAL1
