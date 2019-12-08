@@ -1,8 +1,8 @@
 ######################################################
 # Syntax Coloring Map for SpeedCorrector
 # AUTHOR: Harrison Outram
-# DATE: 25/07/2019
-# VERSION: 1.1
+# DATE: 07/12/2019
+# VERSION: 1.2
 # PROJECT: Climbing Clock (2019)
 # ORGANISATION: Curtin Robotics Club (CRoC)
 ######################################################
@@ -19,7 +19,7 @@ SpeedCorrector	KEYWORD1
 
 getCorrectedPwm	KEYWORD2
 addNewCorrectedPwm	KEYWORD2
-getMeanPwm	KEYWORD2
+getCurrentPwm	KEYWORD2
 
 ######################################################
 # Constants (LITERAL1)
