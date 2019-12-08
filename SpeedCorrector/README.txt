@@ -1,12 +1,12 @@
 #################################################################
 AUTHOR: Harrison Outram
-DATE: 19/09/2019 (day/month/year)
+DATE: 06/12/2019 (day/month/year)
 PROGRAM: SpeedCorrector library/class
 LANGuaGE: C++ (Using the Arduino IDE)
 PURPOSE: Provide functionality for a Machine Learning (ML) AI to
 			auto-correct robot climbing speed
 project: Climbing Clock (2019)
-version: 1.3
+version: 1.4
 #################################################################
 
 				----------------------
@@ -21,11 +21,11 @@ Value: 10 (uint8_t)
 Purpose: default value for speedIncrement classfield
 
 Name: MIN_SPEED_INCREMENT
-Value: 5 (uint8_t)
+Value: 1 (uint8_t)
 Purpose: default minimum speed increment for adjusting motor speed
 
 Name: SPEED_INCREMENT_CHANGE
-Value: 5 (uint8_t)
+Value: 3 (uint8_t)
 Purpose: default value for how exactly the speedIncrement classfield will change
 Note: See calcNewSpeedIncrement method
 
@@ -43,7 +43,7 @@ Mutable: No
 Purpose: the index of the last element of the correctedPwms array
 
 Name: correctedPwms
-Datatype: uint16_t[] pointer
+Datatype: uint8_t[] pointer
 Mutable: Limited (see addNewCorrectedPwm method below)
 Purpose: records the latest corrected PWMs
 Note: Defined as a pointer to allow for array size to be specified upon object construction
@@ -62,7 +62,7 @@ Note: can use any unit of time desired, as long as it's a positive integer
 
 Name: speedIncrement
 Datatype: int8_t
-Mutable: Limited (see calcNewSpeedIncrement)
+Mutable: Limited (see calcNewSpeedIncrement() private method)
 Purpose: Amount PWM is increased by if robot does not reach top in time.
 Note 1: Small values will take longer to get to correct speed,
 			but larger value are likely to overcorrect.
@@ -84,16 +84,19 @@ Mutable: No
 Purpose: value for how exactly the speedIncrement classfield will change
 Note: See calcNewSpeedIncrement method
 
+Name: currPwm
+Datatype: uint8_t
+Mutable: Limited (see addNewCorrectedPwm() public method)
+Purpose: What the current PWM of the SpeedCorrector object is
+
 				---------------------------
 				CONSTRUCTORS AND DESTRUCTOR
 				---------------------------
 Name: Alternate 1
-Imports: initialPwm (uint16_t), inCorrectTime (uint32_t)
+Imports: initialPwm (uint16_t), inCorrectTime (uint32_t), inSpeedChangeFunc (type(speedChangeFunc))
 Note 1: assigns initialPwm as the 0th element in the correctedPwms array
 Note 2: the max PWM index (and the array size by extension) is assigned the
 			MAX_PWM_INDEX public class constant.
-Note 3: the change type for the speedIncrement classfield is linear with a speedIncrementChange
-			of SPEED_INCREMENT_CHANGE.
 
 Name: Alternate 2
 Imports: initialPwm (uint16_t), inCorrectTime (uint32_t), inMaxPwmIndex (uint8_t),
@@ -113,15 +116,24 @@ Imports: N/A
 				PUBLIC METHODS
 				--------------
 Name: getCorrectedPwm
-Imports: actualTime (uint32_t), currentPwm (uint16_t), topReached (bool)
-Export: correctedPwm (uint16_t)
+Imports: actualTime (uint32_t), topReached (bool)
+Export: correctedPwm (uint8_t)
 Purpose: calculate correct PWM based on current PWM, time taken and error
 
 Name: addNewCorrectedPwm
-Import: correctedPwm (uint16_t)
+Import: correctedPwm (uint8_t)
 Export: N/A
 Purpose: Adds import to correctedPwms array.
 Note: If the correctedPwms array is full, oldest value is replaced first.
+
+Name: getCurrentPwm
+Imports: N/A
+Export: uint8_t
+Purpose: Return current PWM.
+
+				---------------
+				PRIVATE METHODS
+				---------------
 
 Name: getMeanPwm
 Import: N/A
@@ -129,13 +141,15 @@ Export: meanPwm
 Purpose: Calculates and returns the mean PWMs within the correctedPwms array.
 Note: Ignores elements that have not been assigned a correctedPwm.
 
-				---------------
-				PRIVATE METHODS
-				---------------
 Name: getPwmOffset
-Imports: timeErr (uint32_t), currentPwm (uint16_t)
-Export: pwmOffset (uint16_t)
+Imports: timeErr (uint32_t)
+Export: pwmOffset (uint8_t)
 Purpose: calculates how much the current PWM was off by via the timeError and the currentPwm.
+
+Name: calcNewSpeedIncrement
+Imports: N/A
+Export: N/A
+Purpose: Calculates new speed increment for self.
 
 				-----------------
 				EXTERNAL MATERIAL
