@@ -1,11 +1,10 @@
 /*
  * Author: Harrison Outram
- * Date: 07/12/2019 (d/m/y)
+ * Date: 12/12/2019 (d/m/y)
  * Version: 1.3
  * Purpose: test script for SpeedCorrector class
  * Project: Climbing Clock (2019)
  * Organisation: Curtin Robotics Club (CRoC)
- * Working status: Compiles
  */
 
 #include <SpeedCorrector.h>
@@ -125,15 +124,16 @@ uint8_t getCorrectedPwm_testCase3(void) {
   uint8_t testsPassed = 0, i;
   bool testPassed = true;
   uint16_t actualTime = TEST_CORRECT_TIME;
-  uint8_t expectedPwms[] = {TEST_INITIAL_PWM + EXPECTED_DEFAULT_SPEED_INC, 0, 0, 0, 0};
+  uint8_t expectedPwms[5];
   uint8_t actualPwm;
+  uint8_t currSpeedInc = EXPECTED_DEFAULT_SPEED_INC;
 
-  for (i = 1; i < 5; i++) {
-    if (EXPECTED_DEFAULT_SPEED_INC - i * EXPECTED_SPEED_INC_CHANGE >= EXPECTED_MIN_SPEED_INC) {
-      expectedPwms[i] = expectedPwms[i - 1] + (EXPECTED_DEFAULT_SPEED_INC - i * EXPECTED_SPEED_INC_CHANGE);  
-    } else {
-      expectedPwms[i] = expectedPwms[i - 1] + EXPECTED_MIN_SPEED_INC;
-    }
+  for (i = 0; i < 5; i++) {
+    expectedPwms[i] = TEST_INITIAL_PWM + currSpeedInc;
+    if (currSpeedInc - EXPECTED_SPEED_INC_CHANGE >= EXPECTED_MIN_SPEED_INC)
+      currSpeedInc -= EXPECTED_SPEED_INC_CHANGE;
+    else
+      currSpeedInc = EXPECTED_MIN_SPEED_INC;
   }
     
   i = 0;
@@ -153,6 +153,7 @@ uint8_t getCorrectedPwm_testCase3(void) {
     Serial.print("Corrected PWM test case 3 failed.\n");
     Serial.print("Expected corrected PWM: "); Serial.print(expectedPwms[i - 1]);
     Serial.print(", actual corrected PWM: "); Serial.print(actualPwm);
+    Serial.print(", index: "); Serial.print(i - 1);
     Serial.print("\n\n");
   }
 
@@ -163,16 +164,17 @@ uint8_t getCorrectedPwm_testCase3(void) {
 uint8_t getCorrectedPwm_testCase4(void) {
   uint8_t testsPassed = 0, i;
   bool testPassed = true;
-  uint16_t actualTime = 1000;
-  uint8_t expectedPwms[] = {TEST_INITIAL_PWM + ALT_SPEED_INC, 0, 0};
+  uint16_t actualTime = TEST_CORRECT_TIME;
+  uint8_t expectedPwms[] = {0, 0, 0};
   uint8_t actualPwm;
-  
-  for (i = 1; i < 3; i++) {
-    if (ALT_SPEED_INC / (i * ALT_SPEED_INC_CHANGE) >= ALT_MIN_SPEED_INC) {
-      expectedPwms[i] = expectedPwms[i - 1] + (ALT_SPEED_INC / (i * ALT_SPEED_INC_CHANGE));
-    } else {
-      expectedPwms[i] = expectedPwms[i - 1] + ALT_MIN_SPEED_INC;
-    }
+  uint8_t currSpeedInc = ALT_SPEED_INC;
+
+  for (i = 0; i < 3; i++) {
+    expectedPwms[i] = TEST_INITIAL_PWM + currSpeedInc;
+    if (currSpeedInc / ALT_SPEED_INC_CHANGE >= ALT_MIN_SPEED_INC)
+      currSpeedInc /= ALT_SPEED_INC_CHANGE;
+    else
+      currSpeedInc = ALT_MIN_SPEED_INC;
   }
 
   i = 0;
@@ -192,6 +194,7 @@ uint8_t getCorrectedPwm_testCase4(void) {
     Serial.print("Corrected PWM test case 4 failed.\n");
     Serial.print("Expected corrected PWM: "); Serial.print(expectedPwms[i - 1]);
     Serial.print(", actual corrected PWM: "); Serial.print(actualPwm);
+    Serial.print(", index: "); Serial.print(i - 1);
     Serial.print("\n\n");
   }
 
@@ -202,16 +205,12 @@ uint8_t getCorrectedPwm_testCase4(void) {
 uint8_t getCorrectedPwm_testCase5(void) {
   uint8_t testsPassed = 0, i;
   bool testPassed = true;
-  uint16_t actualTime = 1000;
-  uint16_t expectedPwms[] = {TEST_INITIAL_PWM + ALT_SPEED_INC, 0, 0};
+  uint16_t actualTime = TEST_CORRECT_TIME;
+  uint16_t expectedPwms[3];
   uint16_t actualPwm;
 
-  for (i = 1; i < 3; i++) {
-    if (ALT_SPEED_INC >= ALT_MIN_SPEED_INC) {
-      expectedPwms[i] = expectedPwms[i - 1] + ALT_SPEED_INC;
-    } else {
-      expectedPwms[i] = expectedPwms[i - 1] + ALT_MIN_SPEED_INC;
-    }
+  for (i = 0; i < 3; i++) {
+    expectedPwms[i] = TEST_INITIAL_PWM + ALT_SPEED_INC;
   }
 
   i = 0;
@@ -231,6 +230,7 @@ uint8_t getCorrectedPwm_testCase5(void) {
     Serial.print("Corrected PWM test case 5 failed.\n");
     Serial.print("Expected corrected PWM: "); Serial.print(expectedPwms[i - 1]);
     Serial.print(", actual corrected PWM: "); Serial.print(actualPwm);
+    Serial.print(", index: "); Serial.print(i - 1);
     Serial.print("\n\n");
   }
 
@@ -315,6 +315,7 @@ uint8_t addNewCorrectedPwm_testCase1(void) {
       Serial.print("Expected current PWM after being full: "); Serial.print(expectedPwms[1][i - 1]);
       Serial.print(", actual PWM: "); Serial.print(actualPwm);
     }
+    Serial.print(", index: "); Serial.print(i - 1);
     Serial.print("\n\n");
   }
   
@@ -378,6 +379,7 @@ uint8_t addNewCorrectedPwm_testCase2(void) {
       Serial.print("Expected PWM after being full: "); Serial.print(expectedPwms[1][i - 1]);
       Serial.print(", actual PWM: "); Serial.print(actualPwm);
     }
+    Serial.print(", index: "); Serial.print(i - 1);
     Serial.print("\n\n");
   }
   
@@ -442,6 +444,7 @@ uint8_t addNewCorrectedPwm_testCase3(void) {
       Serial.print("Expected PWM after being full: "); Serial.print(expectedPwms[1][i - 1]);
       Serial.print(", actual PWM: "); Serial.print(actualPwm);
     }
+    Serial.print(", index: "); Serial.print(i - 1);
     Serial.print("\n\n");
   }
   
