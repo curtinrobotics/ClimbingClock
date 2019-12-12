@@ -1,11 +1,11 @@
 /*
  * Author: Harrison Outram
- * Date: 08/12/2019 (d/m/y)
+ * Date: 12/12/2019 (d/m/y)
  * Version: 1.3
  * Purpose: Header file for auto correcting motor speed
  * Project: Climbing Clock (2019)
  * Organisation: Curtin Robotics Club (CRoC)
- * Working status: Compiles
+ * Working status: tested and works
  */
 
 #ifndef SpeedCorrector_h
@@ -17,7 +17,6 @@
 #define SPEED_INCREMENT 10
 #define MIN_SPEED_INCREMENT 1
 #define SPEED_INCREMENT_CHANGE 3
-#define MAX_8BIT_INT 255
 
 class SpeedCorrector {
   public:
