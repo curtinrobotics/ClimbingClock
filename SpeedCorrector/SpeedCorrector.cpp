@@ -1,11 +1,11 @@
 /*
  * Author: Harrison Outram
- * Date: 08/12/2019 (d/m/y)
+ * Date: 12/12/2019 (d/m/y)
  * Version: 1.7
  * Purpose: Provide functionality for auto correcting motor speed
  * Project: Climbing Clock (2019)
  * Organisation: Curtin Robotics Club (CRoC)
- * Working status: Compiles
+ * Working status: Tested and works
  */
 
 #include "SpeedCorrector.h"
@@ -121,9 +121,6 @@ uint8_t SpeedCorrector::getMeanPwm(void) {
         meanPwm /= (pwmIndex + 1);
     }
     
-    if (meanPwm > MAX_8BIT_INT)
-        meanPwm = MAX_8BIT_INT;
-
     return (uint8_t)meanPwm;
 }
 
