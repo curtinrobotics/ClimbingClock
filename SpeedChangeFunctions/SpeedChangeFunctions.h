@@ -1,8 +1,8 @@
 /*
- * Author: Harrison Outram
- * Date: 06/12/2019 (d/m/y)
- * Version: 1.1
- * Purpose: Header file for speed change functions
+ * @author Harrison Outram
+ * Last Updated: 06/12/2019 (d/m/y UTC+08:00)
+ * @version 1.1
+ * @brief Header file for speed change functions
  * Project: Climbing Clock (2019)
  * Organisation: Curtin Robotics Club (CRoC)
  */
