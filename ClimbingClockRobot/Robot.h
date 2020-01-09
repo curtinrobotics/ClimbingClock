@@ -1,11 +1,11 @@
 /*
- * Author: Harrison Outram and Anton R
- * Date: 08/12/2019
- * Version: 0.1
- * Purpose: Header file for Robot class
+ * @author Harrison Outram and Anton R
+ * Last Updated: 21/12/2019
+ * @version 1.0
+ * @brief Header file for Robot class
  * Project: Climbing Clock (2019)
  * Organisation: Curtin Robotics Club (CRoC)
- * Working status: Compiles
+ * Working status: Works
  */
 
 #ifndef Robot_h
@@ -16,21 +16,23 @@
 #include "../RTClib/RTClib.h"
 
 #define DOWN_PWM 0
-#define BOTTOM_RELEASE_TIME 30
+#define BOTTOM_RELEASE_TIME 5
+
+typedef bool (*TriggerFunc)(void);
 
 class Robot {
   public:
     /**
      * @param initialEndDate The end date and time of the first cycle
-     * @param inSpeedCorr The speed corrector AI used by Robot object
-     * @param inAtTopFuncPtr A function pointer for determining if the robot is at the top
-     * @param inAtBottomFuncPtr A function pointer for determining if the robot is at the bottom
-     * @param inSetPwmPin The pin used to set the robot's PWM
-     * @param inRtcPtr Pointer to Real Time Clock (RTC) to keep track of time
-     */    
-    Robot(DateTime& initialEndDate, SpeedCorrector* inSpeedCorrPtr,
-            bool (*inAtTopFuncPtr)(void), bool (*inAtBottomFuncPtr)(void),
-            uint8_t inSetPwmPin, RTC_DS1307* inRtcPtr);
+     * @param speedCorr The speed corrector AI used by Robot object
+     * @param atTopFuncPtr A function pointer for determining if the robot is at the top
+     * @param atBottomFuncPtr A function pointer for determining if the robot is at the bottom
+     * @param setPwmPin The pin used to set the robot's PWM
+     * @param rtcPtr Pointer to Real Time Clock (RTC) to keep track of time
+     */
+    Robot(DateTime& initialEndDate, SpeedCorrector* speedCorrPtr,
+            TriggerFunc atTopFuncPtr, TriggerFunc atBottomFuncPtr,
+            uint8_t setPwmPin, RTC_DS1307* rtcPtr);
     ~Robot();
 
     /**
@@ -75,16 +77,19 @@ class Robot {
 
   protected:
     //object variables
-    TimeSpan* correctTimePtr;
-    DateTime* currCycleEndDatePtr;
-    SpeedCorrector* speedCorrPtr;
-    bool (*atTopFuncPtr)(void);
-    bool (*atBottomFuncPtr)(void);
-    RTC_DS1307* rtcPtr;
-    DateTime* prevFinDatePtr;
-    uint8_t setPwmPin;
-    bool topMet;
-    bool waitingAtBottom;
+    TimeSpan* _correctTimePtr;
+    DateTime* _currCycleEndDatePtr;
+    SpeedCorrector* _speedCorrPtr;
+    TriggerFunc _atTopFuncPtr;
+    TriggerFunc _atBottomFuncPtr;
+    RTC_DS1307* _rtcPtr;
+    DateTime* _prevFinDatePtr;
+    uint8_t _setPwmPin;
+    bool _topMet;
+    bool _waitingAtBottom;
+    uint8_t _oldPwm;
+
+    void changePwm(uint8_t i);
 };
 
 #endif
