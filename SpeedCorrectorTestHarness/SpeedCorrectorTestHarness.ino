@@ -1,10 +1,11 @@
 /*
- * Author: Harrison Outram
- * Date: 12/12/2019 (d/m/y)
- * Version: 1.3
- * Purpose: test script for SpeedCorrector class
+ * @author Harrison Outram
+ * Last Updated: 13/12/2019 (d/m/y UTC+08:00)
+ * @version 1.4
+ * @brief test script for SpeedCorrector class
  * Project: Climbing Clock (2019)
  * Organisation: Curtin Robotics Club (CRoC)
+ * Working status: all test cases pass
  */
 
 #include <SpeedCorrector.h>
@@ -18,12 +19,14 @@ SpeedCorrector *speedCorr1, *speedCorr2, *speedCorr3;
 #define ALT_SPEED_INC 20
 #define ALT_MIN_SPEED_INC 10
 #define ALT_SPEED_INC_CHANGE 2
-#define NUM_TESTS 8
 
 #define EXPECTED_DEFAULT_NUM_PWM 10
 #define EXPECTED_DEFAULT_SPEED_INC 10
 #define EXPECTED_MIN_SPEED_INC 1
 #define EXPECTED_SPEED_INC_CHANGE 3
+#define EXPECTED_MAX_PWM 255
+
+#define NUM_TESTS 9
 
 void setup(void) {
   Serial.begin(9600);
@@ -63,6 +66,8 @@ uint8_t testSuite_getCorrectedPwm(void) {
   testsPassed += getCorrectedPwm_testCase4();
   testsPassed += getCorrectedPwm_testCase5();
   tearDown();
+
+  testsPassed += getCorrectedPwm_testCase6();
   
   return testsPassed;
 }
@@ -231,6 +236,28 @@ uint8_t getCorrectedPwm_testCase5(void) {
     Serial.print("Expected corrected PWM: "); Serial.print(expectedPwms[i - 1]);
     Serial.print(", actual corrected PWM: "); Serial.print(actualPwm);
     Serial.print(", index: "); Serial.print(i - 1);
+    Serial.print("\n\n");
+  }
+
+  return testsPassed;
+}
+
+uint8_t getCorrectedPwm_testCase6(void) {
+  uint8_t testsPassed = 0;
+  uint8_t expected, actual;
+  SpeedCorrector speedCorr = SpeedCorrector(EXPECTED_MAX_PWM, TEST_CORRECT_TIME,
+                                            &(SpeedChangeFunctions::linearChange));
+
+  actual = speedCorr.getCorrectedPwm(TEST_CORRECT_TIME, false);
+  expected = EXPECTED_MAX_PWM;
+
+  if (actual == expected) {
+    Serial.print("Corrected PWM test case 6 passed.\n\n");
+    testsPassed++;
+  } else {
+    Serial.print("Corrected PWM test case 5 failed.\n");
+    Serial.print("Expected corrected PWM: "); Serial.print(expected);
+    Serial.print(", actual corrected PWM: "); Serial.print(actual);
     Serial.print("\n\n");
   }
 
