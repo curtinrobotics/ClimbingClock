@@ -1,8 +1,8 @@
 /*
- * Author: Harrison Outram
- * Date: 06/12/2019
- * Version: 1.2
- * Purpose: Simple functions for changing speedCorrector
+ * @author Harrison Outram
+ * Last Updated: 06/12/2019
+ * @version 1.2
+ * @brief Simple functions for changing speedCorrector
  * Project: Climbing Clock (2019)
  * Organisation: Curtin Robotics Club (CRoC)
  */
