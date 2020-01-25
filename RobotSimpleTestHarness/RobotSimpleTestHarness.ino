@@ -1,9 +1,9 @@
 /*
  * @author Harrison Outram
- * Last Updated: 9/01/2020 (d/m/y UTC+08:00)
+ * Last Updated: 25/01/2020 (d/m/y UTC+08:00)
  * @version 1.0
  * @brief test script for Tortoise and Hare classes
- * Project: Climbing Clock (2019)
+ * Project: Climbing Clock (2019-20)
  * Organisation: Curtin Robotics Club (CRoC)
  * Working status: 13/13 test cases pass
  * !!!! Hardware Dependancies: RTC !!!!
@@ -11,7 +11,7 @@
 
 #include <SpeedCorrector.h>
 #include <SpeedChangeFunctions.h>
-#include <Robot.h>
+#include <RobotSimple.h>
 #include <RTClib.h>
 
 #define TEST_INITIAL_PWM 200
@@ -54,9 +54,9 @@ void setUp(void) {
                                      &(SpeedChangeFunctions::linearChange));
   speedCorr2Ptr = new SpeedCorrector(TEST_INITIAL_PWM, TEST_CORRECT_TIME,
                                      &(SpeedChangeFunctions::linearChange));
-  robotTruePtr = new Robot(testInitialEndDate, speedCorr1Ptr,
+  robotTruePtr = new RobotSimple(testInitialEndDate, speedCorr1Ptr,
                             &returnTrue, &returnTrue, TEST_PWM_OUT1, &rtc);
-  robotFalsePtr = new Robot(testInitialEndDate, speedCorr2Ptr,
+  robotFalsePtr = new RobotSimple(testInitialEndDate, speedCorr2Ptr,
                             &returnFalse, &returnFalse, TEST_PWM_OUT2, &rtc);
 }
 
