@@ -1,8 +1,8 @@
 ######################################################
-# Syntax Coloring Map for abstract Robot class
+# Syntax Coloring Map for RobotSimple class
 # AUTHOR: Harrison Outram
-# DATE: 8/12/2019 (d/m/y)
-# VERSION: 1.0
+# DATE: 25/01/2020 (d/m/y, UTC+08:00)
+# VERSION: 1.1
 # PROJECT: Climbing Clock (2019)
 # ORGANISATION: Curtin Robotics Club (CRoC)
 ######################################################
@@ -11,7 +11,7 @@
 # Datatypes (KEYWORD1)
 ######################################################
 
-Robot	KEYWORD1
+RobotSimple	KEYWORD1
 
 ######################################################
 # Methods (KEYWORD2)
