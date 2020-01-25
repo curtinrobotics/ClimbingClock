@@ -14,6 +14,7 @@
 #define RobotSimple_h
 
 #include "Arduino.h"
+#inlcude "../IRobot/IRobot.h"
 #include "../SpeedCorrector/SpeedCorrector.h"
 #include "../RTClib/RTClib.h"
 
