@@ -1,7 +1,7 @@
 /*
  * @author Harrison Outram
- * Last Updated: 13/12/2019 (d/m/y)
- * @version 1.8
+ * Last Updated: 25/01/2020 (d/m/y, UTC+08:00)
+ * @version 1.8.1
  * @brief Provide functionality for auto correcting motor speed
  * Project: Climbing Clock (2019)
  * Organisation: Curtin Robotics Club (CRoC)
@@ -57,7 +57,7 @@ SpeedCorrector::SpeedCorrector(uint8_t initialPwm, uint32_t correctTime,    uint
 }
 
 SpeedCorrector::~SpeedCorrector() {
-    delete _correctedPwms;
+    delete[] _correctedPwms;
 }
 
     /* PUBLIC METHODS */

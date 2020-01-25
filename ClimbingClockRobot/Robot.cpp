@@ -1,14 +1,14 @@
 /*
  * @author Harrison Outram and Anton R
- * Last Updated: 21/12/2019
- * @version 1.0
+ * Last Updated: 25/01/2020 (d/m/y UTC+08:00)
+ * @version 1.1
  * @brief Provide functionality for Robot class
  * Project: Climbing Clock (2019)
  * Organisation: Curtin Robotics Club (CRoC)
  * Working status: Compiles
  */
 
-#include "Robot.h"
+#include "RobotSimple.h"
 
 /**
  * @param initialEndDate The end date and time of the first cycle
@@ -18,7 +18,7 @@
  * @param setPwmPin The pin used to set the robot's PWM
  * @param rtcPtr Pointer to Real Time Clock (RTC) to keep track of time
  */
-Robot::Robot(DateTime& initialEndDate, SpeedCorrector* speedCorrPtr,
+RobotSimple::RobotSimple(DateTime& initialEndDate, SpeedCorrector* speedCorrPtr,
             TriggerFunc atTopFuncPtr, TriggerFunc atBottomFuncPtr,
             uint8_t setPwmPin, RTC_DS1307* rtcPtr) {
     _currCycleEndDatePtr = new DateTime(initialEndDate);
@@ -35,7 +35,7 @@ Robot::Robot(DateTime& initialEndDate, SpeedCorrector* speedCorrPtr,
     analogWrite(setPwmPin, OUTPUT);
 }
 
-Robot::~Robot() {
+RobotSimple::~RobotSimple() {
     delete _currCycleEndDatePtr;
     delete _prevFinDatePtr;
 }
@@ -47,7 +47,7 @@ Robot::~Robot() {
  * Should be used for initial cycle only!
  * @return void
  */
-void Robot::start(void) {
+void RobotSimple::start(void) {
     changePwm(_speedCorrPtr->getCurrentPwm());
 }
 
@@ -55,7 +55,7 @@ void Robot::start(void) {
  * Checks if the robot has finished the current cycle
  * @return bool
  */
-bool Robot::cycleDone(void) {
+bool RobotSimple::cycleDone(void) {
     bool result;
 
     _topMet = (*_atTopFuncPtr)();
@@ -70,7 +70,7 @@ bool Robot::cycleDone(void) {
  * Does <b>not</b> tell robot to move!
  * @return void
  */
-void Robot::prepareNextCycle(void) {
+void RobotSimple::prepareNextCycle(void) {
     uint8_t correctedPwm;
     
     delete _prevFinDatePtr;
@@ -87,7 +87,7 @@ void Robot::prepareNextCycle(void) {
  * Use stop() to command robot to stop!
  * @return void
  */
-void Robot::goDown(void) {
+void RobotSimple::goDown(void) {
     changePwm(DOWN_PWM);
     _waitingAtBottom = true;
 }
@@ -97,7 +97,7 @@ void Robot::goDown(void) {
  * Won't go up if reached top too early and still waiting for cycle to end
  * @return bool representing if robot is going up
  */
-bool Robot::attemptToGoUp(void) {
+bool RobotSimple::attemptToGoUp(void) {
     DateTime *oldCycleEndDatePtr;
     DateTime newCycleEnd;
     bool goUp = (_rtcPtr->now() >= *_currCycleEndDatePtr);
@@ -119,7 +119,7 @@ bool Robot::attemptToGoUp(void) {
  * If only just starting to go up, will ignore trigger
  * @return bool
  */
-bool Robot::atBottom(void) {
+bool RobotSimple::atBottom(void) {
     bool atBottom;
     TimeSpan timePassed;
 
@@ -147,7 +147,7 @@ bool Robot::atBottom(void) {
  * @param newPwm The new PWM to change the motor speed to
  * @return void
  */
-void Robot::changePwm(uint8_t newPwm) {
+void RobotSimple::changePwm(uint8_t newPwm) {
     if (newPwm > _oldPwm) {
         for (uint8_t i = _oldPwm; i < newPwm; i++)
             analogWrite(_setPwmPin, i);

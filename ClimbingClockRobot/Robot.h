@@ -1,17 +1,20 @@
 /*
  * @author Harrison Outram and Anton R
- * Last Updated: 21/12/2019
- * @version 1.0
- * @brief Header file for Robot class
+ * Last Updated: 25/01/2020
+ * @version 1.1
+ * @brief Header file for RobotSimple class
+ * <p>The RobotSimple class requires the robot to use sensors that can tell if the
+ * robot is at the bottom or top.</p>
  * Project: Climbing Clock (2019)
  * Organisation: Curtin Robotics Club (CRoC)
  * Working status: Works
  */
 
-#ifndef Robot_h
-#define Robot_h
+#ifndef RobotSimple_h
+#define RobotSimple_h
 
 #include "Arduino.h"
+#inlcude "../IRobot/IRobot.h"
 #include "../SpeedCorrector/SpeedCorrector.h"
 #include "../RTClib/RTClib.h"
 
@@ -20,7 +23,7 @@
 
 typedef bool (*TriggerFunc)(void);
 
-class Robot {
+class RobotSimple : public IRobot {
   public:
     /**
      * @param initialEndDate The end date and time of the first cycle
@@ -30,10 +33,10 @@ class Robot {
      * @param setPwmPin The pin used to set the robot's PWM
      * @param rtcPtr Pointer to Real Time Clock (RTC) to keep track of time
      */
-    Robot(DateTime& initialEndDate, SpeedCorrector* speedCorrPtr,
+    RobotSimple(DateTime& initialEndDate, SpeedCorrector* speedCorrPtr,
             TriggerFunc atTopFuncPtr, TriggerFunc atBottomFuncPtr,
             uint8_t setPwmPin, RTC_DS1307* rtcPtr);
-    ~Robot();
+    ~RobotSimple();
 
     /**
      * Tells robot to start moving

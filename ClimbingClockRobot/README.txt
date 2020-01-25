@@ -1,12 +1,12 @@
 #################################################################
 AUTHOR: Harrison Outram
-DATE: 8/12/2019 (day/month/year)
-PROGRAM: Robot class
+DATE: 25/01/2020 (day/month/year, UTC+08:00)
+PROGRAM: RobotSimple class
 LANGUAGE: C++ (Using the Arduino IDE)
 PURPOSE: Create Robot objects to keep track of robot's status and
             tell robot to do required tasks
-PROJECT: Climbing Clock (2019)
-VERSION: 0.1
+PROJECT: Climbing Clock (2019-20)
+VERSION: 0.2
 WORKING STATUS: Compiles
 #################################################################
 
@@ -20,6 +20,16 @@ Availability: Public, can install through Arduino IDE
 Name: SpeedCorrector.h
 Purpose: Machine Learning AI that corrects robot's PWM over time
 Availability: Private, see project Github repo
+
+				-----------
+				LIMITATIONS
+				-----------
+
+The RobotSimple is named so because it can only change the
+speed of its motor, not its direction, and it only checks
+if it's at the top or bottom via a yes/no sensor(s). It does
+not care if the sensor can detect how far the robot has
+climbed.
 
 				----------------------
 				PUBLIC CLASS CONSTANTS
