@@ -1,4 +1,4 @@
-# ClimbingClock
+# Climbing Clock Project
 
 Welcome to the Climbing Clock project!
 
@@ -20,12 +20,12 @@ More importantly, remember to have fun!
 
 ## Project Details
 
-**Organisation:** Curtin Robotics Club (CRoC)
-**Institute:** Curtin University (Bentley Campus)
-**Location:** Ground floor, building  204, Curtin University
-**Time:** Most Thursdays 6pm onwards (see CRoC personel for more details)
-**Project Lead:** Harrison G. Outram
-**Project Founder:** Ilke Dincer
+**Organisation:** Curtin Robotics Club (CRoC)<br>
+**Institute:** Curtin University (Bentley Campus)<br>
+**Location:** Ground floor, building  204, Curtin University<br>
+**Time:** Most Thursdays 6pm onwards (see CRoC personel for more details)<br>
+**Project Lead:** Harrison G. Outram<br>
+**Project Founder:** Ilke Dincer<br>
 **Difficulty:** Easy to moderate (depends on exact task)
 
 #### Overall Project Goal
@@ -34,14 +34,14 @@ To make one or more robots climb in a manner that allows us to tell the time of 
 
 #### Project Requirements
 
-1. Must be able to tell the time of day to the nearest 5 minutes from a distance of up to 10 metres.
-2. Strict budget to stay under (see Project Lead for more details).
-3. Robot(s) must move.
-4. Entire system must hang from second floor catwalk in Engineering Pavilion (building 204). See project lead for exact location.
-5. Entire system cannot be more than 2.4 metres tall.
-6. Entire system cannot be more than 1 metre wide.
-7. Robots must move using internally mechanics. Pulley systems are not allowed.
-8. System must be able to run without supervision.
+1. Must be able to tell the time of day to the nearest 5 minutes from a distance of up to 10 metres
+2. Strict budget to stay under (see Project Lead for more details)
+3. Robot(s) must move
+4. Entire system must hang from second floor catwalk in Engineering Pavilion (building 204). See project lead for exact location
+5. Entire system cannot be more than 2.4 metres tall
+6. Entire system cannot be more than 1 metre wide
+7. Robots must move using internally mechanics (Pulley systems are not allowed)
+8. System must be able to run without supervision
 9. It has to look cool.
 
 ## Progress Made
@@ -68,9 +68,9 @@ The Climbing Clock project demands a diverse team of various skillsets to tackle
 
 The skillsets can be, somewhat broadly, divided into five categories: -
 
-1. Programming: Using the Arduino IDE or an equivalent to program the system.
-2. Mechanical: Working within dimensional restrictions and using CAD software to design the robot(s) with moving parts.
-3. Electronics: Researching and choosing the electronic devices needed for a safe and efficient way of powering the robot(s).
-4. Logistics: Managing and researching all equipment and parts needed to build the system while keeping within budget.
-5. Art: Painting or otherwise colouring the visible parts for visual flare.
+1. Programming: Using the Arduino IDE or an equivalent to program the system
+2. Mechanical: Working within dimensional restrictions and using CAD software to design the robot(s) with moving parts
+3. Electronics: Researching and choosing the electronic devices needed for a safe and efficient way of powering the robot(s)
+4. Logistics: Managing and researching all equipment and parts needed to build the system while keeping within budget
+5. Art: Painting or otherwise colouring the visible parts for visual flare
 
