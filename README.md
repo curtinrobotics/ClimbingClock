@@ -34,15 +34,14 @@ To make one or more robots climb in a manner that allows us to tell the time of 
 
 #### Project Requirements
 
-1. Must be able to tell the time of day to the nearest 5 minutes from a distance of up to 10 metres
+1. Must be able to tell the time of day within 5 minutes from a distance of up to 10 metres
 2. Strict budget to stay under (see Project Lead for more details)
-3. Robot(s) must move
+3. Robots must move using internally mechanics (Pulley systems are not allowed)
 4. Entire system must hang from second floor catwalk in Engineering Pavilion (building 204). See project lead for exact location
 5. Entire system cannot be more than 2.4 metres tall
 6. Entire system cannot be more than 1 metre wide
-7. Robots must move using internally mechanics (Pulley systems are not allowed)
-8. System must be able to run without supervision
-9. It has to look cool.
+7. System must be able to run automonously (i.e. without supervision)
+8. It has to look cool (subject to interpretation)
 
 ## Progress Made
 
@@ -70,7 +69,8 @@ The skillsets can be, somewhat broadly, divided into five categories: -
 
 1. Programming: Using the Arduino IDE or an equivalent to program the system
 2. Mechanical: Working within dimensional restrictions and using CAD software to design the robot(s) with moving parts
-3. Electronics: Researching and choosing the electronic devices needed for a safe and efficient way of powering the robot(s)
-4. Logistics: Managing and researching all equipment and parts needed to build the system while keeping within budget
-5. Art: Painting or otherwise colouring the visible parts for visual flare
+3. Civil: Designing, CADing, and constructing a structurally stable frame
+4. Electronics: Researching and choosing the electronic devices needed for a safe and efficient way of powering the robot(s)
+5. Logistics: Managing and researching all equipment and parts needed to build the system while keeping within budget
+6. Art: Painting or otherwise colouring the visible parts for visual flare
 
