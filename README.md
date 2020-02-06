@@ -1,5 +1,7 @@
 # Climbing Clock Project
 
+![alt text](https://github.com/curtinrobotics/ClimingClock/CRoC_docs/CRoC_Logo_with_Text_Medium_Quality.png "CRoC Logo")
+
 Welcome to the Climbing Clock project!
 
 Here is where we store all our code and code backups.
