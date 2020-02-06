@@ -1,6 +1,6 @@
 # Climbing Clock Project
 
-![CRoC Logo Missing](https://github.com/curtinrobotics/ClimbingClock/tree/doc_update/CRoC_docs/CRoC_Logo_with_Text_Medium_Quality.png "CRoC Logo")
+![*CRoC Logo Missing*](https://github.com/curtinrobotics/ClimbingClock/blob/doc_update/CRoC_docs/CRoC_Logo_with_Text_Medium_Quality.png "CRoC Logo")
 
 Welcome to the Climbing Clock project!
 
