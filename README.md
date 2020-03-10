@@ -1,3 +1,5 @@
+![*CRoC Logo Missing*](https://github.com/curtinrobotics/ClimbingClock/blob/doc_update/CRoC_docs/CRoC_Logo_with_Text_Medium_Quality.png "CRoC Logo")
+
 # Climbing Clock Project
 
 Welcome to the Climbing Clock project!
@@ -6,16 +8,16 @@ Here is where we store all our code and code backups.
 
 ## Getting Started
 
-Please make sure you read the following to get a grasp on the project.
+Please make sure you read the following to get a grasp on the project's code.
 
 More importantly, remember to have fun!
 
-##### Table of Contents
+#### Table of Contents
 
 **[Project Details](#project-details)**<br>
 **[Progress Made](#progress-made)**<br>
 **[Prerequisities](#prerequisities)**<br>
-**[Skills Needed](#skills-needed)**<br>
+**[Programming Standards](#programming-standards)**<br>
 
 
 ## Project Details
@@ -28,15 +30,15 @@ More importantly, remember to have fun!
 **Project Founder:** Ilke Dincer<br>
 **Difficulty:** Easy to moderate (depends on exact task)
 
-#### Overall Project Goal
+### Overall Project Goal
 
 To make one or more robots climb in a manner that allows us to tell the time of day.
 
-#### Project Requirements
+### Project Requirements
 
 1. Must be able to tell the time of day within 5 minutes from a distance of up to 10 metres
 2. Strict budget to stay under (see Project Lead for more details)
-3. Robots must move using internally mechanics (Pulley systems are not allowed)
+3. Robots must move using internal mechanics (E.g. pulley systems are not allowed)
 4. Entire system must hang from second floor catwalk in Engineering Pavilion (building 204). See project lead for exact location
 5. Entire system cannot be more than 2.4 metres tall
 6. Entire system cannot be more than 1 metre wide
@@ -49,28 +51,37 @@ As evident by our latest versions and physical devices, we have made several str
 
 However, there is still much more to be done!
 
-Please see our PERT chart (*pending*) and talk with us to get an idea of where you can fit in.
+Please see our Kanban board or talk with us to get an idea of where you can fit in.
 
 ## Prerequisities
 
 While everyone is welcome to join, CRoC has designed this project to be as first-year friendly as possible.
-To promote and upload this standard, no experience is necessary to get started!
+To promote and upload this standard, no experience nor knowledges are necessary to join!
 
-To get you started, the project lead and your fellow colleagues can teach you all you need to know.
+To get you started, the project lead can update on where exactly the project is at. If the project lead is not availableyou can contact him/her through the club's Discord or on Facebook. If you need an answer immediately, please refer to the Kanban board, project overview (*pending*), and other Climbing Clock members present.
 Whether it be learning CAD software or using an Arduino for the first time, feel free to ask anyone anytime if you need help.
 
-Don't worry if your first week or two seemed slow; even the project leads have spent entire build nights just researching how to guides.
+Don't worry if your first week or two seemed slow; even the project leads have spent entire build nights just researching how-to guides.
 
-## Skills Needed
+## Programming Standards
 
-The Climbing Clock project demands a diverse team of various skillsets to tackle all nuances.
+The Climbing Clock project demands a diverse team of programmers to tackle all nuances as they come.
 
-The skillsets can be, somewhat broadly, divided into five categories: -
+Whether a novice or an advanced user, a standard must be established to keep the project on track. This are, in no particular order,
 
-1. Programming: Using the Arduino IDE or an equivalent to program the system
-2. Mechanical: Working within dimensional restrictions and using CAD software to design the robot(s) with moving parts
-3. Civil: Designing, CADing, and constructing a structurally stable frame
-4. Electronics: Researching and choosing the electronic devices needed for a safe and efficient way of powering the robot(s)
-5. Logistics: Managing and researching all equipment and parts needed to build the system while keeping within budget
-6. Art: Painting or otherwise colouring the visible parts for visual flare
+1. Write code to fit the design documentation
 
+   a. If the design can be improvement, internally contradictory, or inpractical/impossible to implement, speak with the project lead to change the design
+
+2. All code must be documented internally via docuemnt code blocks for public and protected functions and methods (think Doxygen)
+3. Whenever it is not obvious within 5 seconds as to what a block of code is supposed to do a comment should be placed
+4. All libraries must come with a README.md file, formatted as per [Markdown](https://github.com/adam-p/markdown-here/wiki/Markdown-Cheatsheet#code "Markdown Cheat Sheet")
+5. Avoid floats, division, trig functions and other computationally expensive operations and functions, unless otherwise no better alternative exist
+6. Use bitwise operators whenever applicable for max performance, e.g. use `num = input >> 2` instead of `num = input / 2`
+7. All functions and methods should use as few operators as possible to achieve its task while retaining readability
+
+   a. If a function/methods is too large split it into multiple functions/methods
+
+8. All code written should be reviewed by a non-author programmer
+
+If in doubt, ask a fellow Climbing Clock programmer or the project lead
