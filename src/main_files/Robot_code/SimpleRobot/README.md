@@ -1,5 +1,14 @@
 # Simple Robot README
 
+### Table of Contents
+
+**[Project Details](#project-details)**<br>
+**[Dependencies](#dependencies)**<br>
+**[Limitations](#limitations)**<br>
+**[How-To Guide](#how-to-guide)**<br>
+**[External Material](#external-material)**<br>
+**[Misc](#misc)**<br>
+
 ## Project Details
 
 **Author:** Harrison Outram<br>
@@ -13,13 +22,13 @@
 
 ## Dependencies
 
-Name: RTClib.h<br>
-Purpose: library for using real time clocks on Arduinos easily<br>
-Availability: Public, can install through Arduino IDE
+**Name:** RTClib.h<br>
+**Purpose:** library for using real time clocks on Arduinos easily.<br>
+**Availability:** Public, can install through Arduino IDE.
 
-Name: SpeedCorrector.h<br>
-Purpose: Machine Learning AI that corrects robot's PWM over time<br>
-Availability: Private, see project Github repo
+**Name:** SpeedCorrector.h<br>
+**Purpose:** Machine Learning AI that corrects robot's PWM over time.<br>
+**Availability:** Private, see project Github repo.
 
 ## Limitations
 
@@ -27,7 +36,7 @@ Availability: Private, see project Github repo
 2. Only checks if at top or bottom or neither; cannot tell how far up
 3. Robot goes down as fast as possible when commanded; it does not slow down to prevent damage
    
-  * Assumes something at the bottom will soften the impact, e.g. pillow
+   * Assumes something at the bottom will soften the impact, e.g. pillow
 
 ## How-To Guide
 
