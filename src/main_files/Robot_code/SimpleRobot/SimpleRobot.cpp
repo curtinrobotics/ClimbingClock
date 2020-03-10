@@ -8,7 +8,7 @@
  * Working status: Compiles
  */
 
-#include "RobotSimple.h"
+#include "SimpleRobot.h"
 
 /**
  * @param initialEndDate The end date and time of the first cycle
