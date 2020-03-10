@@ -7,7 +7,7 @@
  * robot is at the bottom or top.</p>
  * Project: Climbing Clock (2019)
  * Organisation: Curtin Robotics Club (CRoC)
- * Working status: Works
+ * Status: in progress
  */
 
 #ifndef RobotSimple_h
