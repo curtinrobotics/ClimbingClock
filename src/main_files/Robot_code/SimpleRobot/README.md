@@ -58,6 +58,8 @@ To learn how this library works, read the source code.
 10. If at the bottom, call `attemptToGoUp()` method
 11. Repeat steps 6-10
 
+Steps 4-7 should be done in the `setup()` function whereas steps 7-11 should be performed in the `loop()` function.
+
 ### Public Constants
 
 Name: BOTTOM\_RELEASE\_TIME<br>
