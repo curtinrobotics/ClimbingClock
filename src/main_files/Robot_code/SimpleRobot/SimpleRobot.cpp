@@ -5,10 +5,10 @@
  * @brief Provide functionality for Robot class
  * Project: Climbing Clock (2019)
  * Organisation: Curtin Robotics Club (CRoC)
- * Working status: Compiles
+ * Status: in progress
  */
 
-#include "RobotSimple.h"
+#include "SimpleRobot.h"
 
 /**
  * @param initialEndDate The end date and time of the first cycle
