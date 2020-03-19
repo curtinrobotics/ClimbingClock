@@ -73,15 +73,25 @@ Whether a novice or an advanced user, a standard must be established to keep the
 
    a. If the design can be improvement, internally contradictory, or inpractical/impossible to implement, speak with the project lead to change the design
 
-2. All code must be documented internally via docuemnt code blocks for public and protected functions and methods (think Doxygen)
+2. All code must be documented internally via document code blocks for public and protected functions and methods (think Doxygen)
 3. Whenever it is not obvious within 5 seconds as to what a block of code is supposed to do a comment should be placed
 4. All libraries must come with a README.md file, formatted as per [Markdown](https://github.com/adam-p/markdown-here/wiki/Markdown-Cheatsheet#code "Markdown Cheat Sheet")
 5. Avoid floats, division, trig functions and other computationally expensive operations and functions, unless otherwise no better alternative exist
 6. Use bitwise operators whenever applicable for max performance, e.g. use `num = input >> 2` instead of `num = input / 2`
-7. All functions and methods should use as few operators as possible to achieve its task while retaining readability
+7. All operators and operands should have a single space inbetween
 
-   a. If a function/methods is too large split it into multiple functions/methods
+   a. This excludes spaces after an opening round bracket, before a closing round bracket, before and after an opening square bracket, before a closing square bracket, and before a semi-colon
+   
+   b. Opening curly brackets should either be on their own line or the end of a line after a space, and closing curly brackets should be on their own line, excluding empty curly brackets (requires a single space inbetween) and curly brackets with a single short statement
+   
+   c. `temp=a-3/((beta[2]*10.0)-2)+calcGamma(lemma,0);` is unacceptable
+   
+   d. `temp = a - 3 / ( (beta[2] * 10.0) - 2 ) + calcGamma(lemma, 0);` is fine
 
-8. All code written should be reviewed by a non-author programmer
+8. All functions and methods should use as few operators as possible to achieve its task while retaining readability
+
+   a. If a function/methods is too large (> 50 lines) split it into multiple functions/methods
+
+9. All code written should be reviewed by a non-author programmer
 
 If in doubt, ask a fellow Climbing Clock programmer or the project lead

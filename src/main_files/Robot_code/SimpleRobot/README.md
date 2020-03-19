@@ -1,32 +1,44 @@
 # Simple Robot README
 
+### Table of Contents
+
+**[Project Details](#project-details)**<br>
+**[Dependencies](#dependencies)**<br>
+**[Limitations](#limitations)**<br>
+**[How-To Guide](#how-to-guide)**<br>
+**[External Material](#external-material)**<br>
+**[Misc](#misc)**<br>
+
 ## Project Details
 
-**Author:** Harrison Outram
-**Date:** 25/01/2020 (day/month/year, UTC+08:00)
-**Program:** SimpleRobot class
-**Language:** Arduino C++
-**Purpose:** Create Robot objects to keep track of robot's status and
-            tell robot to do required tasks
-**Project:** Climbing Clock (2019-20)
-**README Version:** 0.3
+**Author:** Harrison Outram<br>
+**Date:** 10/03/2020 (day/month/year, UTC+08:00)<br>
+**Program:** SimpleRobot class<br>
+**Language:** Arduino C++<br>
+**Purpose:** Create Robot objects to keep track of robot's status and tell robot to do required tasks<br>
+**Project:** Climbing Clock (2019-20)<br>
+**README Version:** 0.3<br>
 **Status:** In progress
 
 ## Dependencies
 
-Name: RTClib.h
-Purpose: library for using real time clocks on Arduinos easily
-Availability: Public, can install through Arduino IDE
+**Name:** RTClib.h<br>
+**Purpose:** library for using real time clocks on Arduinos easily.<br>
+**Availability:** Public, can install through Arduino IDE.
 
-Name: SpeedCorrector.h
-Purpose: Machine Learning AI that corrects robot's PWM over time
-Availability: Private, see project Github repo
+**Name:** SpeedCorrector.h<br>
+**Purpose:** Machine Learning AI that corrects robot's PWM over time.<br>
+**Availability:** Private, see project Github repo.
 
 ## Limitations
 
 1. Can only change speed of motor, not the direction
 2. Only checks if at top or bottom or neither; cannot tell how far up
-3. Robot goes down as fast as possible when commanded; it does not slow down to prevent damage
+3. Does not disconnect motor when going down.
+
+   * Will wear out motor faster
+
+4. Robot goes down as fast as possible when commanded; it does not slow down to prevent damage
    
    * Assumes something at the bottom will soften the impact, e.g. pillow
 
@@ -50,111 +62,75 @@ To learn how this library works, read the source code.
 10. If at the bottom, call `attemptToGoUp()` method
 11. Repeat steps 6-10
 
+Steps 4-7 should be done in the `setup()` function whereas steps 7-11 should be performed in the `loop()` function.
+
 ### Public Constants
 
-Name: BOTTOM\_RELEASE\_TIME
-Value: 30
-Purpose: Seconds to ignore `atBottom()` trigger when ascending
-Note: See `atBottom()` public method
+**Name:** BOTTOM\_RELEASE\_TIME<br>
+**Value:** 30<br>
+**Purpose:** Seconds to ignore `atBottom()` trigger when starting to ascend from the bottom.<br>
+**Note:** See `atBottom()` public method
 
-Name: DOWN\_PWM
-Value: 0
-Purpose: Used for making robot go down ladder
-Note: see `goDown()` public function
+**Name:** DOWN\_PWM<br>
+**Value:** 0<br>
+**Purpose:** Used for making robot go down ladder.<br>
+**Note:** see `goDown()` public function
+
+### Typedefs
+
+**Name:** TriggerFunc
+**Definition:** bool (\*TriggerFunc)(void)
+**Purpose:** Determining if the robot has reached the top or bottom.
 
 ### Constructors and Destructors
 
-Name: Alternate 1
+**Name:** Alternate 1<br>
+**Parameters:** initialEndDate (DateTime&), inSpeedCorrPtr (SpeedCorrector\*), inAtTopFuncPtr (bool (\*)(void)), inAtBottomFuncPtr (bool (\*)(void)), inSetPwmPin (uint8\_t), inRtcPtr (RTC\_DS1307\*)<br>
+**Note 1:** Make sure the SpeedCorrector object is put on the heap, as the contructor does **not** create a copy for performance.<br>
+**Note 2:** The PWM pin will be set to output mode via analogWrite(setPwmPin, OUTPUT).<br>
+**Note 3:** Make sure the RTC object is put on the heap, as the contructor does **not** create a copy for performance.<br>
+**Note 4:** RTC is **not** initialised in the constructor!
 
-Parameters: initialEndDate (DateTime&), inSpeedCorrPtr (SpeedCorrector\*), inAtTopFuncPtr (bool (\*)(void)), inAtBottomFuncPtr (bool (\*)(void)), inSetPwmPin (uint8\_t), inRtcPtr (RTC\_DS1307\*)
+**Name:** Destructor<br>
+**Parameters:** N/A
 
-Note 1: Make sure the SpeedCorrector object is put on the heap, as the contructor does **not** create a copy for performance.
+### Public Methods
 
-Note 2: The PWM pin will be set to output mode via analogWrite(setPwmPin, OUTPUT).
+**Name:** `start()`<br>
+**Parameters:** void<br>
+**Return:** void<br>
+**Purpose:** Tell the robot to start moving up.<br>
+**Note:** Only use for initial cycle! Do **not** use elsewhere!
 
-Note 3: Make sure the RTC object is put on the heap, as the contructor does **not** create a copy for performance.
+**Name:** `cycleDone()`<br>
+**Parameters:** void<br>
+**Return:** (bool) Whether the cycle is done or not<br>
+**Purpose:** Checks if the robot has completed the current cycle.
 
-Note 4: RTC is **not** initialised in the constructor!
+**Name:** `goDown()`<br>
+**Parameters:** void<br>
+**Return:** void<br>
+**Purpose:** Tells robot to go down.<br>
+**Note:** Uses DOWN\_PWM constant (see above).
 
+**Name:** `attemptToGoUp()`<br>
+**Parameters:** void<br>
+**Return:** (bool) Whether the robot is going up or not.<br>
+**Purpose:** Tells robot to go up.<br>
+**Note:** will only go up if the current time is on or after the current cycle's end time.<br>
 
-
-Name: Destructor
-
-Parameters: N/A
-
-				--------------
-				PUBLIC METHODS
-				--------------
-Name: `start()`
-
-Parameters: N/A
-
-Return: N/A
-
-Purpose: Tell the robot to start moving up
-
-Note: Only use for initial cycle! Do **not** use elsewhere!
-                
-
-Name: `cycleDone()`
-
-Parameters: N/A
-
-Return: bool
-
-Purpose: Checks if the robot has completed the current cycle
-
-
-Name: `prepareNextCycle()`
-
-Parameters: N/A
-
-Return: N/A
-
-Purpose: Updates object variables for next cycle
-
-Note: Does **not** tell robot to move!
-
-
-Name: `goDown()`
-
-Parameters: N/A
-
-Return: N/A
-
-Purpose: Tells robot to go down.
-
-Note: Uses DOWN\_PWM constant (see above).
-
-
-Name: `attemptToGoUp()`
-
-Parameters: N/A
-
-Return: bool
-
-Purpose: Tells robot to go up.
-
-Note 1: will only go up if the current time is on or after the current cycle's
-        end time.
-Note 2: Return value tells caller if robot is going up or not.
-
-Name: `atBottom()`
-
-Parameters: N/A
-
-Return: bool
-
-Purpose: Checks if robot is at bottom of ladder.
+**Name:** `atBottom()`<br>
+**Parameters:** N/A<br>
+**Return:** bool<br>
+**Purpose:** Checks if robot is at bottom of ladder.
 
 ## External Material
 
 Tutorial used to create library/class: [Arduino - Libraries](https://www.arduino.cc/en/Hacking/LibraryTutorial)
 
-Tutorial for learning PWM: [PWM](https://www.arduino.cc/en/Tutorial/PWM)
+Tutorial for learning [PWM](https://www.arduino.cc/en/Tutorial/PWM)
 
-Tutorial for setting PWM: [Analog Write](https://www.arduino.cc/reference/en/language/functions/analog-io/analogwrite/)
-
+Tutorial for setting the motor's PWM: [Analog Write](https://www.arduino.cc/reference/en/language/functions/analog-io/analogwrite/)
 
 ## Misc
 
