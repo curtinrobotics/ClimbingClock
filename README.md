@@ -81,7 +81,12 @@ Whether a novice or an advanced user, a standard must be established to keep the
 7. All operators and operands should have a single space inbetween
 
    a. This excludes spaces after an opening round bracket, before a closing round bracket, before and after an opening square bracket, before a closing square bracket, and before a semi-colon
-   b. E.g. `temp=a-3/(beta[2]*10.0)+calcGamma(lemma,0);` is unacceptable whereas `temp = a - 3 / (beta[2] * 10.0) + calcGamma(lemma, 0);` is fine.
+   
+   b. Opening curly brackets should either be on their own line or the end of a line after a space, and closing curly brackets should be on their own line, excluding empty curly brackets (requires a single space inbetween) and curly brackets with a single short statement
+   
+   c. `temp=a-3/((beta[2]*10.0)-2)+calcGamma(lemma,0);` is unacceptable
+   
+   d. `temp = a - 3 / ( (beta[2] * 10.0) - 2 ) + calcGamma(lemma, 0);` is fine
 
 8. All functions and methods should use as few operators as possible to achieve its task while retaining readability
 
