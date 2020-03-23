@@ -66,17 +66,17 @@ Steps 4-6 should be done in the `setup()` function whereas steps 7-11 should be 
 
 ### Public Constants
 
-**Name:** `BOTTOM\_RELEASE\_TIME`<br>
+**Name:** `BOTTOM_RELEASE_TIME`<br>
 **Value:** 30<br>
 **Purpose:** Seconds to ignore `atBottom()` trigger when starting to ascend from the bottom.<br>
 **Note:** See `atBottom()` public method
 
-**Name:** `DOWN\_PWM`<br>
+**Name:** `DOWN_PWM`<br>
 **Value:** 0<br>
 **Purpose:** Used for making robot go down ladder.<br>
 **Note:** see `goDown()` public function
 
-**Name:** `PWM\_CHANGE\_DELAY`<br>
+**Name:** `PWM_CHANGE_DELAY`<br>
 **Value:** 1<br>
 **Purpose:** Used for slowing down the change of PWM to prevent motor damage<br>
 **Note 1:** Expressed in milliseconds.<br>
@@ -85,13 +85,13 @@ Steps 4-6 should be done in the `setup()` function whereas steps 7-11 should be 
 ### Typedefs
 
 **Name:** `TriggerFunc`<br>
-**Definition:** `bool (\*TriggerFunc)(void)`<br>
+**Definition:** `bool (*TriggerFunc)(void)`<br>
 **Purpose:** Determining if the robot has reached the top or bottom.
 
 ### Constructors and Destructors
 
 **Name:** Alternate 1<br>
-**Parameters:** `pwmCorr (PwmCorrector&), inAtTopFuncPtr (TriggerFunc), inAtBottomFuncPtr (TriggerFunc), inSetPwmPin (uint8\_t), rtc (RTC\_DS1307&)`<br>
+**Parameters:** `pwmCorr (PwmCorrector&), inAtTopFuncPtr (TriggerFunc), inAtBottomFuncPtr (TriggerFunc), inSetPwmPin (uint8_t), rtc (RTC_DS1307&)`<br>
 **Note 1:** Make sure the SpeedCorrector object is put on the heap, as the contructor does **not** create a copy for performance.<br>
 **Note 2:** The PWM pin will be set to output mode via analogWrite(setPwmPin, OUTPUT).<br>
 **Note 3:** Make sure the RTC object is put on the heap, as the contructor does **not** create a copy for performance.<br>
