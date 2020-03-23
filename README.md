@@ -87,7 +87,7 @@ Whether a novice or an advanced user, a standard must be established to keep the
    
    c. `temp=a-3/((beta[2]*10.0)-2)+calcGamma(lemma,0);` and `Foo::getColour(){return _colour;};` are unacceptable
    
-   d. `temp = a - 3 / ( (beta[2] * 10.0) - 2 ) + calcGamma(lemma, 0);` and `Foo::getColour() { return _colour; };` is acceptable
+   d. `temp = a - 3 / ( (beta[2] * 10.0) - 2 ) + calcGamma(lemma, 0);` and `Foo::getColour() { return _colour; }` are acceptable
 
 8. All functions and methods should use as few operators as possible to achieve its task while retaining readability
 
