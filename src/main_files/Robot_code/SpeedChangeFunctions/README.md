@@ -40,19 +40,19 @@ N/A
 
 ### Functions
 
-**Name:** noChange<br>
-**Parameters:** currSpeedInc (uint8_t), speedIncChange (uint8_t)<br>
-**Return:** newSpeedInc (uint8_t)<br>
+**Name:** `noChange()`<br>
+**Parameters:** `currSpeedInc (uint8_t), speedIncChange (uint8_t)`<br>
+**Return:** `newSpeedInc (uint8_t)`<br>
 **Equation:** newSpeedInc = currSpeedInc
 
-**Name:** linearChange<br>
-**Parameters:** currSpeedInc (uint8_t), speedIncChange (uint8_t)<br>
-**Return:** newSpeedInc (uint8_t)<br>
+**Name:** `linearChange()`<br>
+**Parameters:** `currSpeedInc (uint8_t), speedIncChange (uint8_t)`<br>
+**Return:** `newSpeedInc (uint8_t)`<br>
 **Equation:** newSpeedInc = initialSpeedInc - floor(time / correctTime) * speedIncChange
 
-**Name:** exponentialChange<br>
-**Parameters:** currSpeedInc (uint8_t), speedIncChange (uint8_t)<br>
-**Return:** newSpeedInc (uint8_t)<br>
+**Name:** `exponentialChange()`<br>
+**Parameters:** `currSpeedInc (uint8_t), speedIncChange (uint8_t)`<br>
+**Return:** `newSpeedInc (uint8_t)`<br>
 **Equation:** speedInc = initialSpeedInc * (1 / speedIncChange) ^ floor(time / correctTime)
 
 ## External Material
