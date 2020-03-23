@@ -1,10 +1,11 @@
 /*
  * @author Harrison Outram
- * Last Updated: 06/12/2019
- * @version 1.2
- * @brief Simple functions for changing speedCorrector
- * Project: Climbing Clock (2019)
+ * Last Updated: 23/03/2020 (d/m/y, UTC+08:00)
+ * @version 2.0.0
+ * @brief Simple functions for changing PwmCorrector speed increment
+ * Project: Climbing Clock
  * Organisation: Curtin Robotics Club (CRoC)
+ * Status: Untested
  */
 
 #include "Arduino.h"
@@ -16,7 +17,7 @@
  * @param speedIncChange The change of the speed increment (useless)
  * @return uint8_t
  */
-uint8_t SpeedChangeFunctions::noChange(uint8_t currSpeedInc, uint8_t speedIncChange) {
+uint8_t noChange(uint8_t currSpeedInc, uint8_t speedIncChange) {
 	return currSpeedInc;
 }
 
@@ -27,7 +28,7 @@ uint8_t SpeedChangeFunctions::noChange(uint8_t currSpeedInc, uint8_t speedIncCha
  * @param speedIncChange The amount to decrease the speed increment by
  * @return uint8_t
  */
-uint8_t SpeedChangeFunctions::linearChange(uint8_t currSpeedInc, uint8_t speedIncChange) {
+uint8_t linearChange(uint8_t currSpeedInc, uint8_t speedIncChange) {
 	return currSpeedInc - speedIncChange;
 }
 
@@ -38,6 +39,6 @@ uint8_t SpeedChangeFunctions::linearChange(uint8_t currSpeedInc, uint8_t speedIn
  * @param speedIncChange What to divide the speed increment by
  * @return uint8_t
  */
-uint8_t SpeedChangeFunctions::exponentialChange(uint8_t currSpeedInc, uint8_t speedIncChange) {
+uint8_t exponentialChange(uint8_t currSpeedInc, uint8_t speedIncChange) {
 	return currSpeedInc / speedIncChange;
 }

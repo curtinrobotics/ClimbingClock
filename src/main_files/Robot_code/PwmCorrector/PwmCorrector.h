@@ -1,15 +1,15 @@
 /*
  * @author Harrison Outram
- * Last Updated: 21/12/2019 (d/m/y)
- * @version 1.4
+ * Last Updated: 23/03/2020 (d/m/y, UTC+08:00)
+ * @version 1.5
  * @brief Header file for auto correcting motor speed
- * Project: Climbing Clock (2019)
+ * Project: Climbing Clock
  * Organisation: Curtin Robotics Club (CRoC)
- * Working status: works
+ * Working status: untested
  */
 
-#ifndef SpeedCorrector_h
-#define SpeedCorrector_h
+#ifndef PwmCorrector_h
+#define PwmCorrector_h
 
 #include "Arduino.h"
 
@@ -22,14 +22,14 @@
 typedef uint8_t (*SpeedChangeFunc)(uint8_t currSpeedChange,
                                     uint8_t speedIncChange);
 
-class SpeedCorrector {
+class PwmCorrector {
   public:
     /**
      * @param initialPwm The PWM the robot should start with
      * @param correctTime The time it should take for the robot to complete each cycle in seconds
      * @param speedChangeFunc The function which determines how the speedIncrement is changed
      */
-    SpeedCorrector(uint8_t initialPwm, uint32_t correctTime,
+    PwmCorrector(uint8_t initialPwm, uint32_t correctTime,
                     SpeedChangeFunc speedChangeFunc);
 
     /**
@@ -41,12 +41,16 @@ class SpeedCorrector {
      * @param speedChangeFunc The function which determines how the speedIncrement is changed
      * @param speedIncrementChange Dictates how much the speedIncrement is changed by inSpeedChangeFunc
      */
-    SpeedCorrector(uint8_t initialPwm, uint32_t correctTime, uint8_t maxNumOfPwms,
+    PwmCorrector(uint8_t initialPwm, uint32_t correctTime, uint8_t maxNumOfPwms,
                     uint8_t speedIncrement, uint8_t minSpeedIncrement,
                     SpeedChangeFunc speedChangeFunc,
                     uint8_t speedIncrementChange);
-    ~SpeedCorrector();
+    ~PwmCorrector();
     
+    uint8_t getCurrentPwm(void);
+
+    uint32_t getCorrectTime(void);
+
     /**
      * calculates new PWM based on current PWM and error
      * @param actualTime The time in seconds for the robot to complete its current cycle
@@ -63,8 +67,6 @@ class SpeedCorrector {
      */
     void addNewCorrectedPwm(uint8_t correctedPwm);
     
-    uint8_t getCurrentPwm(void);
-
   private:
     uint8_t _pwmIndex;
     uint8_t _maxPwmIndex;

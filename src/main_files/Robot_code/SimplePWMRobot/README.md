@@ -1,4 +1,4 @@
-# Simple Robot README
+# Simple PWM Robot
 
 ### Table of Contents
 
@@ -12,12 +12,12 @@
 ## Project Details
 
 **Author:** Harrison Outram<br>
-**Date:** 10/03/2020 (day/month/year, UTC+08:00)<br>
+**Date:** 23/03/2020 (day/month/year, UTC+08:00)<br>
 **Program:** SimpleRobot class<br>
 **Language:** Arduino C++<br>
 **Purpose:** Create Robot objects to keep track of robot's status and tell robot to do required tasks<br>
 **Project:** Climbing Clock (2019-20)<br>
-**README Version:** 0.3<br>
+**README Version:** 1.0<br>
 **Status:** In progress
 
 ## Dependencies
@@ -26,7 +26,7 @@
 **Purpose:** library for using real time clocks on Arduinos easily.<br>
 **Availability:** Public, can install through Arduino IDE.
 
-**Name:** SpeedCorrector.h<br>
+**Name:** PwmCorrector.h<br>
 **Purpose:** Machine Learning AI that corrects robot's PWM over time.<br>
 **Availability:** Private, see project Github repo.
 
@@ -40,7 +40,7 @@
 
 4. Robot goes down as fast as possible when commanded; it does not slow down to prevent damage
    
-   * Assumes something at the bottom will soften the impact, e.g. pillow
+   * Assumes something at the bottom will soften the impact, e.g. pillows, bag of jelly
 
 ## How-To Guide
 
@@ -53,16 +53,16 @@ To learn how this library works, read the source code.
 1. Ensure RTC is plugged in and working
 2. Choose pin for controlling motor PWM
 3. Determine correct position of robot given the time it will be turned on
-4. Construct `SpeedCorrector` and `RTC_DS1307` objects on the heap (either global variable or through `new` keyword)
-5. Determine the end date/time of the first cycle and store it in a DateTime object
+4. Construct `PwmCorrector` and `RTC_DS1307` objects on the heap (either global variable or through `new` keyword)
+5. Wait until next cycle starts (e.g. midday or when minutes = seconds = 0)
 6. Run `start()` method to make the robot start moving
 7. Constantly check if the robot has reached the top or run out of time via `cycleDone()` method
-8. If at current cycle complete, prepare object variables via `prepareNextCycle()` method *first* then command robot to go down via `goDown()`
+8. If at current cycle complete, command robot to go down via `goDown()`
 9. If going down, constantly check if at the bottom via `atBottom()`
-10. If at the bottom, call `attemptToGoUp()` method
-11. Repeat steps 6-10
+10. If at the bottom, call `goUp()` method
+11. Repeat steps 7-10
 
-Steps 4-7 should be done in the `setup()` function whereas steps 7-11 should be performed in the `loop()` function.
+Steps 4-6 should be done in the `setup()` function whereas steps 7-11 should be performed in the `loop()` function.
 
 ### Public Constants
 
@@ -76,6 +76,12 @@ Steps 4-7 should be done in the `setup()` function whereas steps 7-11 should be 
 **Purpose:** Used for making robot go down ladder.<br>
 **Note:** see `goDown()` public function
 
+**Name:** PWM\_CHANGE\_DELAY<br>
+**Value:** 1<br>
+**Purpose:** Used for slowing down the change of PWM to prevent motor damage<br>
+**Note 1:** Expressed in milliseconds.<br>
+**Note 2:** Lower values result in faster speed changes but can wear out motor faster.<br>
+
 ### Typedefs
 
 **Name:** TriggerFunc
@@ -85,7 +91,7 @@ Steps 4-7 should be done in the `setup()` function whereas steps 7-11 should be 
 ### Constructors and Destructors
 
 **Name:** Alternate 1<br>
-**Parameters:** initialEndDate (DateTime&), inSpeedCorrPtr (SpeedCorrector\*), inAtTopFuncPtr (bool (\*)(void)), inAtBottomFuncPtr (bool (\*)(void)), inSetPwmPin (uint8\_t), inRtcPtr (RTC\_DS1307\*)<br>
+**Parameters:** pwmCorr (PwmCorrector&), inAtTopFuncPtr (TriggerFunc), inAtBottomFuncPtr (TriggerFunc), inSetPwmPin (uint8\_t), rtc (RTC\_DS1307&)<br>
 **Note 1:** Make sure the SpeedCorrector object is put on the heap, as the contructor does **not** create a copy for performance.<br>
 **Note 2:** The PWM pin will be set to output mode via analogWrite(setPwmPin, OUTPUT).<br>
 **Note 3:** Make sure the RTC object is put on the heap, as the contructor does **not** create a copy for performance.<br>
@@ -109,11 +115,11 @@ Steps 4-7 should be done in the `setup()` function whereas steps 7-11 should be 
 
 **Name:** `goDown()`<br>
 **Parameters:** void<br>
-**Return:** void<br>
+**Return:** (bool) whether the robot is going down or not<br>
 **Purpose:** Tells robot to go down.<br>
 **Note:** Uses DOWN\_PWM constant (see above).
 
-**Name:** `attemptToGoUp()`<br>
+**Name:** `goUp()`<br>
 **Parameters:** void<br>
 **Return:** (bool) Whether the robot is going up or not.<br>
 **Purpose:** Tells robot to go up.<br>

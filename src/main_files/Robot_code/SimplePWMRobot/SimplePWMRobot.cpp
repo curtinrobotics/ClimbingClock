@@ -1,43 +1,46 @@
 /*
- * @author Harrison Outram and Anton R
- * Last Updated: 25/01/2020 (d/m/y UTC+08:00)
- * @version 1.1
+ * @authors Harrison Outram and Anton R
+ * Last Updated: 23/03/2020 (d/m/y UTC+08:00)
+ * @version 1.2
  * @brief Provide functionality for Robot class
  * Project: Climbing Clock (2019)
  * Organisation: Curtin Robotics Club (CRoC)
  * Status: in progress
  */
 
-#include "SimpleRobot.h"
+#include "SimplePWMRobot.h"
 
 /**
- * @param initialEndDate The end date and time of the first cycle
- * @param speedCorr The speed corrector AI used by Robot object
+ * @param pwmCorr The PWM corrector AI used by Robot object
  * @param atTopFuncPtr A function pointer for determining if the robot is at the top
  * @param atBottomFuncPtr A function pointer for determining if the robot is at the bottom
  * @param setPwmPin The pin used to set the robot's PWM
  * @param rtcPtr Pointer to Real Time Clock (RTC) to keep track of time
  */
-RobotSimple::RobotSimple(DateTime& initialEndDate, SpeedCorrector* speedCorrPtr,
+SimplePWMRobot::SimplePWMRobot(PwmCorrector& pwmCorr,
             TriggerFunc atTopFuncPtr, TriggerFunc atBottomFuncPtr,
-            uint8_t setPwmPin, RTC_DS1307* rtcPtr) {
-    _currCycleEndDatePtr = new DateTime(initialEndDate);
-    _speedCorrPtr = speedCorrPtr;
+            uint8_t setPwmPin, RTC_DS1307& rtc) {
+    _currCycleEndDatePtr = NULL;
+    _pwmCorrPtr = &pwmCorr;
     _atTopFuncPtr = atTopFuncPtr;
     _atBottomFuncPtr = atBottomFuncPtr;
-    _rtcPtr = rtcPtr;
-    _prevFinDatePtr = new DateTime(rtcPtr->now());
+    _rtcPtr = &rtc;
+    _prevFinDatePtr = NULL;
     _setPwmPin = setPwmPin;
     _topMet = false;
     _waitingAtBottom = false;
     _oldPwm = 0;
+    _pwmChangeDelay = PWM_CHANGE_DELAY;
 
     analogWrite(setPwmPin, OUTPUT);
 }
 
-RobotSimple::~RobotSimple() {
-    delete _currCycleEndDatePtr;
-    delete _prevFinDatePtr;
+SimplePWMRobot::~SimplePWMRobot() {
+    if (_currCycleEndDatePtr != NULL)
+        delete _currCycleEndDatePtr;
+
+    if (_prevFinDatePtr != NULL)
+        delete _prevFinDatePtr;
 }
 
 	/* PUBLIC METHODS */
@@ -47,7 +50,9 @@ RobotSimple::~RobotSimple() {
  * Should be used for initial cycle only!
  * @return void
  */
-void RobotSimple::start(void) {
+void SimplePWMRobot::start(void) {
+    _prevFinDatePtr = new Date(rtcPtr->now());
+    _currCycleEndDatePtr = new Date(_prevFinDatePtr->unixtime() + _pwmCorrPtr->getCorrectTime();
     changePwm(_speedCorrPtr->getCurrentPwm());
 }
 
@@ -55,7 +60,7 @@ void RobotSimple::start(void) {
  * Checks if the robot has finished the current cycle
  * @return bool
  */
-bool RobotSimple::cycleDone(void) {
+bool SimplePWMRobot::cycleDone(void) {
     bool result;
 
     _topMet = (*_atTopFuncPtr)();
@@ -66,30 +71,14 @@ bool RobotSimple::cycleDone(void) {
 }
 
 /**
- * Prepares object variables for next cycle
- * Does <b>not</b> tell robot to move!
- * @return void
- */
-void RobotSimple::prepareNextCycle(void) {
-    uint8_t correctedPwm;
-    
-    delete _prevFinDatePtr;
-    _prevFinDatePtr = new DateTime(_rtcPtr->now());
-    correctedPwm = _speedCorrPtr->getCorrectedPwm(_prevFinDatePtr->unixtime(),
-                                                  _topMet);
-    _speedCorrPtr->addNewCorrectedPwm(correctedPwm);
-    _topMet = false;
-}
-
-/**
  * Makes robot go down ladder
  * WARNING: Does **not** prevent robot from stopping at bottom!
- * Use stop() to command robot to stop!
- * @return void
+ * @return Whether the robot is going down or not
  */
-void RobotSimple::goDown(void) {
+bool SimplePWMRobot::goDown(void) {
     changePwm(DOWN_PWM);
     _waitingAtBottom = true;
+    return true;
 }
 
 /**
@@ -97,17 +86,15 @@ void RobotSimple::goDown(void) {
  * Won't go up if reached top too early and still waiting for cycle to end
  * @return bool representing if robot is going up
  */
-bool RobotSimple::attemptToGoUp(void) {
+bool SimplePWMRobot::goUp(void) {
     DateTime *oldCycleEndDatePtr;
-    DateTime newCycleEnd;
     bool goUp = (_rtcPtr->now() >= *_currCycleEndDatePtr);
     
     if (goUp) {
         changePwm(_speedCorrPtr->getCurrentPwm());
         _waitingAtBottom = false;
         oldCycleEndDatePtr = _currCycleEndDatePtr;
-        newCycleEnd = *_currCycleEndDatePtr + *_correctTimePtr;
-        _currCycleEndDatePtr = new DateTime(newCycleEnd);
+        _currCycleEndDatePtr = new DateTime(_currCycleEndDatePtr->unixtime() + _rtcPtr->getCorrectTime());
         delete oldCycleEndDatePtr;
     }
     
@@ -119,7 +106,7 @@ bool RobotSimple::attemptToGoUp(void) {
  * If only just starting to go up, will ignore trigger
  * @return bool
  */
-bool RobotSimple::atBottom(void) {
+bool SimplePWMRobot::atBottom(void) {
     bool atBottom;
     TimeSpan timePassed;
 
@@ -147,15 +134,45 @@ bool RobotSimple::atBottom(void) {
  * @param newPwm The new PWM to change the motor speed to
  * @return void
  */
-void RobotSimple::changePwm(uint8_t newPwm) {
+void SimplePWMRobot::changePwm(uint8_t newPwm) {
+    uint8_t j;
+
     if (newPwm > _oldPwm) {
-        for (uint8_t i = _oldPwm; i < newPwm; i++)
-            analogWrite(_setPwmPin, i);
+        for (uint8_t i = _oldPwm; i < newPwm; i++) {
+            j = 0;
+            while (i < newPwm && j < 10) {
+                analogWrite(_setPwmPin, i);
+                j++;
+            }
+            delay(_pwmChangeDelay);
+        }
     } else if (newPwm < _oldPwm) {
-        for (uint8_t i = _oldPwm; i > newPwm; i--) 
-            analogWrite(_setPwmPin, i);
+        for (uint8_t i = _oldPwm; i > newPwm; i--) {
+            j = 0;
+            while (i > newPwm && j < 10) {
+                analogWrite(_setPwmPin, i);
+                j++;
+            }
+            delay(_pwmChangeDelay);
+        }
     }
 
     _oldPwm = newPwm;
+}
+
+/**
+ * Prepares object variables for next cycle
+ * Does <b>not</b> tell robot to move!
+ * @return void
+ */
+void SimplePWMRobot::prepareNextCycle(void) {
+    uint8_t correctedPwm;
+    
+    delete _prevFinDatePtr;
+    _prevFinDatePtr = new DateTime(_rtcPtr->now());
+    correctedPwm = _speedCorrPtr->getCorrectedPwm(_prevFinDatePtr->unixtime(),
+                                                  _topMet);
+    _speedCorrPtr->addNewCorrectedPwm(correctedPwm);
+    _topMet = false;
 }
 

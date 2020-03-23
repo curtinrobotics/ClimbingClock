@@ -1,21 +1,21 @@
 /*
  * @author Harrison Outram
  * Last Updated: 25/01/2020 (d/m/y, UTC+08:00)
- * @version 1.8.1
+ * @version 1.9.0
  * @brief Provide functionality for auto correcting motor speed
  * Project: Climbing Clock (2019)
  * Organisation: Curtin Robotics Club (CRoC)
  * Working status: works
  */
 
-#include "SpeedCorrector.h"
+#include "PwmCorrector.h"
 
 /**
  * @param initialPwm The PWM the robot should start with
  * @param correctTime The time it should take for the robot to complete each cycle in seconds
  * @param speedChangeFunc The function which determines how the speedIncrement is changed
  */
-SpeedCorrector::SpeedCorrector(uint8_t initialPwm, uint32_t correctTime,
+PwmCorrector::PwmCorrector(uint8_t initialPwm, uint32_t correctTime,
                                 SpeedChangeFunc speedChangeFunc) {
     _pwmIndex = 0;
     _maxPwmIndex = MAX_NUM_OF_PWMS - 1;
@@ -39,7 +39,7 @@ SpeedCorrector::SpeedCorrector(uint8_t initialPwm, uint32_t correctTime,
  * @param speedChangeFunc The function which determines how the speedIncrement is changed
  * @param speedIncrementChange Dictates how much the speedIncrement is changed by inSpeedChangeFunc
  */
-SpeedCorrector::SpeedCorrector(uint8_t initialPwm, uint32_t correctTime,    uint8_t maxNumOfPwms, 
+PwmCorrector::PwmCorrector(uint8_t initialPwm, uint32_t correctTime,    uint8_t maxNumOfPwms, 
                     uint8_t speedIncrement, uint8_t minSpeedIncrement,
                     SpeedChangeFunc speedChangeFunc,
                     uint8_t speedIncrementChange) {
@@ -56,7 +56,7 @@ SpeedCorrector::SpeedCorrector(uint8_t initialPwm, uint32_t correctTime,    uint
     _currPwm = initialPwm;
 }
 
-SpeedCorrector::~SpeedCorrector() {
+PwmCorrector::~PwmCorrector() {
     delete[] _correctedPwms;
 }
 
@@ -68,7 +68,7 @@ SpeedCorrector::~SpeedCorrector() {
  * @param topRached Whether the robot reached the top or not
  * @return uint8_t
  */
-uint8_t SpeedCorrector::getCorrectedPwm(uint32_t actualTime, bool topReached) {
+uint8_t PwmCorrector::getCorrectedPwm(uint32_t actualTime, bool topReached) {
     uint8_t correctedPwm;
     
     if (_correctTime > actualTime) {                 // reached top too quickly
@@ -88,12 +88,12 @@ uint8_t SpeedCorrector::getCorrectedPwm(uint32_t actualTime, bool topReached) {
 }
 
 /**
- * Adds new corrected PWM to SpeedCorrector object
+ * Adds new corrected PWM to PwmCorrector object
  * Also updates current PWM
  * @param correctedPwm The PWM required to complete the last cycle correctly
  * @return void
  */
-void SpeedCorrector::addNewCorrectedPwm(uint8_t correctedPwm) {
+void PwmCorrector::addNewCorrectedPwm(uint8_t correctedPwm) {
     if (_pwmIndex == _maxPwmIndex) {
         _pwmIndex = 0; //reset index to replace oldest value
         _correctedPwmsFull = true;
@@ -108,7 +108,7 @@ void SpeedCorrector::addNewCorrectedPwm(uint8_t correctedPwm) {
  * currPwm getter
  * @return uint8_t
  */
-uint8_t SpeedCorrector::getCurrentPwm(void) {
+uint8_t PwmCorrector::getCurrentPwm(void) {
     return _currPwm;
 }
 
@@ -118,7 +118,7 @@ uint8_t SpeedCorrector::getCurrentPwm(void) {
  * Generates mean PWM from corrected PWMs
  * @return uint8_t
  */
-uint8_t SpeedCorrector::getMeanPwm(void) {
+uint8_t PwmCorrector::getMeanPwm(void) {
     uint32_t meanPwm = 0;
     
     if (_correctedPwmsFull) {
@@ -141,7 +141,7 @@ uint8_t SpeedCorrector::getMeanPwm(void) {
  * @param timeErr The difference between the actual time and the correct time
  * @return uint8_t
  */
-uint8_t SpeedCorrector::getPwmOffset(uint32_t timeErr) {
+uint8_t PwmCorrector::getPwmOffset(uint32_t timeErr) {
     //use dimensional analysis to confirm equation is correct
     // Assumes PWM input and output scale linearly
     return (uint8_t)( ((float)timeErr / (float)_correctTime) * (float)_currPwm );
@@ -151,7 +151,7 @@ uint8_t SpeedCorrector::getPwmOffset(uint32_t timeErr) {
  * Changes speedIncrement to new value
  * @return void
  */
-void SpeedCorrector::calcNewSpeedIncrement(void) {
+void PwmCorrector::calcNewSpeedIncrement(void) {
     _speedIncrement = (*_speedChangeFunc)(_speedIncrement,
                                          _speedIncrementChange);
 

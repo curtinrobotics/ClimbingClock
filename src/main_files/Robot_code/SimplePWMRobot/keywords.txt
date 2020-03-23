@@ -1,9 +1,9 @@
 ######################################################
-# Syntax Coloring Map for SpeedCorrector
+# Syntax Coloring Map for SimpleRobot class
 # AUTHOR: Harrison Outram
-# DATE: 07/12/2019
+# DATE: 23/03/2020 (d/m/y, UTC+08:00)
 # VERSION: 1.2
-# PROJECT: Climbing Clock (2019)
+# PROJECT: Climbing Clock
 # ORGANISATION: Curtin Robotics Club (CRoC)
 ######################################################
 
@@ -11,21 +11,22 @@
 # Datatypes (KEYWORD1)
 ######################################################
 
-SpeedCorrector	KEYWORD1
+SimplePWMRobot	KEYWORD1
 
 ######################################################
 # Methods (KEYWORD2)
 ######################################################
 
-getCorrectedPwm	KEYWORD2
-addNewCorrectedPwm	KEYWORD2
-getCurrentPwm	KEYWORD2
+start	KEYWORD2
+cycleDone	KEYWORD2
+goDown	KEYWORD2 
+goUp	KEYWORD2
+atBottom	KEYWORD2
 
 ######################################################
 # Constants (LITERAL1)
 ######################################################
 
-MAX_NUM_OF_PWMS	LITERAL1
-SPEED_INCREASE_INCREMENT	LITERAL1
-MIN_SPEED_INCREMENT LITERAL1
-SPEED_INCREMENT_CHANGE LITERAL1
+BOTTOM_RELEASE_TIME	LITERAL1
+DOWN_PWM	LITERAL1
+PWM_CHANGE_DELAY	LITERAL1

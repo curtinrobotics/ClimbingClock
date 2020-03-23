@@ -1,42 +1,43 @@
 /*
- * @author Harrison Outram and Anton R
- * Last Updated: 25/01/2020
- * @version 1.1
- * @brief Header file for RobotSimple class
- * <p>The RobotSimple class requires the robot to use sensors that can tell if the
+ * @authors Harrison Outram and Anton R
+ * Last Updated: 23/03/2020
+ * @version 1.2
+ * @brief Header file for SimplePWMRobot class
+ * <p>The SimplePWMRobot class requires the robot to use sensors that can tell if the
  * robot is at the bottom or top.</p>
  * Project: Climbing Clock (2019)
  * Organisation: Curtin Robotics Club (CRoC)
  * Status: in progress
  */
 
-#ifndef RobotSimple_h
-#define RobotSimple_h
+#ifndef SimplePWMRobot_h
+#define SimplePWMRobot_h
 
 #include "Arduino.h"
-#inlcude "../IRobot/IRobot.h"
+#include "../IRobot/IRobot.h"
 #include "../SpeedCorrector/SpeedCorrector.h"
 #include "../RTClib/RTClib.h"
 
 #define DOWN_PWM 0
 #define BOTTOM_RELEASE_TIME 5
+#define PWM_CHANGE_DELAY 1
 
+/** Used for detecting if robot has reached top or bottom */
 typedef bool (*TriggerFunc)(void);
 
-class RobotSimple : public IRobot {
+class SimplePWMRobot : public IRobot {
   public:
     /**
-     * @param initialEndDate The end date and time of the first cycle
-     * @param speedCorr The speed corrector AI used by Robot object
+     * @param pwmCorr The speed corrector AI used by Robot object
      * @param atTopFuncPtr A function pointer for determining if the robot is at the top
      * @param atBottomFuncPtr A function pointer for determining if the robot is at the bottom
      * @param setPwmPin The pin used to set the robot's PWM
-     * @param rtcPtr Pointer to Real Time Clock (RTC) to keep track of time
+     * @param rtc Real Time Clock (RTC) to keep track of time
      */
-    RobotSimple(DateTime& initialEndDate, SpeedCorrector* speedCorrPtr,
+    SimplePWMRobot(PwmCorrector& pwmCorr,
             TriggerFunc atTopFuncPtr, TriggerFunc atBottomFuncPtr,
-            uint8_t setPwmPin, RTC_DS1307* rtcPtr);
-    ~RobotSimple();
+            uint8_t setPwmPin, RTC_DS1307& rtc);
+    ~SimplePWMRobot();
 
     /**
      * Tells robot to start moving
@@ -52,25 +53,17 @@ class RobotSimple : public IRobot {
     bool cycleDone(void);
 
     /**
-     * Prepares object variables for next cycle
-     * Does **not** tell robot to move!
-     * @return void
-     */
-    void prepareNextCycle(void);
-
-    /**
      * Makes robot go down ladder
-     * WARNING: Does **not** prevent robot from stopping at bottom!
-     * Use stop() to command robot to stop!
-     * @return void
+     * WARNING: Does <b>not</b> prevent robot from stopping at bottom!
+     * @return Whether the robot has started going down or not
      */
-    void goDown(void);
+    bool goDown(void);
 
     /**
      * Will go up if enough time has passed
      * @return bool representing if robot is going up
      */
-    bool attemptToGoUp(void);
+    bool goUp(void);
 
     /**
      * Check if at bottom of ladder
@@ -80,9 +73,8 @@ class RobotSimple : public IRobot {
 
   protected:
     //object variables
-    TimeSpan* _correctTimePtr;
     DateTime* _currCycleEndDatePtr;
-    SpeedCorrector* _speedCorrPtr;
+    PwmCorrector* _pwmCorrPtr;
     TriggerFunc _atTopFuncPtr;
     TriggerFunc _atBottomFuncPtr;
     RTC_DS1307* _rtcPtr;
@@ -91,8 +83,16 @@ class RobotSimple : public IRobot {
     bool _topMet;
     bool _waitingAtBottom;
     uint8_t _oldPwm;
+    uint8_t _pwmChangeDelay;
 
     void changePwm(uint8_t i);
+
+    /**
+     * Prepares object variables for next cycle
+     * Does <b>not</b> tell robot to move!
+     * @return void
+     */
+    void prepareNextCycle(void);
 };
 
 #endif
