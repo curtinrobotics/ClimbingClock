@@ -58,8 +58,8 @@ Note that, as this is an interface, all methods are pure virtual, not static, an
 **Name:** `setTime()`<br>
 **Parameters:** `uint8_t hours, uint8_t minutes, uint8_t seconds`<br>
 **Return:** (`bool`) Whether the time was set successfully or not.<br>
-**Purpose:** Set the time on the time scale.
-**Note 1:** `false` should be returned if the time scale malfunctions.
+**Purpose:** Set the time on the time scale.<br>
+**Note 1:** `false` should be returned if the time scale malfunctions.<br>
 **Note 2:** If the time scale cannot detect if a malfunction has occured then always return `true`.
 
 **Name:** `stop()`<br>
