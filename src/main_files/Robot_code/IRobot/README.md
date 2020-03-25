@@ -70,7 +70,7 @@ Note that, as this is an interface, all methods are pure virtual, not static, an
 **Name:** `atTop()`<br>
 **Parameters:** `void`<br>
 **Return:** (`bool`) Whether the robot is at the top or not.<br>
-**Purpose:** Check if the robot is at the top or not.
+**Purpose:** Check if the robot is at the top or not.<br>
 **Note:** If the robot climbs too fast, meaning it should be waiting at the bottom for the current cycle to end, this should return `false`.
 
 **Name:** `atBottom()`<br>
