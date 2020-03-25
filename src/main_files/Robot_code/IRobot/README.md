@@ -1,4 +1,4 @@
-# PWM Corrector
+# IRobot
 
 ### Table of Contents
 
@@ -13,7 +13,7 @@
 
 **Author:** Harrison Outram<br>
 **Date:** 25/03/2020 (day/month/year, UTC+08:00)<br>
-**Program:** PwmCorrector class<br>
+**Program:** IRobot interface<br>
 **Language:** Arduino C++<br>
 **Purpose:** De-couple `Main_program.ino` from robot classes.<br>
 **Project:** Climbing Clock<br>
@@ -28,8 +28,6 @@ N/A
 
 1. Interface does not know what mechanical nor electronic components the robot classes use.
 2. Must be implemented by a robot class that overloads every method.
-3. No private, protected, nor static methods.
-4. No data members.
 
 ## How-To Guide
 
@@ -50,23 +48,47 @@ N/A
 
 ### Methods
 
-Note that, as this is an interface, all methods are pure virtual and public.
+Note that, as this is an interface, all methods are pure virtual, not static, and public.
 
-**Name:** `getCorrectedPwm()`<br>
-**Parameters:** `actualTime (uint32_t), topReached (bool)`<br>
-**Return:** `correctedPwm (uint8_t)`<br>
-**Purpose:** Calculate correct PWM based on current PWM, time taken and error.
+**Name:** `start()`<br>
+**Parameters:** `void`<br>
+**Return:** `void`<br>
+**Purpose:** Initialise the robot's hardware.
 
-**Name:** `addNewCorrectedPwm()`<br>
-**Parameters:** `correctedPwm (uint8_t)`<br>
-**Return:** N/A<br>
-**Purpose:** Adds corrected PWM to internal storage.<br>
-**Note:** Will replace oldest values when storage is full.
+**Name:** `goUp()`<br>
+**Parameters:** `void`<br>
+**Return:** (`bool`) Whether the robot is going up or not.<br>
+**Purpose:** Tell the robot to go up.<br>
+**Note:** `false` should be returned based on the Robot class' documentation.
 
-**Name:** `getCurrentPwm()`<br>
-**Parameters:** N/A<br>
-**Return:** `uint8_t`<br>
-**Purpose:** Return current PWM.
+**Name:** `goDown()`<br>
+**Parameters:** `void`<br>
+**Return:** (`bool`) Whether the robot is going down or not.<br>
+**Purpose:** Tell the robot to go down.<br>
+**Note:** `false` should be returned based on the Robot class' documentation.
+
+**Name:** `atTop()`<br>
+**Parameters:** `void`<br>
+**Return:** (`bool`) Whether the robot is at the top or not.<br>
+**Purpose:** Check if the robot is at the top or not.
+**Note:** If the robot climbs too fast, meaning it should be waiting at the bottom for the current cycle to end, this should return `false`.
+
+**Name:** `atBottom()`<br>
+**Parameters:** `void`<br>
+**Return:** (`bool`) Whether the robot is at the bottom or not.<br>
+**Purpose:** Check if the robot is at the bottom or not.
+
+**Name:** `cycleDone()`<br>
+**Parameters:** `void`<br>
+**Return:** (`bool`) Whether the current cycle is done or not.<br>
+**Purpose:** Check if enough time has passed for the current cycle to end.<br>
+**Note:** If the robot is too slow, `cycleDone()` will eventually start returning `true` before `atTop()`.
+
+**Name:** `stop()`<br>
+**Parameters:** `void`<br>
+**Return:** `void`<br>
+**Purpose:** Emergency stop method to tell robot to go down to the bottom and do nothing.<br>
+**Note:** Should be used if a fault is detected and someone needs to manually investigate.
 
 ## External Material
 
@@ -76,6 +98,4 @@ Microsoft tutorial for creating a C++ interface: [__interface](https://docs.micr
 
 ## Misc
 
-Due to lacking screen and control panel on robots, exception handling has not been implemented.
-Ergo, code must be visually inspected for valid classfields when constructing Robot objects.
-
+N/A
