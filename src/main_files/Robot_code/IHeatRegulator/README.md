@@ -64,9 +64,9 @@ Note that, as this is an interface, all methods are pure virtual, not static, an
 **Name:** `setCooling()`<br>
 **Parameters:** `uint8_t power`<br>
 **Return:** (`bool`) Whether the cooling is being applied.<br>
-**Purpose:** Tell the cooling system to start cooling at a specific power.
-**Note 1:** The parameter `power` is a percentage from 0% to 100%, hence the datatype. Values above 100 will be interpreted as 100.
-**Note 2:** Should return `false` if the cooling system is malfunctioning.
+**Purpose:** Tell the cooling system to start cooling at a specific power.<br>
+**Note 1:** The parameter `power` is a percentage from 0% to 100%, hence the datatype. Values above 100 will be interpreted as 100%.<br>
+**Note 2:** Should return `false` if the cooling system is malfunctioning.<br>
 **Note 3:** If there is no way for the system to detect if the cooling system has malfunctioned return `true`.
 
 **Name:** `temp2power()`<br>

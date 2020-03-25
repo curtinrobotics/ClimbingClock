@@ -59,18 +59,20 @@ Note that, as this is an interface, all methods are pure virtual, not static, an
 **Parameters:** `void`<br>
 **Return:** (`bool`) Whether the robot is going up or not.<br>
 **Purpose:** Tell the robot to go up.<br>
-**Note:** `false` should be returned based on the Robot class' documentation.
+**Note 1:** `false` should be returned if the robot cannot or will not go up.<br>
+**Note 2:** If the robot never decides to not go up and it cannot tell if it malfunctions, always return `true`.
 
 **Name:** `goDown()`<br>
 **Parameters:** `void`<br>
 **Return:** (`bool`) Whether the robot is going down or not.<br>
 **Purpose:** Tell the robot to go down.<br>
-**Note:** `false` should be returned based on the Robot class' documentation.
+**Note 1:** `false` should be returned if the robot cannot or will not go down.<br>
+**Note 2:** If the robot never decides to not go down and it cannot tell if it malfunctions, always return `true`.
 
 **Name:** `atTop()`<br>
 **Parameters:** `void`<br>
 **Return:** (`bool`) Whether the robot is at the top or not.<br>
-**Purpose:** Check if the robot is at the top or not.
+**Purpose:** Check if the robot is at the top or not.<br>
 **Note:** If the robot climbs too fast, meaning it should be waiting at the bottom for the current cycle to end, this should return `false`.
 
 **Name:** `atBottom()`<br>
