@@ -52,8 +52,9 @@ Note that, as this is an interface, all methods are pure virtual, not static, an
 
 **Name:** `start()`<br>
 **Parameters:** `void`<br>
-**Return:** `void`<br>
-**Purpose:** Initialise the time scale's hardware.
+**Return:** (`bool`) Whether the time scale initialised correctly or not.<br>
+**Purpose:** Initialise the time scale's hardware.<br>
+**Note:** If the time scale cannot detect if it initialised correctly, always return `true`.
 
 **Name:** `setTime()`<br>
 **Parameters:** `uint8_t hours, uint8_t minutes, uint8_t seconds`<br>

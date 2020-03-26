@@ -17,7 +17,7 @@
 **Language:** Arduino C++<br>
 **Purpose:** De-couple `Main_program.ino` from heat regulator classes.<br>
 **Project:** Climbing Clock<br>
-**README Version:** 1.0<br>
+**README Version:** 1.1<br>
 **Status:** In progress
 
 ## Dependencies
@@ -52,8 +52,9 @@ Note that, as this is an interface, all methods are pure virtual, not static, an
 
 **Name:** `start()`<br>
 **Parameters:** `void`<br>
-**Return:** `void`<br>
-**Purpose:** Initialise the heat regulator's hardware.
+**Return:** (`bool`) Whether the heat regulator initialised correctly or not.<br>
+**Purpose:** Initialise the heat regulator's hardware.<br>
+**Note:** If the heat regulator cannot detect if it initialised correcly, return `true`.
 
 **Name:** `getTempt()`<br>
 **Parameters:** `void`<br>
