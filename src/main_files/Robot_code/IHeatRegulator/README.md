@@ -12,12 +12,12 @@
 ## Project Details
 
 **Author:** Harrison Outram<br>
-**Date:** 25/03/2020 (day/month/year, UTC+08:00)<br>
+**Date:** 31/03/2020 (day/month/year, UTC+08:00)<br>
 **Program:** IHeatRegulator interface<br>
 **Language:** Arduino C++<br>
 **Purpose:** De-couple `Main_program.ino` from heat regulator classes.<br>
 **Project:** Climbing Clock<br>
-**README Version:** 1.1<br>
+**README Version:** 1.2<br>
 **Status:** In progress
 
 ## Dependencies
@@ -62,11 +62,17 @@ Note that, as this is an interface, all methods are pure virtual, not static, an
 **Purpose:** Find the temperature.<br>
 **Note:** Due to the environment, temperatures 0 degrees or less should be interpreted as the sensor malfunctioning.
 
+**Name:** `temptSensorWorking()`<br>
+**Paramters:** `void`<br>
+**Return:** (`bool`) The status.<br>
+**Purpose:** Determine if the temperature sensor is working.<br>
+**Note:** If it is not possible to detect if the sensor is working, always return `true`.
+
 **Name:** `setCooling()`<br>
 **Parameters:** `uint8_t power`<br>
 **Return:** (`bool`) Whether the cooling is being applied.<br>
 **Purpose:** Tell the cooling system to start cooling at a specific power.<br>
-**Note 1:** The parameter `power` is a percentage from 0% to 100%, hence the datatype. Values above 100 will be interpreted as 100%.<br>
+**Note 1:** The parameter `power` can be any range of values to prevent unnecessary conversions.<br>
 **Note 2:** Should return `false` if the cooling system is malfunctioning.<br>
 **Note 3:** If there is no way for the system to detect if the cooling system has malfunctioned return `true`.
 
@@ -74,7 +80,11 @@ Note that, as this is an interface, all methods are pure virtual, not static, an
 **Parameters:** `int tempt`<br>
 **Return:** `uint8_t power`<br>
 **Purpose:** Return the recommended power given the temperature.<br>
-**Note:** While not necessary, it is recommended that the heat regulator dictate what power to output.
+
+**Name:** `stop()`<br>
+**Parameters:** `void`<br>
+**Return:** `void`<br>
+**Purpose:** Emergency stop method in case a fault is detected.
 
 ## External Material
 
