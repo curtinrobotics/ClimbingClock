@@ -1,19 +1,18 @@
-//Author: A. Taylor
-//Date Created: 2/04/2020
-//Purpose: iRobotInterface for both Hare and Tortoise Code
+/*
+ * @author A. Taylor
+ * Date Created: 2/04/2020 (d/m/y, UTC+08:00)
+ * @brief iRobotInterface for both Hare and Tortoise Code
+ */
 
-#include <string>
-#include <iostream>
+#include "Arduino.h"
 
 class iRobotInterface
 {
-    //virtual functions 
     public:
-        virtual std:: bool start() = 0;
-        virtual std:: void stop() = 0;
-        virtual std:: bool goUp() = 0;
-        virtual std:: bool goDown() = 0;
-        virtual std:: int getPosition() = 0;
-        virtual std:: bool cycleDone() = 0;
-
+        virtual bool start() = 0;
+        virtual void stop() = 0;
+        virtual bool goUp() = 0;
+        virtual bool goDown() = 0;
+        virtual int getPosition() = 0;
+        virtual bool cycleDone() = 0;
 };
