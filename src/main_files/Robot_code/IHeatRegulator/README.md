@@ -62,11 +62,13 @@ Note that, as this is an interface, all methods are pure virtual, not static, an
 **Purpose:** Find the temperature.<br>
 **Note:** Due to the environment, temperatures 0 degrees or less should be interpreted as the sensor malfunctioning.
 
-**Name:** `temptSensorWorking()`<br>
+**Name:** `faultDetected()`<br>
 **Paramters:** `void`<br>
-**Return:** (`bool`) The status.<br>
+**Return:** (`int`) The status.<br>
 **Purpose:** Determine if the temperature sensor is working.<br>
-**Note:** If it is not possible to detect if the sensor is working, always return `true`.
+**NOte 1:** `0` should mean no fault is detected.<br>
+**Note 2:** If it is not possible to detect if the sensor is working, always return `0`.<br>
+**Note 3:** If the sensor(s) allow it, different non-zero integers could signify different faults as an enum.
 
 **Name:** `setCooling()`<br>
 **Parameters:** `uint8_t power`<br>
