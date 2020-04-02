@@ -1,12 +1,13 @@
 /*
- * @author A. Taylor
+ * @authors Ashley Taylor, Harrison Outram
  * Date Created: 2/04/2020 (d/m/y, UTC+08:00)
- * @brief iRobotInterface for both Hare and Tortoise Code
+ * @brief IRobot for both Hare and Tortoise Code
+ * @see README.md file for full breakdown.
  */
 
 #include "Arduino.h"
 
-class iRobotInterface
+class IRobot
 {
     public:
         virtual bool start() = 0;
@@ -15,4 +16,6 @@ class iRobotInterface
         virtual bool goDown() = 0;
         virtual int getPosition() = 0;
         virtual bool cycleDone() = 0;
+        
+        virtual ~IRobot() { Serial.println("IRobot destroyed"); }
 };
