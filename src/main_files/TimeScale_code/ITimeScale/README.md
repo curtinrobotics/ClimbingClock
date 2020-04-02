@@ -17,7 +17,7 @@
 **Language:** Arduino C++<br>
 **Purpose:** De-couple `Main_program.ino` from time scale classes.<br>
 **Project:** Climbing Clock<br>
-**README Version:** 1.0<br>
+**README Version:** 1.1<br>
 **Status:** In progress
 
 ## Dependencies
@@ -62,6 +62,12 @@ Note that, as this is an interface, all methods are pure virtual, not static, an
 **Purpose:** Set the time on the time scale.<br>
 **Note 1:** `false` should be returned if the time scale malfunctions.<br>
 **Note 2:** If the time scale cannot detect if a malfunction has occured then always return `true`.
+
+**Name:** `faultDetected()`<br>
+**Parameters:** `void`<br>
+**Return:** (`bool`) Whether a fault was detected or not.<br>
+**Purpose:** Detect if a fault has occured.<br>
+**Note:** If the time scale cannot detect if a fault has occured, always return `false`.
 
 **Name:** `stop()`<br>
 **Parameters:** `void`<br>
