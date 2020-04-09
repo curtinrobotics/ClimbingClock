@@ -8,6 +8,7 @@
   Purpose: Revised version of the stepper motor code.
 */
 
+#include "Arduino.h"
 #include <Tone.h>
 
 #define M1_DIR 2 // Motor 1 - Direction
