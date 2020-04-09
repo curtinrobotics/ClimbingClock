@@ -76,13 +76,26 @@ Note that, as this is an interface, all methods are pure virtual, not static, an
 **Purpose:** To detect how far the robot has climbed up.<br>
 **Note 1:** Each robot class implementing this interface should have a constant of the expected return value when the robot is at the top. E.g. `#define TOP_POS 100`.<br>
 **Note 2:** This method should return `0` if the robot is at the bottom.<br>
-**Note 3:** If the robot does not know its position, return a negative number. If the sensors allow it, different negative numbers could signify different malfunctions. E.g. `enum Positions {UNKNOWN = -1, ERRACTIC = -2, DEAD = -3};`.
+**Note 3:** If the robot does not know its position, return a negative number `-1`.
+
+**Name:** `getDirection()`<br>
+**Parameters:** `void`<br>
+**Return:** (`int`) What direction the robot is going.<br>
+**Purpose:** So the Master program can tell what direction the robot is trying to go in.<br>
+**Note:** Use an enum to allow for multiple directions, e.g. `enum Direction = {UP, DOWN, AT_TOP, AT_BOTTOM, STILL};`.
 
 **Name:** `cycleDone()`<br>
 **Parameters:** `void`<br>
 **Return:** (`bool`) Whether the current cycle is done or not.<br>
 **Purpose:** Check if enough time has passed for the current cycle to end.<br>
 **Note:** If the robot is too slow, `cycleDone()` should eventually start returning `true` before `atTop()` and vice versa.
+
+**Name:** `faultDetected()`<br>
+**Parameters:** `void`<br>
+**Return:** (`int`) The fault code.<br>
+**Note 1:** `0` should mean no fault is detected.<br>
+**Note 2:** If it is not possible to detect if a fault has occurred, always return `0`.<br>
+**Note 3:** If the sensor(s) allow it, different integers could signify different faults as an enum.
 
 **Name:** `stop()`<br>
 **Parameters:** `void`<br>
