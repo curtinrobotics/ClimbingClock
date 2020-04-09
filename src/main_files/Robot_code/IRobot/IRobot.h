@@ -5,8 +5,9 @@
  * @see README.md file for full breakdown.
  */
 
-#ifdef IRobot_h
+#ifndef IRobot_h
 #define IRobot_h
+
 #include "Arduino.h"
 
 class IRobot
