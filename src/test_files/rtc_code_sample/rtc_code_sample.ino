@@ -6,7 +6,7 @@
  */
 
 #include <RTClib.h>
-//#include "RTClib_CRoC.h"
+#include "RTClib_CRoC.h"
 #include <Adafruit_NeoPixel.h>
 
 #define LED_PIN 6
@@ -18,7 +18,7 @@
 
 // make sure to initialize the rtc according to its model
 // in this case, we're using a DS1307
-RTC_DS1307 rtc;
+RTC_DS1307_Wrapper rtc;
 Adafruit_NeoPixel strip(LED_COUNT, LED_PIN, NEO_GRB + NEO_KHZ800);
 
 const uint32_t COL_RED = strip.Color(80,0,0);
@@ -37,7 +37,7 @@ void setup()
   }
 
   // adjust the clock's time to correspond with the computer's time
-  rtc.adjust(DateTime(F(__DATE__), F(__TIME__)));
+  rtc.adjust(DateTimeWrapper(F(__DATE__), F(__TIME__)));
 
 
   strip.begin();
@@ -49,8 +49,8 @@ void setup()
 void loop()
 {
 
-  DateTime currentTime = rtc.now();
-  DateTime last12Hrs = previousTwelveHour(currentTime);
+  DateTimeWrapper currentTime = rtc.nowDT();
+  DateTimeWrapper last12Hrs = previousTwelveHour(currentTime);
 
   // a bunch of example code below, uncomment to see how it works
 
@@ -61,6 +61,8 @@ void loop()
   Serial.print(currentTime.minute());
   Serial.print(":");
   Serial.println(currentTime.second());
+  Serial.print("Current unix time: ");
+  Serial.println(currentTime.unixtime());
 
   Serial.print("Last 12th hour was: ");
   Serial.print(last12Hrs.hour());
@@ -68,6 +70,8 @@ void loop()
   Serial.print(last12Hrs.minute());
   Serial.print(":");
   Serial.println(last12Hrs.second());
+  Serial.print("Last 12th hour in unix time: ");
+  Serial.println(last12Hrs.unixtime());
   Serial.println();
 
   delay(2000);
@@ -90,7 +94,7 @@ void loop()
 // previousTwelveHour: returns the date and time of the previous 12-hour mark
 //                     (noon or midnight)
 
-DateTime previousTwelveHour(DateTime time) {
+DateTimeWrapper previousTwelveHour(DateTime time) {
 
   // ake a copy of the current time object
   DateTime out(time.unixtime());
