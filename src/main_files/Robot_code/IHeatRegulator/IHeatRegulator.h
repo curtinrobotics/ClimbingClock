@@ -18,8 +18,8 @@ class IHeatRegulator
         virtual void stop() = 0;
         virtual int getTempt() = 0;
         virtual int faultDetected() = 0;
-        virtual bool setCooling(/*parameter?*/) = 0;
-        virtual /*parameter?*/ tempToPower(int tempt) = 0;
+        virtual bool setCooling(uint8_t power) = 0;
+        virtual uint8_t tempToPower(int tempt) = 0;
 
         virtual ~IHeatRegulator() { Serial.println(F("IHeatRegulator destroyed")); }
 
