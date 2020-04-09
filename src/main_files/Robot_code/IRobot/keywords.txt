@@ -20,7 +20,6 @@ IRobot	KEYWORD1
 start	KEYWORD2
 stop	KEYWORD2
 cycleDone	KEYWORD2
-goDown	KEYWORD2 
 goUp	KEYWORD2
 goDown	KEYWORD2
 getPosition	KEYWORD2
