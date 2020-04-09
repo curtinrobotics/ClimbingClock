@@ -15,7 +15,9 @@ class IRobot
         virtual bool goUp() = 0;
         virtual bool goDown() = 0;
         virtual int getPosition() = 0;
+        virtual int getDirection() = 0;
+        virtual int faultDetected() = 0;
         virtual bool cycleDone() = 0;
         
-        virtual ~IRobot() { Serial.println("IRobot destroyed"); }
+        virtual ~IRobot() { Serial.println(F("IRobot destroyed")); }
 };
