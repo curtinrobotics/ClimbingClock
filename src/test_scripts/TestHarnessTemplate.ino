@@ -25,19 +25,19 @@
 
 
 void setup(void) {
-  Serial.begin(9600);
   while (!Serial) { } // wait for Serial monitor to be ready
+  Serial.begin(9600);
   
-  // device initialisation here
-
+  // initialise hardware here
+  
+  
   uint8_t testsPassed = 0;
-
+  
   testsPassed += testSuite_constructor();
   testsPassed += testSuite_start();
   testsPassed += testSuite_method1();
   testsPassed += testSuite_method2();
   testsPassed += testSuite_method3();
-
   
   outputOverallResult(testsPassed);
 }
@@ -78,15 +78,15 @@ uint8_t constructor_testCase1(void) {
   // test actual and expected are the same
 
   if (expected == actual1 && expected == actual2) {
-    Serial.println("constructor test case 1 passed.");
+    Serial.println(F("constructor test case 1 passed."));
     testsPassed++;
   } else {
-    Serial.println("constructor test case 1 failed.");
-    Serial.print("Expected initial input: "); Serial.println(expected);
-    Serial.print("Actual input 1: "); Serial.println(actual1);
-    Serial.print("Actual input 2: "); Serial.println(actual2);
+    Serial.println(F("constructor test case 1 failed."));
+    Serial.print(F("Expected initial input: ")); Serial.println(expected);
+    Serial.print(F("Actual input 1: ")); Serial.println(actual1);
+    Serial.print(F("Actual input 2: ")); Serial.println(actual2);
   }
-  Serial.print("\n");
+  Serial.println(F(""));
   
   return testsPassed;
 }
@@ -99,15 +99,15 @@ uint8_t constructor_testCase2(void) {
   // test actual and expected are the same
 
   if (expected == actual1 && expected == actual2) {
-    Serial.println("constructor test case 2 passed.");
+    Serial.println(F("constructor test case 2 passed."));
     testsPassed++;
   } else {
-    Serial.println("constructor test case 2 failed.");
-    Serial.print("Expected initial input: "); Serial.println(expected);
-    Serial.print("Actual input 1: "); Serial.println(actual1);
-    Serial.print("Actual input 2: "); Serial.println(actual2);
+    Serial.println(F("constructor test case 2 failed."));
+    Serial.print(F("Expected initial input: ")); Serial.println(expected);
+    Serial.print(F("Actual input 1: ")); Serial.println(actual1);
+    Serial.print(F("Actual input 2: ")); Serial.println(actual2);
   }
-  Serial.print("\n");
+  Serial.println(F(""));
   
   return testsPassed;
 }
@@ -132,15 +132,15 @@ uint8_t start_testCase1(void) {
   // test devices have started up correctly
 
   if (result) {
-    Serial.println("start() test case 1 passed.");
+    Serial.println(F("start() test case 1 passed."));
     testsPassed++;
   } else {
-    Serial.println("start() test case 1 failed.");
-    Serial.print("Expected initial input: "); Serial.println(expected);
-    Serial.print("Actual input 1: "); Serial.println(actual1);
-    Serial.print("Actual input 2: "); Serial.println(actual2);  
+    Serial.println(F("start() test case 1 failed."));
+    Serial.print(F("Expected initial input: ")); Serial.println(expected);
+    Serial.print(F("Actual input 1: ")); Serial.println(actual1);
+    Serial.print(F("Actual input 2: ")); Serial.println(actual2);  
   }
-  Serial.print("\n");
+  Serial.println(F(""));
   
   return testsPassed;
 }
@@ -175,14 +175,14 @@ uint8_t method1_testCase1(void) {
   // test actual and expected here
   
   if (actual == expected) {
-    Serial.println("method1() test case 1 passed.");
+    Serial.println(F("method1() test case 1 passed."));
     testsPassed++;
   } else {
-    Serial.println("method1() test case 1 failed.");
-    Serial.print("Expected method1(): "); Serial.println(expected);
-    Serial.print("Actual method1(): "); Serial.println(actual);
+    Serial.println(F("method1() test case 1 failed."));
+    Serial.print(F("Expected method1(): ")); Serial.println(expected);
+    Serial.print(F("Actual method1(): ")); Serial.println(actual);
   }
-  Serial.print("\n");
+  Serial.println(F(""));
   
   return testsPassed;
 }
@@ -195,14 +195,14 @@ uint8_t method1_testCase2(void) {
   // test actual and expected here
   
   if (actual == expected) {
-    Serial.println("method1() test case 2 passed.");
+    Serial.println(F("method1() test case 2 passed."));
     testsPassed++;
   } else {
-    Serial.println("method1() test case 2 failed.");
-    Serial.print("Expected method1(): "); Serial.println(expected);
-    Serial.print("Actual method1(): "); Serial.println(actual);
+    Serial.println(F("method1() test case 2 failed."));
+    Serial.print(F("Expected method1(): ")); Serial.println(expected);
+    Serial.print(F("Actual method1(): ")); Serial.println(actual);
   }
-  Serial.print("\n");
+  Serial.println(F(""));
   
   return testsPassed;
 }
@@ -215,14 +215,14 @@ uint8_t method1_testCase3(void) {
   // test actual and expected here
   
   if (actual == expected) {
-    Serial.println("method1() test case 3 passed.");
+    Serial.println(F("method1() test case 3 passed."));
     testsPassed++;
   } else {
-    Serial.println("method1() test case 3 failed.");
-    Serial.print("Expected method1(): "); Serial.println(expected);
-    Serial.print("Actual method1(): "); Serial.println(actual);
+    Serial.println(F("method1() test case 3 failed."));
+    Serial.print(F("Expected method1(): ")); Serial.println(expected);
+    Serial.print(F("Actual method1(): ")); Serial.println(actual);
   }
-  Serial.print("\n");
+  Serial.println(F(""));
   
   return testsPassed;
 }
@@ -257,14 +257,14 @@ uint8_t method2_testCase1(void) {
   // test actual and expected here
   
   if (actual == expected) {
-    Serial.println("method2() test case 1 passed.");
+    Serial.println(F("method2() test case 1 passed."));
     testsPassed++;
   } else {
-    Serial.println("method2() test case 1 failed.");
-    Serial.print("Expected method1(): "); Serial.println(expected);
-    Serial.print("Actual method1(): "); Serial.println(actual);
+    Serial.println(F("method2() test case 1 failed."));
+    Serial.print(F("Expected method1(): ")); Serial.println(expected);
+    Serial.print(F("Actual method1(): ")); Serial.println(actual);
   }
-  Serial.print("\n");
+  Serial.println(F(""));
   
   return testsPassed;
 }
@@ -277,14 +277,14 @@ uint8_t method2_testCase2(void) {
   // test actual and expected here
   
   if (actual == expected) {
-    Serial.println("method2() test case 2 passed.");
+    Serial.println(F("method2() test case 2 passed."));
     testsPassed++;
   } else {
-    Serial.println("method2() test case 2 failed.");
-    Serial.print("Expected method1(): "); Serial.println(expected);
-    Serial.print("Actual method1(): "); Serial.println(actual);
+    Serial.println(F("method2() test case 2 failed."));
+    Serial.print(F("Expected method1(): ")); Serial.println(expected);
+    Serial.print(F("Actual method1(): ")); Serial.println(actual);
   }
-  Serial.print("\n");
+  Serial.println(F(""));
   
   return testsPassed;
 }
@@ -297,14 +297,14 @@ uint8_t method2_testCase3(void) {
   // test actual and expected here
   
   if (actual == expected) {
-    Serial.println("method2() test case 3 passed.");
+    Serial.println(F("method2() test case 3 passed."));
     testsPassed++;
   } else {
-    Serial.println("method2() test case 3 failed.");
-    Serial.print("Expected method1(): "); Serial.println(expected);
-    Serial.print("Actual method1(): "); Serial.println(actual);
+    Serial.println(F("method2() test case 3 failed."));
+    Serial.print(F("Expected method1(): ")); Serial.println(expected);
+    Serial.print(F("Actual method1(): ")); Serial.println(actual);
   }
-  Serial.print("\n");
+  Serial.println(F(""));
   
   return testsPassed;
 }
@@ -339,14 +339,14 @@ uint8_t method3_testCase1(void) {
   // test actual and expected here
   
   if (actual == expected) {
-    Serial.println("method3() test case 1 passed.");
+    Serial.println(F("method3() test case 1 passed."));
     testsPassed++;
   } else {
-    Serial.println("method3() test case 1 failed.");
-    Serial.print("Expected method1(): "); Serial.println(expected);
-    Serial.print("Actual method1(): "); Serial.println(actual);
+    Serial.println(F("method3() test case 1 failed."));
+    Serial.print(F("Expected method1(): ")); Serial.println(expected);
+    Serial.print(F("Actual method1(): ")); Serial.println(actual);
   }
-  Serial.print("\n");
+  Serial.println(F(""));
   
   return testsPassed;
 }
@@ -359,14 +359,14 @@ uint8_t method3_testCase2(void) {
   // test actual and expected here
   
   if (actual == expected) {
-    Serial.println("method3() test case 2 passed.");
+    Serial.println(F("method3() test case 2 passed."));
     testsPassed++;
   } else {
-    Serial.println("method3() test case 2 failed.");
-    Serial.print("Expected method1(): "); Serial.println(expected);
-    Serial.print("Actual method1(): "); Serial.println(actual);
+    Serial.println(F("method3() test case 2 failed."));
+    Serial.print(F("Expected method1(): ")); Serial.println(expected);
+    Serial.print(F("Actual method1(): ")); Serial.println(actual);
   }
-  Serial.print("\n");
+  Serial.println(F(""));
   
   return testsPassed;
 }
@@ -379,14 +379,14 @@ uint8_t method3_testCase3(void) {
   // test actual and expected here
   
   if (actual == expected) {
-    Serial.println("method3() test case 3 passed.");
+    Serial.println(F("method3() test case 3 passed."));
     testsPassed++;
   } else {
-    Serial.println("method3() test case 3 failed.");
-    Serial.print("Expected method1(): "); Serial.println(expected);
-    Serial.print("Actual method1(): "); Serial.println(actual);
+    Serial.println(F("method3() test case 3 failed."));
+    Serial.print(F("Expected method1(): ")); Serial.println(expected);
+    Serial.print(F("Actual method1(): ")); Serial.println(actual);
   }
-  Serial.print("\n");
+  Serial.println(F(""));
   
   return testsPassed;
 }
@@ -395,16 +395,16 @@ uint8_t method3_testCase3(void) {
 void outputOverallResult(uint8_t testsPassed) {
   uint8_t testsFailed = NUM_TESTS - testsPassed;
 
-  Serial.println("=============================");
-  Serial.print(NUM_TESTS); Serial.println(" tests performed");
-  Serial.println("=============================");
+  Serial.println(F("============================="));
+  Serial.print(NUM_TESTS); Serial.println(F(" tests performed"));
+  Serial.println(F("============================="));
   
   if (testsPassed == NUM_TESTS) {
-    Serial.println("All tests passed!");
+    Serial.println(F("All tests passed!"));
   } else {
-    Serial.print(testsPassed); Serial.println(" tests passed.");
-    Serial.print(testsFailed); Serial.println(" tests failed.");
-    Serial.print("Success rate: "); Serial.print( (float)(NUM_TESTS - testsFailed) / (float)NUM_TESTS * 100.0); Serial.println("%");
+    Serial.print(testsPassed); Serial.println(F(" tests passed."));
+    Serial.print(testsFailed); Serial.println(F(" tests failed."));
+    Serial.print(F("Success rate: ")); Serial.print( (float)(NUM_TESTS - testsFailed) / (float)NUM_TESTS * 100.0); Serial.println(F("%"));
   }
 }
 
