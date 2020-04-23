@@ -17,7 +17,7 @@ class ITimeScale
         virtual bool start() = 0;
         virtual void stop() = 0;
         virtual bool faultDetected() = 0;
-        virtual bool setTime(/*parameter?*/) = 0;
+        virtual bool setTime(uint8_t hours, uint8_t minutes, uint8_t seconds) = 0;
 
         virtual ~ITimeScale() { Serial.println(F("ITimeScale destroyed")); }
 
