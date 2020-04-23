@@ -7,9 +7,9 @@
 */
 
 #ifndef RTC_LIB_CROC_H
-#  define RTC_LIB_CROC_H
+#define RTC_LIB_CROC_H
 
-#  include <RTClib.h>
+#include <RTClib.h>
 
 
 /*
