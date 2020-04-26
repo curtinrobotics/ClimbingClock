@@ -201,9 +201,9 @@ DateTime::DateTime(uint32_t t) {
   _yearOffset = 0;
   uint8_t leap = 1; // year 2000 is a leap year
 
-  while (days < 365 && leap) {
+  while (days < 365U && leap) {
     leap = (uint8_t)isLeapYear(_yearOffset);
-    days -= 365 + leap;
+    days -= 365U + leap;
     _yearOffset++;
   }
 
@@ -392,7 +392,7 @@ bool DateTime::isValid() const {
     return false;
   
   DateTime other(unixtime());
-  return yearOffset == other._yearOffset && _month == other._month
+  return _yearOffset == other._yearOffset && _month == other._month
         && _day == other._day && _hour == other._hour
         && _minutes == other._minutes && _seconds == other._seconds;
 }
