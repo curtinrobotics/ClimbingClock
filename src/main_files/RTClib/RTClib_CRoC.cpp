@@ -3,59 +3,52 @@
    auth: anton r
 
    created:  06/04/2020
-   modified: 06/04/2020
-
-   purpose: TODO 
+   modified: 16/04/2020
 */
 
 #include "RTClib_CRoC.h"
 
-uint32_t RTC_DS1307_Wrapper::nowUnix(void)
+/*
+   Determines if one DateTimeWrapper object is less than the other
+*/
+bool DateTimeWrapper::operator<(const DateTime &other)
 {
-   return RTC_DS1307::now().unixtime();
+   return (
+      other.year()    > yOff || (
+      other.year()   == yOff && (
+      other.month()   > m    || (
+      other.month()) == m    && (
+      other.day()     > d    || (
+      other.day()    == d    && (
+      other.hour()    > hh   || (
+      other.hour()   == hh   && (
+      other.minute()  > mm   || (
+      other.minute() == mm   && 
+      other.second()  > ss ) ) ) ) ) ) ) ) );
 }
 
-DateTime  RTC_DS1307_Wrapper::nowDT(void)
+bool DateTimeWrapper::operator>(const DateTime &other)
 {
-   return RTC_DS1307::now();
+   return (DateTimeWrapper) other < *this;
 }
 
-
-DateTimeWrapper::DateTimeWrapper(uint32_t t = SECONDS_FROM_1970_TO_2000)
-      : DateTime(t)
+bool DateTimeWrapper::operator==(const DateTime &other)
 {
-   time = DateTime::unixtime();
+   return (
+      other.year()   == yOff &&
+      other.month()  == m    &&
+      other.day()    == d    &&
+      other.hour()   == hh   &&
+      other.minute() == mm   &&
+      other.second() == ss);
 }
 
-DateTimeWrapper::DateTimeWrapper(uint16_t year, uint8_t month, uint8_t day,
-      uint8_t hour = 0, uint8_t min = 0, uint8_t sec = 0)
-      : DateTime(year, month, day, hour, min, sec)
+bool DateTimeWrapper::operator<=(const DateTime &other)
 {
-   time = DateTime::unixtime();
+   return (*this < other) || (*this == other);
 }
 
-
-DateTimeWrapper::DateTimeWrapper(DateTime &copy) 
-      : DateTime(copy)
+bool DateTimeWrapper::operator>=(const DateTime &other)
 {
-   time = copy.unixtime();
-}
-
-
-DateTimeWrapper::DateTimeWrapper(const char *dateString, const char *timeString)
-      : DateTime(dateString, timeString)
-{
-   time = DateTime::unixtime();
-}
-
-DateTimeWrapper::DateTimeWrapper(const __FlashStringHelper *FSHdate, const __FlashStringHelper *FSHtime)
-      : DateTime(FSHdate, FSHtime)
-{
-   time = DateTime::unixtime();
-}
-
-
-uint32_t DateTimeWrapper::unixtime(void)
-{
-   return time;
+   return (*this > other) || (*this == other);
 }
