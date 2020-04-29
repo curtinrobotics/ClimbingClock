@@ -5,7 +5,7 @@
  * @see README.md file for full breakdown. 
  */
 
-#ifdef ITimeScale_h
+#ifndef ITimeScale_h
 #define ITimeScale_h
 
 #include "Arduino.h"
