@@ -5,6 +5,9 @@
  * @see README.md file for full breakdown.
  */
 
+#ifndef IRobot_h
+#define IRobot_h
+
 #include "Arduino.h"
 
 class IRobot
@@ -21,3 +24,5 @@ class IRobot
         
         virtual ~IRobot() { Serial.println(F("IRobot destroyed")); }
 };
+
+#endif
