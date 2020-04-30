@@ -51,7 +51,7 @@ Please see our Kanban board or talk with us to get an idea of where you can fit 
 While everyone is welcome to join, CRoC has designed this project to be as first-year friendly as possible.
 To promote and upload this standard, no experience nor knowledges are necessary to join!
 
-To get you started, the project lead can update on where exactly the project is at. If the project lead is not available you can contact him/her through the club's Discord or on Facebook. If you need an answer immediately, please refer to the Kanban board, project overview (*pending*), and other Climbing Clock members present.
+To get you started, the project lead can update on where exactly the project is at. If the project lead is not available you can contact him/her through the club's Discord or on Facebook. If you need an answer immediately, please refer to the Kanban board, [project breakdown](https://github.com/curtinrobotics/ClimbingClock/blob/documentation/project_doc/(v0.1)%20Climbing%20Clock%20Project%20Breakdown.pdf), and other Climbing Clock members present.
 
 Whether it be learning CAD software or using an Arduino for the first time, feel free to ask anyone anytime if you need help.
 
