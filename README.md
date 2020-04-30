@@ -36,14 +36,7 @@ To make one or more robots climb in a manner that allows us to tell the time of 
 
 ### Project Requirements
 
-1. Must be able to tell the time of day within 5 minutes from a distance of up to 10 metres
-2. Strict budget to stay under (see Project Lead for more details)
-3. Robots must move using internal mechanics (E.g. pulley systems are not allowed)
-4. Entire system must hang from second floor catwalk in Engineering Pavilion (building 204). See project lead for exact location
-5. Entire system cannot be more than 2.4 metres tall
-6. Entire system cannot be more than 1 metre wide
-7. System must be able to run automonously (i.e. without supervision)
-8. It has to look cool (subject to interpretation)
+Project requirements are categorised into two types: functional requirements, and non-functional requirements (NFR). Functional requirements detail what the system has to do, whereas NFRs detail under what restrictions the system has to achieve its functional requirements. Please see the [project breakdown](https://github.com/curtinrobotics/ClimbingClock/blob/documentation/project_doc/(v0.1)%20Climbing%20Clock%20Project%20Breakdown.pdf) for a complete list of all functional and non-functional requirements.
 
 ## Progress Made
 
