@@ -78,7 +78,7 @@ Note that, as this is an interface, all methods are pure virtual, not static, an
 **Note 2:** Should return `false` if the cooling system is malfunctioning.<br>
 **Note 3:** If there is no way for the system to detect if the cooling system has malfunctioned return `true`.
 
-**Name:** `temp2power()`<br>
+**Name:** `temptTopower()`<br>
 **Parameters:** `int tempt`<br>
 **Return:** `uint8_t power`<br>
 **Purpose:** Return the recommended power given the temperature.<br>
