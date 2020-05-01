@@ -5,7 +5,7 @@
  * @brief test script for IHeatRegulator interface
  * Project: Climbing Clock (2019-20)
  * Organisation: Curtin Robotics Club (CRoC)
- * Working status: ?/6 test cases pass
+ * Working status: 6/6 test cases pass
  * @attention Hardware Dependancies: Arduino
  */
 
