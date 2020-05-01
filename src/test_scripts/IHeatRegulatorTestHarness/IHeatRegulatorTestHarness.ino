@@ -239,7 +239,7 @@ void outputOverallResult(uint8_t testsPassed) {
   }
   
   Serial.println(F("WARNING: did not test if interface was destroyed!!"));
-  Serial.println(F("Check Serial monitor for \"IHeatRegulator destroyed\" text"));
+  Serial.println(F("Check Serial monitor for \"IHeatRegulator destroyed\" and \"MockHeatReg destroyed\" text"));
 }
 
 void loop() {
