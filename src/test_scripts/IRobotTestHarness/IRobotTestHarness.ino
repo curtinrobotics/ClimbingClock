@@ -1,7 +1,7 @@
 /*
  * @author Harrison Outram
- * Last Updated: 30/04/2020 (d/m/y UTC+08:00)
- * @version 1.0
+ * Last Updated: 1/05/2020 (d/m/y UTC+08:00)
+ * @version 1.1
  * @brief test script for IRobot interface
  * Project: Climbing Clock (2019-20)
  * Organisation: Curtin Robotics Club (CRoC)
@@ -40,6 +40,7 @@ void setup(void) {
   
   uint8_t testsPassed = 0;
   
+  setUp();
   testsPassed += testSuite_start();
   testsPassed += testSuite_stop();
   testsPassed += testSuite_goUp();
@@ -48,6 +49,7 @@ void setup(void) {
   testsPassed += testSuite_getDirection();
   testsPassed += testSuite_faultDetected();
   testsPassed += testSuite_cycleDone();
+  tearDown();
   
   outputOverallResult(testsPassed);
 }
@@ -66,9 +68,7 @@ void tearDown(void) {
 uint8_t testSuite_start(void) {
   uint8_t testsPassed = 0;
 
-  setUp();
   testsPassed += start_testCase1();
-  tearDown();
   
   return testsPassed;
 }
@@ -99,9 +99,7 @@ uint8_t start_testCase1(void) {
 uint8_t testSuite_stop(void) {
   uint8_t testsPassed = 0;
   
-  setUp();
   testsPassed += stop_testCase1();
-  tearDown();
 
   return testsPassed;
 }
@@ -123,9 +121,7 @@ uint8_t stop_testCase1(void) {
 uint8_t testSuite_goUp(void) {
   uint8_t testsPassed = 0;
   
-  setUp();
   testsPassed += goUp_testCase1();
-  tearDown();
   
   return testsPassed;
 }
@@ -153,9 +149,7 @@ uint8_t goUp_testCase1(void) {
 uint8_t testSuite_goDown(void) {
   uint8_t testsPassed = 0;
   
-  setUp();
   testsPassed += goDown_testCase1();
-  tearDown();
 
   return testsPassed;
 }
@@ -183,9 +177,7 @@ uint8_t goDown_testCase1(void) {
 uint8_t testSuite_getPosition(void) {
   uint8_t testsPassed = 0;
   
-  setUp();
   testsPassed += getPosition_testCase1();
-  tearDown();
 
   return testsPassed;
 }
@@ -213,9 +205,7 @@ uint8_t getPosition_testCase1(void) {
 uint8_t testSuite_getDirection(void) {
   uint8_t testsPassed = 0;
   
-  setUp();
   testsPassed += getDirection_testCase1();
-  tearDown();
 
   return testsPassed;
 }
@@ -243,9 +233,7 @@ uint8_t getDirection_testCase1(void) {
 uint8_t testSuite_faultDetected(void) {
   uint8_t testsPassed = 0;
   
-  setUp();
   testsPassed += faultDetected_testCase1();
-  tearDown();
 
   return testsPassed;
 }
@@ -273,9 +261,7 @@ uint8_t faultDetected_testCase1(void) {
 uint8_t testSuite_cycleDone(void) {
   uint8_t testsPassed = 0;
   
-  setUp();
   testsPassed += cycleDone_testCase1();
-  tearDown();
 
   return testsPassed;
 }
