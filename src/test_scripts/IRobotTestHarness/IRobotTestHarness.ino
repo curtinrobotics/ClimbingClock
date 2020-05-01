@@ -304,7 +304,7 @@ void outputOverallResult(uint8_t testsPassed) {
   }
   
   Serial.println(F("WARNING: did not test if interface was destroyed!!"));
-  Serial.println(F("Check Serial monitor for \"IRobot destroyed\" text"));
+  Serial.println(F("Check Serial monitor for \"IRobot destroyed\" and \"MockRobot destroyed\" text"));
 }
 
 void loop() {
