@@ -1,4 +1,4 @@
-/*
+/*!
  * @author Harrison Outram
  * Last Updated: 30/04/2020 (d/m/y UTC+08:00)
  * @version 1.0

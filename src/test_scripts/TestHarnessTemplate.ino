@@ -1,12 +1,12 @@
-/*
+/*!
  * @author 
  * Last Updated:  (d/m/y UTC+08:00)
- * @version 
- * @brief test script for 
+ * @version 1.1
+ * @brief test script for <Insert library being tested>
  * Project: Climbing Clock (2019-20)
  * Organisation: Curtin Robotics Club (CRoC)
- * Working status: /13 test cases pass
- * !!!! Hardware Dependancies:  !!!!
+ * Working status: ?/13 test cases pass
+ * @attention Hardware Dependancies: !!!
  */
 
 // Inclued code to be tested
@@ -20,6 +20,67 @@
 
 // total number of tests
 #define NUM_TESTS 
+
+// mock classes needed
+
+class MockObject : public MyClass { //example mock class
+  protected:
+    //used to check mock methods were called correct number of times
+    uint32_t _startCalls, _stopCalls;
+    uint32_t _method1Calls, _method2Calls, _method3Calls, _method4Calls;
+    uint32_t _method5Calls, _method6Calls;
+
+  public:
+    MockObject() { // Mock constructor
+      _startCalls = 0; _stopCalls = 0;
+      _method1Calls = 0; _method2Calls = 0; _method3Calls = 0;
+      _method4Calls = 0; _method5Calls = 0; _method6Calls = 0;
+    }
+
+    //mock methods
+    bool start(void) { 
+      _startCalls++;
+      return true;
+    }
+    void stop(void) { _stopCalls++; }
+    bool method1(int num) {
+      _method1Calls++;
+      return false;
+    }
+    int method2(char mode) {
+      _method2Calls++;
+      return 0;
+    }
+    float method3(void) {
+      _method3Calls++;
+      return 3.3f;
+    }
+    char method4(int num) {
+      _method4Calls++;
+      return 't';
+    }
+    size_t method5(String myStr) {
+      _method5Calls++;
+      return (size_t)5;
+    }
+    String method6(double num) {
+      _method6Calls++;
+      return String(F("Bob"));
+    }
+
+    uint32_t getStartCalls(void) { return _startCalls; }
+    uint32_t getStopCalls(void) { return _stopCalls; }
+    uint32_t getMethod1Calls(void) { return _method1Calls; }
+    uint32_t getMethod2Calls(void) { return _method2Calls; }
+    uint32_t getMethod3Calls(void) { return _method3Calls; }
+    uint32_t getMethod4Calls(void) { return _method4Calls; }
+    uint32_t getMethod5Calls(void) { return _method5Calls; }
+    uint32_t getMethod6Calls(void) { return _method6Calls; }
+
+    // mock destructor
+    // Serial message used to check object was destroyed
+    ~MockObject() { Serial.println(F("MockObject destroyed")); }
+};
 
 //global variables needed
 
