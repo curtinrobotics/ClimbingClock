@@ -5,7 +5,7 @@
  * @brief test script for ITimeScale interface
  * Project: Climbing Clock (2019-20)
  * Organisation: Curtin Robotics Club (CRoC)
- * Working status: ?/4 test cases pass
+ * Working status: 4/4 test cases pass
  * @attention Hardware Dependancies: Arduino
  */
 
@@ -178,7 +178,7 @@ void outputOverallResult(uint8_t testsPassed) {
   }
   
   Serial.println(F("WARNING: did not test if interface was destroyed!!"));
-  Serial.println(F("Check Serial monitor for \"ITimeScale destroyed\" text"));
+  Serial.println(F("Check Serial monitor for \"ITimeScale destroyed\" and \"MockTimeScale destroyed\" text"));
 }
 
 void loop() {
