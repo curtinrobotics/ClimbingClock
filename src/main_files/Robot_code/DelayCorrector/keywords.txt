@@ -1,0 +1,32 @@
+######################################################
+# Syntax Coloring Map for PwmCorrector
+# AUTHOR: Harrison Outram
+# DATE: 23/03/2020 (d/m/y, UTC+08:00)
+# VERSION: 1.3
+# PROJECT: Climbing Clock
+# ORGANISATION: Curtin Robotics Club (CRoC)
+######################################################
+
+######################################################
+# Datatypes (KEYWORD1)
+######################################################
+
+PwmCorrector	KEYWORD1
+
+######################################################
+# Methods (KEYWORD2)
+######################################################
+
+getCorrectedPwm	KEYWORD2
+addNewCorrectedPwm	KEYWORD2
+getCurrentPwm	KEYWORD2
+getCorrectTime	KEYWORD2
+
+######################################################
+# Constants (LITERAL1)
+######################################################
+
+MAX_NUM_OF_PWMS	LITERAL1
+SPEED_INCREASE_INCREMENT	LITERAL1
+MIN_SPEED_INCREMENT LITERAL1
+SPEED_INCREMENT_CHANGE LITERAL1
