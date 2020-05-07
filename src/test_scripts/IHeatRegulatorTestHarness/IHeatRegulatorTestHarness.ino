@@ -5,7 +5,7 @@
  * @brief test script for IHeatRegulator interface
  * Project: Climbing Clock (2019-20)
  * Organisation: Curtin Robotics Club (CRoC)
- * Working status: ?/6 test cases pass
+ * Working status: 6/6 test cases pass
  * @attention Hardware Dependancies: Arduino
  */
 
@@ -37,13 +37,15 @@ void setup(void) {
   Serial.begin(9600);
   
   uint8_t testsPassed = 0;
-  
+
+  setUp();
   testsPassed += testSuite_start();
   testsPassed += testSuite_stop();
   testsPassed += testSuite_getTempt();
   testsPassed += testSuite_setCooling();
   testsPassed += testSuite_faultDetected();
   testsPassed += testSuite_temptToPower();
+  tearDown();
   
   outputOverallResult(testsPassed);
 }
@@ -62,9 +64,7 @@ void tearDown(void) {
 uint8_t testSuite_start(void) {
   uint8_t testsPassed = 0;
 
-  setUp();
   testsPassed += start_testCase1();
-  tearDown();
   
   return testsPassed;
 }
@@ -95,9 +95,7 @@ uint8_t start_testCase1(void) {
 uint8_t testSuite_stop(void) {
   uint8_t testsPassed = 0;
   
-  setUp();
   testsPassed += stop_testCase1();
-  tearDown();
 
   return testsPassed;
 }
@@ -118,9 +116,7 @@ uint8_t stop_testCase1(void) {
 uint8_t testSuite_getTempt(void) {
   uint8_t testsPassed = 0;
   
-  setUp();
   testsPassed += getTempt_testCase1();
-  tearDown();
   
   return testsPassed;
 }
@@ -147,9 +143,7 @@ uint8_t getTempt_testCase1(void) {
 uint8_t testSuite_setCooling(void) {
   uint8_t testsPassed = 0;
   
-  setUp();
   testsPassed += setCooling_testCase1();
-  tearDown();
 
   return testsPassed;
 }
@@ -176,9 +170,7 @@ uint8_t setCooling_testCase1(void) {
 uint8_t testSuite_faultDetected(void) {
   uint8_t testsPassed = 0;
   
-  setUp();
   testsPassed += faultDetected_testCase1();
-  tearDown();
 
   return testsPassed;
 }
@@ -205,9 +197,7 @@ uint8_t faultDetected_testCase1(void) {
 uint8_t testSuite_temptToPower(void) {
   uint8_t testsPassed = 0;
   
-  setUp();
   testsPassed += temptToPower_testCase1();
-  tearDown();
 
   return testsPassed;
 }
@@ -249,7 +239,7 @@ void outputOverallResult(uint8_t testsPassed) {
   }
   
   Serial.println(F("WARNING: did not test if interface was destroyed!!"));
-  Serial.println(F("Check Serial monitor for \"IHeatRegulator destroyed\" text"));
+  Serial.println(F("Check Serial monitor for \"IHeatRegulator destroyed\" and \"MockHeatReg destroyed\" text"));
 }
 
 void loop() {
