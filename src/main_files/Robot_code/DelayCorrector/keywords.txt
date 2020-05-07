@@ -1,8 +1,8 @@
 ######################################################
-# Syntax Coloring Map for PwmCorrector
+# Syntax Coloring Map for DelayCorrector
 # AUTHOR: Harrison Outram
-# DATE: 23/03/2020 (d/m/y, UTC+08:00)
-# VERSION: 1.3
+# DATE: 7/05/2020 (d/m/y, UTC+08:00)
+# VERSION: 1.0
 # PROJECT: Climbing Clock
 # ORGANISATION: Curtin Robotics Club (CRoC)
 ######################################################
@@ -11,22 +11,26 @@
 # Datatypes (KEYWORD1)
 ######################################################
 
-PwmCorrector	KEYWORD1
+DelayCorrector	KEYWORD1
 
 ######################################################
 # Methods (KEYWORD2)
 ######################################################
 
-getCorrectedPwm	KEYWORD2
-addNewCorrectedPwm	KEYWORD2
-getCurrentPwm	KEYWORD2
+getCorrectedDelay	KEYWORD2
+addNewCorrectedDelay	KEYWORD2
+getCurrentDelay	KEYWORD2
 getCorrectTime	KEYWORD2
+getMeanDelay	KEYWORD2
+next2Exp	KEYWORD2
+getDelayOffset	KEYWORD2
+calcNewDelayDecrement	KEYWORD2
 
 ######################################################
 # Constants (LITERAL1)
 ######################################################
 
-MAX_NUM_OF_PWMS	LITERAL1
-SPEED_INCREASE_INCREMENT	LITERAL1
-MIN_SPEED_INCREMENT LITERAL1
-SPEED_INCREMENT_CHANGE LITERAL1
+MAX_NUM_DELAYS	LITERAL1
+DELAY_DECREMENT	LITERAL1
+MIN_DELAY_DECREMENT LITERAL1
+DELAY_DECREMENT_CHANGE LITERAL1
