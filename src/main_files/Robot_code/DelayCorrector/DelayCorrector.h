@@ -1,5 +1,5 @@
 /**
- * Last Updated: 7/05/2020 (d/m/y, UTC+08:00)
+ * Last Updated: 21/05/2020 (d/m/y, UTC+08:00)
  * @brief Header file for DelayCorrector
  * Project: Climbing Clock
  * Organisation: Curtin Robotics Club (CRoC)
@@ -12,7 +12,7 @@
 #include "Arduino.h"
 #include "../BiasChangeFunctions/BiasChangeFunctions.h"
 
-#define MAX_NUM_DELAYS 8
+#define MAX_NUM_DELAYS ((uint8_t)8)
 #define DELAY_DECREMENT -10
 #define MIN_DELAY_DECREMENT -1
 #define DELAY_DECREMENT_CHANGE -3
@@ -20,16 +20,16 @@
 class DelayCorrector {
   public:
     /**
-     * Alternate constructor 1
+     * Alternate constructor 1: Only requires needed parameters
      * @param initialDelay The delay time the robot should start with
      * @param correctTime The time it should take for the robot to complete each cycle in seconds
      * @param delayChangeFunc The function which determines how the delayDecrement is changed
      */
     DelayCorrector(uint32_t initialDelay, uint32_t correctTime,
-                  DelayChangeFunc delayChangeFunc);
+                  BiasChangeFunc delayChangeFunc);
 
     /**
-     * Alternate constructor 2
+     * Alternate constructor 2: Full customisation of object properties
      * @param initialDelay The delay time the robot should start with
      * @param correctTime The time it should take for the robot to complete each cycle in seconds
      * @param maxNumOfCorrectedDelays The max num of corrected delays the object should store
@@ -52,7 +52,7 @@ class DelayCorrector {
      * calculates new delay based on current delay and error
      * @param actualTime The time in seconds for the robot to complete its current cycle
      * @param topRached Whether the robot reached the top or not
-     * @return uint8_t
+     * @return The corrected delay time
      */
     uint32_t getCorrectedDelay(uint32_t actualTime, bool topReached);
 
@@ -83,25 +83,10 @@ class DelayCorrector {
     uint32_t getMeanDelay(void);
 
     /**
-     * Calculates the next exponent of the next power of 2
-     * @param startingNum The number to start finding the next power of 2
-     * @return The exponent of the next power of 2
-     * @attention If startingNum is already a power of 2 then log2(startingNum) is returned
+     * Calculates new delay decrement using given delay change function
+     * @return The new delay decrement
      */
-    uint8_t next2Exp(uint32_t startingNum);
-
-    /**
-     * Get the difference between the correct delay and the current delay given the error in cycle completion time
-     * @param timeErr the difference between the correct time and the completion time
-     * @return The delay offset
-     */
-    uint8_t getDelayOffset(uint32_t timeErr);
-
-    /**
-     * Tells robot object to use bias change function to calculate new delay decrement
-     * @return void
-     */
-    void calcNewDelayDecrement(void);
+    uint16_t calcNewDelayDecrement(void);
 };
 
 #endif

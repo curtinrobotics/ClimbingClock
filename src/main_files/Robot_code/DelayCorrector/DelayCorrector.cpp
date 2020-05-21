@@ -1,5 +1,5 @@
 /**
- * Last Updated: 7/05/2020 (d/m/y, UTC+08:00)
+ * Last Updated: 21/05/2020 (d/m/y, UTC+08:00)
  * @brief Auto corrects delay time time given feedback
  * Project: Climbing Clock (2019-20)
  * Organisation: Curtin Robotics Club (CRoC)
@@ -9,15 +9,33 @@
 #include "DelayCorrector.h"
 
 /**
+ * Calculates the next exponent of the next power of 2
+ * @param startingNum The number to start finding the next power of 2
+ * @return The exponent of the next power of 2
+ * @attention If startingNum is already a power of 2 then log2(startingNum) is returned
+ */
+static uint8_t next2Exp(uint32_t startingNum) {
+    uint8_t exp = 0;
+    uint32_t next2Power = 1;
+
+    while (startingNum > next2Power) {
+        exp++;
+        next2Power = next2Power << 1;
+    }
+
+    return exp;
+}
+
+/**
  * Alternate constructor 1
  * @param initialDelay The delay time the robot should start with
  * @param correctTime The time it should take for the robot to complete each cycle in seconds
  * @param delayChangeFunc The function which determines how the delayDecrement is changed
  */
-DelayCorrector::DelayCorrector(uint8_t initialDelay, uint32_t correctTime,
+DelayCorrector::DelayCorrector(uint32_t initialDelay, uint32_t correctTime,
                                 BiasChangeFunc delayChangeFunc) {
     _delayIndex = 0;
-    _numDelayLog2 = next2Exp(MAX_NUM_DELAYS);
+    _numDelayLog2 = next2Exp((uint32_t)MAX_NUM_DELAYS);
     _correctedDelays = new uint32_t[1 << _numDelayLog2];
     _correctedDelaysFull = false;
     _correctedDelays[0] = initialDelay;
@@ -41,10 +59,10 @@ DelayCorrector::DelayCorrector(uint8_t initialDelay, uint32_t correctTime,
  */
 DelayCorrector::DelayCorrector(uint32_t initialDelay, uint32_t correctTime,
                     uint8_t maxNumOfDelays, int16_t delayDecrement,
-                    uint8_t minDelayDecrement, BiasChangeFunc delayChangeFunc,
+                    int8_t minDelayDecrement, BiasChangeFunc delayChangeFunc,
                     int8_t delayDecrementChange) {
     _delayIndex = 0;
-    _numDelayLog2 = next2Exp(maxNumOfDelays);
+    _numDelayLog2 = next2Exp((uint32_t)maxNumOfDelays);
     _correctedDelays = new uint32_t[1 << _numDelayLog2];
     _correctedDelaysFull = false;
     _correctedDelays[0] = initialDelay;
@@ -70,9 +88,12 @@ DelayCorrector::~DelayCorrector() {
  */
 uint32_t DelayCorrector::getCorrectedDelay(uint32_t actualTime, bool topReached) {
     uint32_t correctedDelay;
+    uint32_t slope;
     
-    if (_correctTime > actualTime) {                 // reached top too quickly
-        correctedDelay = _currDelay - getDelayOffset(_correctTime - actualTime);
+    if (_correctTime > actualTime) {                // reached top too quickly
+        // completion time = (slope) * (delay time)
+        slope = actualTime / _currDelay;
+        correctedDelay = _correctTime / slope;
     } else if (!topReached) {                       // did not reach top in time
         correctedDelay = _currDelay + _delayDecrement;
         _delayDecrement = calcNewDelayDecrement();
@@ -90,12 +111,13 @@ uint32_t DelayCorrector::getCorrectedDelay(uint32_t actualTime, bool topReached)
  * @return void
  */
 void DelayCorrector::addNewCorrectedDelay(uint32_t correctedDelay) {
+    _delayIndex++;
+
     if (_delayIndex == (1 << _numDelayLog2)) {
         _delayIndex = 0; //reset index to replace oldest value
         _correctedDelaysFull = true;
-    } else {
-        _delayIndex++;
     }
+
     _correctedDelays[_delayIndex] = correctedDelay;
     _currDelay = getMeanDelay();
 }
@@ -104,16 +126,16 @@ void DelayCorrector::addNewCorrectedDelay(uint32_t correctedDelay) {
 
 /**
  * Generates mean delay time from corrected delay times
- * @return uint8_t
+ * @return The mean corrected delay
  */
 uint32_t DelayCorrector::getMeanDelay(void) {
     uint32_t meanDelay = 0;
     
     if (_correctedDelaysFull) {
-        for (uint8_t i = 0; i <= (1 << _numDelayLog2); i++)
+        for (uint8_t i = 0; i < (1 << _numDelayLog2); i++)
             meanDelay += _correctedDelays[i];
         
-        meanDelay >> _numDelayLog2;
+        meanDelay = meanDelay >> _numDelayLog2;
     } else {
         for (uint8_t i = 0; i <= _delayIndex; i++)
             meanDelay += _correctedDelays[i];
@@ -122,35 +144,6 @@ uint32_t DelayCorrector::getMeanDelay(void) {
     }
     
     return meanDelay;
-}
-
-/**
- * Calculates the next exponent of the next power of 2
- * @param startingNum The number to start finding the next power of 2
- * @return The exponent of the next power of 2
- * @attention If startingNum is already a power of 2 then log2(startingNum) is returned
- */
-uint8_t next2Exp(uint32_t startingNum) {
-    uint8_t exp = 0;
-    uint32_t next2Power = 1;
-
-    while (startingNum > next2Power) {
-        exp++;
-        next2Power = next2Power << 1;
-    }
-
-    return exp;
-}
-
-/**
- * Calculates how much the delay time was off
- * @param timeErr The difference between the actual time and the correct time
- * @return The delay time offset
- */
-uint32_t DelayCorrector::getDelayOffset(uint32_t timeErr) {
-    //use dimensional analysis to confirm equation is correct
-    // Assumes delay time and cycle time scale linearly
-    return (uint32_t)( ((float)timeErr / (float)_correctTime) * (float)_currDelay );
 }
 
 /**
