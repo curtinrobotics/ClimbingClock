@@ -1,0 +1,20 @@
+date values: year, month, day, hour, minute, second
+
+less than:
+- year is less
+- year is equal and month is less
+- yr and mth is equal, day is less
+- yr, mth and day is equal, hr is less
+- yr, mth, day and hr is equal, min is less
+- yr, mth, day, hr and min is equal, sec is less
+
+more than:
+- yr is >
+- yr is =, mth is >
+- yr and mth is =, day is >
+- yr, mth and day is =, hr is >
+- yr, mth, day and hr is =, min is >
+- yr, mth, day, hr and min is =, sec is >
+
+equal:
+- everything is =
