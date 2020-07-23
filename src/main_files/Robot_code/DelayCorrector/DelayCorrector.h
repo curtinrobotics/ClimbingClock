@@ -3,7 +3,7 @@
  * @brief Header file for DelayCorrector
  * Project: Climbing Clock
  * Organisation: Curtin Robotics Club (CRoC)
- * Working status: untested
+ * Working status: Tested and working
  */
 
 #ifndef DelayCorrector_h

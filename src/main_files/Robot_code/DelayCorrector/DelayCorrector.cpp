@@ -3,7 +3,7 @@
  * @brief Auto corrects delay time time given feedback
  * Project: Climbing Clock (2019-20)
  * Organisation: Curtin Robotics Club (CRoC)
- * Working status: untested
+ * Working status: Tested and working
  */
 
 #include "DelayCorrector.h"
