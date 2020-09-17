@@ -1,73 +1,71 @@
 /*
  * @author Alex MacKerron, Harrison Outram
- * Date: 27 Aug 2020
- * @brief test script for ensuring stepper motor works
- *        requires stepper motor driver
+ * @brief Example program to test stepper motor and stepper motor driver works
  */
 
-#define dirPin 3  //Direction pin for stepper motor
-#define stepPin 4  //Step pin for stepper motor
-#define buttonPin 2  //Button pin for turning stepper motor driver on/off
-#define enablePin 4 // pin for turning stepper motor driver on/off
+#define dirPin 6
+#define stepPin 5
+#define buttonPin 2
+#define enablePin 4
 
-#define CLOCKWISE HIGH
-#define ANTI_CLOCK LOW
+enum Modes {OFF, ST_HIGH, ST_LOW, TONE};
 
-#define PI 3.14f
-#define DEBOUNCE_TIME 100 // debounce time for button in milliseconds
-
-float angle = 0.0f;
-unsigned int freq;
-volatile unsigned long prevButtonPress = 0;
-volatile bool enabled = false;
-bool direction = CLOCKWISE;
+#define FREQ 1000U
 
 int buttonState = 0;
+volatile int mode = 0;
+int prevMode = 0;
 
 void setup() {
-  // put your setup code here, to run once:
   pinMode(buttonPin, INPUT);
   pinMode(stepPin, OUTPUT);
   pinMode(dirPin, OUTPUT);
-  attachInterrupt(digitalPinToInterrupt(buttonPin), toggleStepperMotorDriver,
+  attachInterrupt(digitalPinToInterrupt(buttonPin), toggleStepperMotorDriver, 
                   RISING);
-
+  digitalWrite(dirPin, HIGH);
   Serial.begin(9600);
-  Serial.println(F("Press button to start..."));
 }
 
 void loop() {
-  if (enabled){
-    digitalWrite(enablePin, LOW); // turn stepper motor driver on
-    Serial.print(F("setting direction to "));
-
-    if (sin(angle) > 0.0) {
-      direction = CLOCKWISE;
-      Serial.println(F("clockwise"));
-    } else {
-      direction = ANTI_CLOCK;
-      Serial.println(F("anti-clockwise"));
-    }
-    digitalWrite(dirPin, direction);
-
-    freq = (unsigned int)(1000.0 * fabs(sin(angle)));
-    Serial.print(F("Setting frequency to ")); Serial.println(freq);
-    tone(stepPin, freq);
-
-    angle += 0.001f;
-
-    if (angle > 4.0f * PI)
-      angle = 0.0f;
-  } else {
-    angle = 0.0f;
-    digitalWrite(enablePin, HIGH); // turn stepper motor driver off
-    // wait for user to press button
+  if (mode == OFF) {
+    digitalWrite(enablePin, HIGH);
+    if (prevMode != mode)
+      Serial.println("Push button to turn on");
   }
+  if (mode == ST_HIGH) {
+    digitalWrite(stepPin, HIGH);
+    digitalWrite(enablePin, LOW);
+    if (prevMode != mode){
+      Serial.println("Motor is on HIGH.");
+    }
+  }
+  if (mode == ST_LOW) {
+    digitalWrite(stepPin, LOW);
+    if (prevMode != mode) {
+      Serial.println("Motor is on LOW");
+    }
+  }
+  if (mode == TONE) {
+    digitalWrite(enablePin, LOW);
+    tone(stepPin, FREQ);
+    if (prevMode != mode) {
+      Serial.println("Motor is at a set frequency");
+    }
+  }
+  if (mode > 3) {
+    mode = 0;
+    noTone(stepPin);
+  }
+
+  if (prevMode != mode)
+    prevMode = mode;
 }
 
 void toggleStepperMotorDriver(void) {
-  if (millis() - prevButtonPress > DEBOUNCE_TIME) {
-    enabled = !enabled;
+  static uint32_t prevButtonPress = 0;
+  if (millis() - prevButtonPress > 100) {
+    Serial.println("Button has been pushed!");
+    mode +=1;
     prevButtonPress = millis();
   }
 }
