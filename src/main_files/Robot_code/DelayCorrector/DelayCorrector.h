@@ -12,9 +12,16 @@
 #include "Arduino.h"
 #include "../BiasChangeFunctions/BiasChangeFunctions.h"
 
+/** @brief Default size for correctedDelays array */
 #define MAX_NUM_DELAYS ((uint8_t)8)
+
+/** @brief default decrement to decrease delay when robot is too slow */
 #define DELAY_DECREMENT -10
+
+/** @brief Default minimum delay decrement */
 #define MIN_DELAY_DECREMENT -1
+
+/** @brief Default decrement change */
 #define DELAY_DECREMENT_CHANGE -3
 
 class DelayCorrector {
