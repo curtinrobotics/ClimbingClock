@@ -5,7 +5,7 @@
  * @brief test script for DelayCorrector class
  * Project: Climbing Clock (2019-20)
  * Organisation: Curtin Robotics Club (CRoC)
- * Working status: Untested
+ * Working status: Tested and working
  */
 
 #include <DelayCorrector.h>
