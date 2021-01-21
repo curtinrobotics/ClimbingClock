@@ -3,7 +3,7 @@
    auth: anton r
 
    created:  06/04/2020
-   modified: 16/04/2020
+   modified: 16/07/2020
 */
 
 #ifndef RTC_LIB_CROC_H

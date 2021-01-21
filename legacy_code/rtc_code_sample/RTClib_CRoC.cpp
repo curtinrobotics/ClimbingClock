@@ -17,14 +17,46 @@ bool DateTimeWrapper::operator<(const DateTime &other)
       other.year()    > yOff || (
       other.year()   == yOff && (
       other.month()   > m    || (
-      other.month()) == m    && (
+      other.month()  == m    && (
       other.day()     > d    || (
       other.day()    == d    && (
       other.hour()    > hh   || (
       other.hour()   == hh   && (
       other.minute()  > mm   || (
       other.minute() == mm   && 
-      other.second()  > ss ) ) ) ) ) ) ) ) );
+      other.second()  > ss ) ) ) ) ) ) ) ) ) );
+   
+   return 
+   (
+      yOff < other.year() ||
+      (
+         yOff == other.year() &&
+         (
+            m < other.month() ||
+            (
+               m == other.month() &&
+               (
+                  d < other.day() ||
+                  (
+                     d == other.day() &&
+                     (
+                        hh < other.hour() ||
+                        (
+                           hh == other.hour() &&
+                           (
+                              mm < other.minute() ||
+                              (
+                                 mm == other.minute() && ss < other.second()
+                              )
+                           )
+                        )
+                     )
+                  )
+               )
+            )
+         )
+      )
+   )
 }
 
 bool DateTimeWrapper::operator>(const DateTime &other)
