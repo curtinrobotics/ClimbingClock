@@ -82,13 +82,12 @@ Note that, as this is an interface, all methods are pure virtual, not static, an
 **Parameters:** `void`<br>
 **Return:** (`int`) What direction the robot is going.<br>
 **Purpose:** So the Master program can tell what direction the robot is trying to go in.<br>
-**Note:** Use an enum to allow for multiple directions, e.g. `enum Direction = {UP, DOWN, AT_TOP, AT_BOTTOM, STILL};`.
 
 **Name:** `cycleDone()`<br>
 **Parameters:** `void`<br>
 **Return:** (`bool`) Whether the current cycle is done or not.<br>
 **Purpose:** Check if enough time has passed for the current cycle to end.<br>
-**Note:** If the robot is too slow, `cycleDone()` should eventually start returning `true` before `atTop()` and vice versa.
+**Note:** If the robot is too slow, `cycleDone()` should eventually start returning `true` before `getPosition()` returns maximum value
 
 **Name:** `faultDetected()`<br>
 **Parameters:** `void`<br>
