@@ -1,14 +1,14 @@
 ######################################################
-# Syntax Coloring Map for SpeedChangeFunctions
+# Syntax Coloring Map for BiasChangeFunctions
 # AUTHOR: Harrison Outram
-# DATE: 23/03/2020 (d/m/y, UTC+08:00)
-# VERSION: 2.0
+# DATE: 7/05/2020 (d/m/y, UTC+08:00)
+# VERSION: 3.0
 # PROJECT: Climbing Clock
 # ORGANISATION: Curtin Robotics Club (CRoC)
 ######################################################
 
 ######################################################
-# Methods (KEYWORD2)
+# Functions (KEYWORD2)
 ######################################################
 
 noChange	KEYWORD2

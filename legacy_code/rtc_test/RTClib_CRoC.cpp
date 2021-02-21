@@ -3,7 +3,7 @@
    auth: anton r
 
    created:  06/04/2020
-   modified: 16/04/2020
+   modified: 16/07/2020
 */
 
 #include "RTClib_CRoC.h"
@@ -14,17 +14,17 @@
 bool DateTimeWrapper::operator<(const DateTime &other)
 {
    return (
-      other.year()    > yOff || (
-      other.year()   == yOff && (
-      other.month()   > m    || (
-      other.month()) == m    && (
-      other.day()     > d    || (
-      other.day()    == d    && (
-      other.hour()    > hh   || (
-      other.hour()   == hh   && (
-      other.minute()  > mm   || (
-      other.minute() == mm   && 
-      other.second()  > ss ) ) ) ) ) ) ) ) );
+      yOff + 2000 < other.year() || (
+      yOff + 2000 == other.year() && (
+      m < other.month() || (
+      m == other.month() && (
+      d < other.day() || (
+      d == other.day() && (
+      hh < other.hour() || (
+      hh == other.hour() && (
+      mm < other.minute() || (
+      mm == other.minute() &&
+      ss < other.second() ) ) ) ) ) ) ) ) ) );
 }
 
 bool DateTimeWrapper::operator>(const DateTime &other)
@@ -35,7 +35,7 @@ bool DateTimeWrapper::operator>(const DateTime &other)
 bool DateTimeWrapper::operator==(const DateTime &other)
 {
    return (
-      other.year()   == yOff &&
+      other.year()   == yOff + 2000 &&
       other.month()  == m    &&
       other.day()    == d    &&
       other.hour()   == hh   &&

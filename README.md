@@ -36,14 +36,7 @@ To make one or more robots climb in a manner that allows us to tell the time of 
 
 ### Project Requirements
 
-1. Must be able to tell the time of day within 5 minutes from a distance of up to 10 metres
-2. Strict budget to stay under (see Project Lead for more details)
-3. Robots must move using internal mechanics (E.g. pulley systems are not allowed)
-4. Entire system must hang from second floor catwalk in Engineering Pavilion (building 204). See project lead for exact location
-5. Entire system cannot be more than 2.4 metres tall
-6. Entire system cannot be more than 1 metre wide
-7. System must be able to run automonously (i.e. without supervision)
-8. It has to look cool (subject to interpretation)
+Project requirements are categorised into two types: functional requirements, and non-functional requirements (NFR). Functional requirements detail what the system has to do, whereas NFRs detail under what restrictions the system has to achieve its functional requirements. Please see the [project breakdown](https://github.com/curtinrobotics/ClimbingClock/blob/documentation/project_doc/(v0.1)%20Climbing%20Clock%20Project%20Breakdown.pdf) for a complete list of all functional and non-functional requirements.
 
 ## Progress Made
 
@@ -58,7 +51,7 @@ Please see our Kanban board or talk with us to get an idea of where you can fit 
 While everyone is welcome to join, CRoC has designed this project to be as first-year friendly as possible.
 To promote and upload this standard, no experience nor knowledges are necessary to join!
 
-To get you started, the project lead can update on where exactly the project is at. If the project lead is not available you can contact him/her through the club's Discord or on Facebook. If you need an answer immediately, please refer to the Kanban board, project overview (*pending*), and other Climbing Clock members present.
+To get you started, the project lead can update on where exactly the project is at. If the project lead is not available you can contact him/her through the club's Discord or on Facebook. If you need an answer immediately, please refer to the Kanban board, [project breakdown](https://github.com/curtinrobotics/ClimbingClock/blob/documentation/project_doc/(v0.1)%20Climbing%20Clock%20Project%20Breakdown.pdf), and other Climbing Clock members present.
 
 Whether it be learning CAD software or using an Arduino for the first time, feel free to ask anyone anytime if you need help.
 
