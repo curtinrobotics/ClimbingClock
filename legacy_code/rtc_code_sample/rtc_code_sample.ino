@@ -49,12 +49,12 @@ void setup()
 void loop()
 {
 
-  DateTimeWrapper currentTime = rtc.nowDT();
+  DateTimeWrapper currentTime = rtc.now();
   DateTimeWrapper last12Hrs = previousTwelveHour(currentTime);
 
   // a bunch of example code below, uncomment to see how it works
 
-//*
+/*
   Serial.print("The current time is: ");
   Serial.print(currentTime.hour());
   Serial.print(":");

@@ -1,0 +1,28 @@
+##############################################################################
+# AUTHOR: Ashley Taylor and Harrison Outram
+# DATE: 30/04/2020 (d/m/y, UTC+08:00)
+# VERSION: 1.1
+# PROJECT: Climbing Clock
+# ORGANISATION: Curtin Robotics Club (CRoC)
+# PURPOSE: this is used so Arduino IDE recognises classes and methods
+##############################################################################
+
+##############################################################################
+# Datatypes (KEYWORD1)
+# Note: KEYWORD1 is used for the class
+##############################################################################
+
+IHeatRegulator	KEYWORD1
+
+##############################################################################
+# Methods (KEYWORD2)
+# Note: KEYWORD2 is used for the methods
+##############################################################################
+
+start	KEYWORD2
+stop	KEYWORD2
+get	TemptKEYWORD2
+faultDetected	KEYWORD2
+setCooling	KEYWORD2
+tempToPower	KEYWORD2
+
