@@ -1,6 +1,7 @@
-/*
- * @authors Ashley Taylor, Harrison Outram
- * Date Created: 2/04/2020 (d/m/y, UTC+08:00)
+/**
+ * @author Ashley Taylor
+ * @author Harrison Outram
+ * @date 2/04/2020 (d/m/y, UTC+08:00)
  * @brief IRobot for both Hare and Tortoise Code
  * @see README.md file for full breakdown.
  */
@@ -10,8 +11,14 @@
 
 #include "Arduino.h"
 
+/**
+ * @brief Codes for direction the robot is moving in
+ */
 enum Direction {D_UP, D_DOWN, D_TOP, D_BOTTOM, D_STILL};
 
+/**
+ * @brief Interface for climbing robots
+ */
 class IClimbingRobot
 {
     public:
