@@ -1,0 +1,27 @@
+######################################################
+# Syntax Coloring Map for IClimbingRobot interface
+# AUTHOR: Harrison Outram
+# DATE: 9/04/2020 (d/m/y, UTC+08:00)
+# VERSION: 1.1
+# PROJECT: Climbing Clock
+# ORGANISATION: Curtin Robotics Club (CRoC)
+######################################################
+
+######################################################
+# Datatypes (KEYWORD1)
+######################################################
+
+IClimbingRobot	KEYWORD1
+
+######################################################
+# Methods (KEYWORD2)
+######################################################
+
+start	KEYWORD2
+stop	KEYWORD2
+cycleDone	KEYWORD2
+goUp	KEYWORD2
+goDown	KEYWORD2
+getPosition	KEYWORD2
+getDirection	KEYWORD2
+faultDetected	KEYWORD2
