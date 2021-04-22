@@ -12,7 +12,7 @@
 # Note: KEYWORD1 is used for the class
 ##############################################################################
 
-IHeatRegulator	KEYWORD1
+IDataLogger	KEYWORD1
 
 ##############################################################################
 # Methods (KEYWORD2)
