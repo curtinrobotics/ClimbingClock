@@ -1,20 +1,19 @@
 /**
- * @author Ashley Taylor
- * @author Harrison Outram
- * @date 9/04/2020 (d/m/y, UTC+08:00)
- * @brief IHeatRegulator for both Hare and Tortoise Code
+ * @author Jarod Harris
+ * @date 22/04/2020 (d/m/y, UTC+08:00)
+ * @brief IDataLogger for ClimbingClock logger
  * @see README.md file for full breakdown. 
  */
 
-#ifndef IHeatRegulator_h
-#define IHeatRegulator_h
+#ifndef IDataLogger_h
+#define IDataLogger_h
 
 #include "Arduino.h"
 
 /**
- * @brief Interface for heat regulators
+ * @brief Interface for data logging
  */
-class IHeatRegulator
+class IDataLogger
 {
     public:
         /**
@@ -28,34 +27,48 @@ class IHeatRegulator
         virtual void stop() = 0;
 
         /**
-         * @brief Get the temperature reading in celcius
-         * @return The temperature
+         * @brief Set the alert level
          */
-        virtual int getTempt() = 0;
+        virtual void setLevel(int level) = 0;
 
         /**
-         * @brief Detect if a fault occured
-         * @details Returns 0 if no fault occured, otherwise returns an
-         * implementation specific code
-         * @return The fault code
+         * @brief Get the alert level
+         * @return The alert level as integer
          */
-        virtual int faultDetected() = 0;
+        virtual int getLevel() = 0;
 
         /**
-         * @brief Set the cooling power level
-         * @param power The power level from temptToPower()
+         * @brief Log a debug message concerning the specified subsystem
+         * @param message The text of the alert
+         * @param timestamp Date and time string
+         * @param subsystem Name of relevant subsystem for alert
          */
-        virtual bool setCooling(uint8_t power) = 0;
+        virtual void logDebug(char[] timestamp, char[] subsystem, char[] message) = 0;
 
         /**
-         * @brief Converts temperature reading to power level
-         * @return The recommended cooling power level
+         * @brief Log an information message concering the specified subsystem
+         * @param message The text of the alert
+         * @param timestamp Date and time string
+         * @param subsystem Name of relevant subsystem for alert
          */
-        virtual uint8_t temptToPower(int tempt) = 0;
-
-        virtual ~IHeatRegulator() {
+        virtual void logInfo(char[] timestamp, char[] subsystem, char[] message) = 0;
+        /**
+         * @brief Log a warning message concerning the specified subsystem
+         * @param message The text of the alert
+         * @param timestamp Date and time string
+         * @param subsystem Name of relevant subsystem for alert
+         */
+        virtual void logWarning(char[] timestamp, char[] subsystem, char[] message) = 0;
+        /**
+         * @brief Log an error message concerning specified subsystem
+         * @param message The text of the alert
+         * @param timestamp Date and time string
+         * @param subsystem Name of relevant subsystem for alert
+         */
+        virtual void logError(char[] timestamp, char[] subsystem, char[] message) = 0;
+           virtual ~IDataLogger() {
             // Use line below to confirm destructor works
-            // Serial.println(F("IHeatRegulator destroyed"));
+            // Serial.println(F("IDataLogger destroyed"));
         }
 };
 
