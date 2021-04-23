@@ -66,6 +66,13 @@ class IDataLogger
          * @param subsystem Name of relevant subsystem for alert
          */
         virtual void logError(char[] timestamp, char[] subsystem, char[] message) = 0;
+                /**
+         * @brief Log a critical message concerning specified subsystem
+         * @param message The text of the alert
+         * @param timestamp Date and time string
+         * @param subsystem Name of relevant subsystem for alert
+         */
+        virtual void logCritical(char[] timestamp, char[] subsystem, char[] message) = 0;
            virtual ~IDataLogger() {
             // Use line below to confirm destructor works
             // Serial.println(F("IDataLogger destroyed"));
